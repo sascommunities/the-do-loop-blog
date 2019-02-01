@@ -106,6 +106,6 @@ run;
    Intercept, x, x**2, ..., x**7 */
 proc glmselect data=Have seed=1 plots=(ASEPlot Coefficients);
    effect poly = polynomial(x / degree=7);
-   model y = poly / selection= stepwise(choose=validate select=validate);
+   model y = poly / selection= stepwise(choose=SBC select=validate);
    partition rolevar=Type(train="Train" validate="Validate");
 run;
