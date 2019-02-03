@@ -12,7 +12,6 @@
 
 /* Simulate data from a cubic polynomial regression model */
 data Have;
-length Type $10.;
 call streaminit(54321);
 do i = 1 to 250;
    x = rand("uniform", -3, 3);
