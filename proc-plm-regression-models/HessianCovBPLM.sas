@@ -67,7 +67,7 @@ run;
 /* 3. Use PROC PLM to create contrasts and estimates */
 proc plm restore=PainModel;
    /* 'Exponentiated' column is odds ratio between treatment or gender */
-   estimate 'Pairwise B vs A' Treatment 1 -1 / exp CL; 
+   estimate 'Pairwise A vs B' Treatment 1 -1 / exp CL; 
 run;
 
 /* 4. Use PROC PLM to show statistics or the original program */
