@@ -59,17 +59,19 @@ run;
 /* Third blog post:
    "An easier way to create a calibration plot in SAS"
    https://blogs.sas.com/content/iml/2019/02/20/easier-calibration-plot-sas.html
+
+   This section requires SAS/STAT 15.1 (SAS 9.4M6).
 */
 /******************************************************/
 
 /*----------------------------------------------------*/
-/* New in SAS/STAT 15.1 (SAS 9.4M6):                  */
+/* NEW in SAS/STAT 15.1 (SAS 9.4M6):                  */
 /* Create calibration plot by using the               */
 /* PLOTS=CALIBRATION option in PROC LOGISTIC          */
 /*----------------------------------------------------*/
 
 
-/* New in SAS/STAT 15.1 (SAS 9.4M6): PLOTS=CALIBRATION option in PROC LOGISTIC */
+/* NEW in SAS/STAT 15.1 (SAS 9.4M6): PLOTS=CALIBRATION option in PROC LOGISTIC */
 ods graphics / width=600px height=600px;
 ods select CalibrationPlot;
 title "Calibration Plot for a Quadratic Model";
