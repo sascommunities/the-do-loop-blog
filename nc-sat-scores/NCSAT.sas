@@ -63,11 +63,11 @@ proc means data=NCSAT noprint;
    var Total;
    output out=MeansOut(where=(_Type_=1)) Median=MedianSAT;
 run;
-data All;
+data SATSortMerge;
 merge NCSAT MeansOut;
 by DistrictAbbr;
 run;
-proc sort data=All; by DESCENDING MedianSAT DistrictAbbr; run;
+proc sort data=SATSortMerge; by DESCENDING MedianSAT DistrictAbbr; run;
 
 /************************************************/
 /* Visualize histogram of Total SAT scores */
@@ -149,7 +149,7 @@ print nSchoolsInRange;
 pct = nSchoolsInRange / nSchools;
 print pct;
 
-use All where (MedianSAT >= 1035);
+use SATSortMerge where (MedianSAT >= 1035);
 read all var {"DistrictAbbr" "Total"};
 close;
 nSchools = nrow(Total);
@@ -169,7 +169,7 @@ ods graphics / width=600px height=1000px;
 /* viz Y axis with many discrete categories:
    https://blogs.sas.com/content/iml/2017/08/16/pairwise-correlations-bar-chart.html
 */
-proc sgplot data=All;
+proc sgplot data=SATSortMerge;
 where MedianSAT >= 1035;
 scatter x=Total y=DistrictAbbr / markerattrs=(symbol=CircleFilled) transparency=0.4;
 xaxis grid values=(800 to 1500 by 100) valueattrs=(size=8pt) labelattrs=(size=8pt);
