@@ -34,6 +34,7 @@ t = T(0:11) * pi / 6;            /* evenly spaced points in [0, 2p) */
 outliers = 5#cos(t) || 5#sin(t); /* evenly spaced on circle r=5 */
 v = x // outliers;               /* concatenate MVN data and outliers */
 w = v*U;                         /* transform from stdized to data coords */
+
 labl = j(N,1," ") // T('0':'11');
 Type = j(N,1,"Normal") // j(nrow(t),1,"Outlier");
 title "Markers on Circle r=5";
@@ -55,6 +56,7 @@ MD = {5, 6, 10};               /* MD for outlier */
 outliers = MD#cos(t) ||  MD#sin(t);
 v = x // outliers;             /* concatenate MVN data and outliers */
 w = v*U;                       /* transform from stdized to data coords */
+
 labl = j(N,1," ") // {'p1','p2','p3'};
 Type = j(N,1,"Normal") // j(nrow(t),1,"Outlier");
 call scatter(w[,1], w[,2]) grid={x y} datalabel=labl group=Type;
@@ -70,6 +72,7 @@ outliers = MD # Y / sqrt(Y[,##]);   /* surface of spheres of radii MD */
 
 v = x // outliers;             /* concatenate MVN data and outliers */
 w = v*U;                       /* transform from stdized to data coords */
+
 labl = j(N,1," ") // {'p1','p2','p3'};
 Type = j(N,1,"Normal") // j(nrow(t),1,"Outlier");
 title "MVN Data with Random Outliers";
