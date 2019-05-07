@@ -1,6 +1,6 @@
 /* SAS program to accompany the article
    "How to simulate data from a generalized linear model"
-   by Rick Wicklin, published 14MAY2018 on The DO Loop blog:
+   by Rick Wicklin, published 14MAY2019 on The DO Loop blog:
    https://blogs.sas.com/content/iml/2019/05/06/simulate-glim.html
 */
 
