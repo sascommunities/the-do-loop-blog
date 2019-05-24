@@ -1,7 +1,7 @@
 /* SAS program to accompany the article
    "The Theil-Sen robust estimator for simple linear regression"
    by Rick Wicklin, published 27MAY2019 on The DO Loop blog:
-   https://blogs.sas.com/content/iml/2019/05/27/theil-sen-robust-regression.html
+   https://blogs.sas.com/content/iml/2019/05/28/theil-sen-robust-regression.html
 
    This program shows how to implement a simple (one variable) robust 
    regression model due to Theil (1950) and Sen (1968). 
