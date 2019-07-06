@@ -2,10 +2,11 @@
 /* SAS program to accompany the article 
    "Find the center of each cell in a mosaic plot"
    by Rick Wicklin, published 10JUL2019 on The DO Loop blog:
-   https:
+   https://blogs.sas.com/content/iml/2019/07/10/center-of-cell-mosaic-plot.html 
 
    This program shows how to find the center of cells
-   in a mosaic plot in SAS. You can us the centers to add annotations.
+   in a mosaic plot in SAS. You can use the centers to add annotations,
+   which is also part of this program.
 */
 
 /* Get the summary statistics. Use FreqOut for mosaic plot
