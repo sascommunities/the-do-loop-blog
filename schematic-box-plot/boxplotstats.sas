@@ -112,8 +112,6 @@ if EOF then do;
 end;
 run;
 
-proc print data=outbox2;run;
-
 data Schematic1;
    merge outBox2 Have;
 run;
@@ -147,6 +145,7 @@ IQR = Q3 - Q1;
 drop _TYPE_ _FREQ_ IQR;
 run;
 
+/* convert from wide to long, then merge */
 proc transpose data=IQR out=IQR2(rename=(COL1=Value2)) name=Stat;
 run;
 
