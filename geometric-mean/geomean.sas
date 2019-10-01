@@ -177,20 +177,18 @@ s = std(z);                  /* arithmetic std dev of log(X) */
 GM2 = exp(m);                /* same answer as GEOMEAN function */
 GSD = exp(s);                /* geometric std dev */
 GCV = sqrt(exp(s**2) - 1);   /* geometric CV */
-print m s, GM2 GSD GCV;
+print GM2 GSD GCV;
 
 /* verify the 64-95 rule */
-/*
 Upper1 = GM * GSD;
 Lower1 = GM / GSD;
-print Lower1 Upper1;
 within1 = mean(x<=Upper1 & x>=Lower1);
-print within1;
+print Lower1 Upper1 within1[F=percent7.2];
 Upper2 = GM * (GSD)**2;
 Lower2 = GM / (GSD)**2;
 within2 = mean(x<=Upper2 & x>=Lower2);
-print within2;
-*/
+print Lower2 Upper2 within2[F=percent7.2];
+
 
 /* Note that some researchers use the following formula */
 y = log(x/GM)##2;
