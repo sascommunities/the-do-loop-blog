@@ -118,7 +118,7 @@ datalines;
 data Round;
 set Channel1;
    Round     = round(Length, 0.1);    /* traditional: round to nearest tenth */
-   RoundEven = rounde(Length, 0.1);   /* use round-to-even method to round to nearest thenth */
+   RoundEven = rounde(Length, 0.1);   /* use round-to-even method to round to nearest tenth */
    /* create a binary indicator variable: Was x rounded up or down? */
    RoundUp     = (Round > Length);    /* 1 if rounded up; 0 if rounded down */
    RoundEvenUp = (RoundEven > Length);
