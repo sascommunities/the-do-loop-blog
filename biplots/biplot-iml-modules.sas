@@ -150,7 +150,7 @@ start WriteBiplot(X,          /* The data matrix */
                   ID,         /* The ID variable to label rows of X.
                                  If you pass in an empty matrix, 
                                  obs numbers are used */
-                  _Variable_, /* Names of columns of X */
+                  varNames,   /* Names of columns of X */
                   FacType,    /* 'GH', 'COV', 'JK', or 'SYM' */
                   StdMethod,  /* 'None', 'Mean', or 'Std' */
                   Scale=1);   /* Additional scaling applied to vectors */
@@ -172,6 +172,7 @@ start WriteBiplot(X,          /* The data matrix */
    call TableWriteToDataSet(Tbl, "_Scores");
 
    /* columns of B are scaled vectors; write to data set */
+   _Variable_ = varNames;
    create _Vectors from B[rowname=_Variable_ colname={'vx' 'vy'}];
    append from B[rowname=_Variable_];
    close;
@@ -192,13 +193,13 @@ start Biplot(X,          /* The data matrix */
              ID,         /* The ID variable to label rows of X.
                             If you pass in an empty matrix, 
                             obs numbers are used */
-             _Variable_, /* Names of columns of X */
+             varNames,   /* Names of columns of X */
              FacType,    /* 'GH', 'COV', 'JK', or 'SYM' */
              StdMethod,  /* 'None', 'Mean', or 'Std' */
              Scale=1,    /* Additional scaling applied to vectors */
              labelPoints=0); /* should points be labeled by ID variable? */
 
-   call WriteBiplot(X, ID, _Variable_, FacType, StdMethod, Scale);
+   call WriteBiplot(X, ID, varNames, FacType, StdMethod, Scale);
    paramStr = "FacType=" + strip(FacType) + "; Std=" + strip(StdMethod) + ";";
    labelStr = choose(labelPoints, "datalabel=_ID_", " ");
    submit paramStr labelStr;
