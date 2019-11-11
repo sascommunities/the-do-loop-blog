@@ -1,15 +1,13 @@
 /* SAS/IML program to accompany the article
    "How to create biplots in SAS"
    by Rick Wicklin, published 13NOV2019 on The DO Loop blog:
-   https://blogs.sas.com/content/iml/2019/11/30/create-biplots-in-sas.html
+   https://blogs.sas.com/content/iml/2019/11/13/create-biplots-sas.html
 
    This program definee three SAS/IML modules that you an use to create biplots:
    1. The CalcBiplot module returns the matrices that contain the projection of
       the observations (scores) and the projection of the variables (loadings)
       onto the first few principal components.
 */
-
-
 
 /***************************************************/
 
