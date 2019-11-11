@@ -1,7 +1,7 @@
 /* SAS program to accompany the article
    "How to create biplots in SAS"
    by Rick Wicklin, published 13NOV2019 on The DO Loop blog:
-   https://blogs.sas.com/content/iml/2019/11/30/create-biplots-in-sas.html
+   https://blogs.sas.com/content/iml/2019/11/13/create-biplots-sas.html
 
    This program shows how to create biplots in SAS by using modern ODS
    statistical graphics (PROC SGPLOT). Biplots are discussed 
