@@ -14,9 +14,10 @@
       use PROC SGPLOT to create the biplot.
    2. Use SAS/IML modules directly. Plot by using PROC SGPLOT.
       
+   Friendly's %BIPLOT macro is from Visualizing Categorical Data (Friendly, 200, p. 339)
    You can download the %BIPLOT macro from 
          http://www.datavis.ca/books/vcd/biplot.html
-   You can download the %EQUATE macro from 
+   The %BIPLOT macro requires the %EQUATE macro. You can download the %EQUATE macro from 
          http://www.datavis.ca/books/vcd/equate.html
 */
 title;
