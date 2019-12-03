@@ -5,27 +5,27 @@
    -and-
    "Longitudinal data: The mixed model"
    by Rick Wicklin, published 05DEC2019:
-   https://blogs.sas.com/content/iml/2019/12/05/longitudinal-data-response-profile-model.html
+   https://blogs.sas.com/content/iml/2019/12/05/longitudinal-data-mixed-model.html
 
    This program shows how to analyze longitudinal data by following the 
    the article 
    "A Primer in Longitudinal Data Analysis"
    G. Fitzmaurice and C. Ravichandran (2008), Circulation, 118(19), p. 2005-2010.
-   You can download the TLC data deom the web site for the book 
-   Applied Longitudinal Analysis (2012, 2nd Ed) 
+
+   You can download the TLC data from the web site for the book 
+   Applied Longitudinal Analysis (2011, 2nd Ed) 
    G. Fitzmaurice, N. Laird, and J. Ware.
    https://content.sph.harvard.edu/fitzmaur/ala2e/
 */
 
 /* Read data into SAS, and create a dataset (TLC) in long format */
-data FAKE; run; /* TEMP TEMP TEMP */
 
 data tlc;
    input id Treatment $ lead0 lead1 lead4 lead6;
-   y=lead0; time=0; output;
-   y=lead1; time=1; output;
-   y=lead4; time=4; output;
-   y=lead6; time=6; output;
+   y=lead0; Time=0; output;
+   y=lead1; Time=1; output;
+   y=lead4; Time=4; output;
+   y=lead6; Time=6; output;
    drop lead0 lead1 lead4 lead6;
    label y = "Blood Lead Level (mcg/dL)";
 datalines;
@@ -168,11 +168,11 @@ proc sgplot data=tlc dattrmap=Order;
 run;
 
 proc sgplot data=tlc dattrmap=Order;
-   vline time / response=y group=Treatment stat=mean limitstat=stderr markers attrid=Treat;
+   vline Time / response=y group=Treatment stat=mean limitstat=stderr markers attrid=Treat;
 run;
 /*
 proc sgplot data=tlc;
-vbox y / category=time group=Treatment connect=mean groupdisplay=cluster 
+vbox y / category=Time group=Treatment connect=mean groupdisplay=cluster 
             connect=mean clusterwidth=0.35;
 run;
 */
@@ -202,3 +202,72 @@ proc sgpanel data=GLMSubset dattrmap=Order;
    scatter x=Time y=y / group=Treatment attrid=Treat;
    series x=Time y=Pred / group=Treatment attrid=Treat;
 run;
+
+/**************************************************/
+/* You can model the intercept of individuals as a random variable. 
+   In more sophisticated analyses, you can use random effects to 
+   model clusters such as classrooms or hospitals.
+*/
+%macro SortAndPlot(DSName);
+proc sort data=&DSName;
+   by descending Treatment ID Time;
+run;
+
+proc sgplot data=&DSName dattrmap=Order;
+   series x=Time y=Pred / group=ID groupLC=Treatment break lineattrs=(pattern=solid)
+                       attrid=Treat;
+   legenditem type=line name="P" / label="Placebo (P)" lineattrs=GraphData1; 
+   legenditem type=line name="A" / label="Succimer (A)" lineattrs=GraphData2; 
+   keylegend "A" "P";
+   xaxis values=(0 1 4 6) grid;
+   yaxis label="Predicted Blood Lead Level (mcg/dL)";
+run;
+%mend;
+
+/* Make "discrete time" (t) to use in REPEATED statement.
+   Make spline effect with knot at t=1. */
+data TLCView / view=TLCView;
+set tlc;
+t = Time;       /* discrete copy of time */
+T1 = ifn(Time<1, 0, Time - 1);  /* knot at Time=1 for PWL analysis */
+run;
+
+/* Repeat the response-profile analysis, but 
+   use the RANDOM statement to add random intercept for each subject */
+proc mixed data=TLCView;
+   class id Time(ref='0') Treatment(ref='P');
+   model y = Treatment Time Treatment*Time / s chisq outpred=MixedOut;
+   repeated Time / type=un subject=id r;   /* measurements are repeated for subjects */
+   random intercept / subject=id;          /* each subject gets its own intercept */
+run;
+ 
+title "Predicted Individual Growth Curves";
+title2 "Random Intercept Model";
+%SortAndPlot(MixedOut);
+
+/* Model time as continuous and use a quadratic model in Time. 
+   For more about quadratic growth models, see
+   https://support.sas.com/resources/papers/proceedings/proceedings/sugi27/p253-27.pdf */
+proc mixed data=TLCView;
+   class id t(ref='0') Treatment(ref='P');
+   model y = Treatment Time Time*Time Treatment*Time / s outpred=MixedOutQuad;
+   repeated t / type=un subject=id r;      /* measurements are repeated for subjects */
+   random intercept / subject=id;          /* each subject gets its own intercept */
+run;
+ 
+title2 "Random Intercept; Quadratic in Time";
+%SortAndPlot(MixedOutQuad);
+
+/* Piecewise linear (PWL) model with knot at Time=1.
+   For more about PWL models, see Hwang (2015) 
+   "Hands-on Tutorial for Piecewise Linear Mixed-effects Models Using SAS PROC MIXED"
+   https://www.lexjansen.com/pharmasug-cn/2015/ST/PharmaSUG-China-2015-ST08.pdf    */
+proc mixed data=TLCView;
+   class id t(ref='0') Treatment(ref='P');
+   model y = Treatment Time T1 Treatment*Time Treatment*T1 / s outpred=MixedOutPWL;
+   repeated t / type=un subject=id r;      /* measurements are repeated for subjects */
+   random intercept / subject=id;          /* each subject gets its own intercept */
+run;
+ 
+title2 "Random Intercept; Piecewise Linear Model";
+%SortAndPlot(MixedOutPWL);
