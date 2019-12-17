@@ -88,7 +88,7 @@ ods layout end;
 /* what proportion of the original cells are the same as the new binary estimate? */
 A4 = (Ak > 0.5);
 propSame = 1 - (Tree - A4)[:];
-print propDiff;
+print propSame;
 
 /* Create ROC curve for the rank-4 approx:
    https://blogs.sas.com/content/iml/2018/11/14/compare-roc-curves-sas.html */
