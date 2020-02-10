@@ -1,0 +1,1987 @@
+Clover Garden Alamance Charter 38 0.0% 2.6% 0.0%
+River Mill Academy Alamance Charter 72 0.0% 0.0% 0.0%
+Alamance Christian School Alamance Private 21 0.0% 0.0% 23.8%
+Bible Wesleyan Christian School Alamance Private 1 0.0% 0.0% 0.0%
+BLESSED SACRAMENT SCHOOL Alamance Private 24 0.0% 4.2% 0.0%
+Bradford Academy Alamance Private 13 0.0% 7.7% 46.2%
+Burlington Christian Academy Alamance Private 38 0.0% 0.0% 0.0%
+Childrens House Montessori School Alamance Private 9 0.0% 0.0% 0.0%
+The Burlington School Alamance Private 18 0.0% 0.0% 0.0%
+Alexander Wilson Elementary Alamance Public 95 0.0% 0.0% 1.1%
+Altamahaw Ossipee Elem Alamance Public 106 0.0% 0.0% 0.9%
+B Everett Jordan Elem Alamance Public 48 0.0% 0.0% 0.0%
+E M Yoder Elementary Alamance Public 60 0.0% 0.0% 0.0%
+Eastlawn Elementary Alamance Public 92 0.0% 0.0% 1.1%
+Edwin M Holt Elementary Alamance Public 72 0.0% 0.0% 0.0%
+Elon Elementary Alamance Public 124 0.0% 0.0% 0.8%
+Garrett Elementary Alamance Public 122 0.0% 0.8% 2.5%
+Grove Park Elementary Alamance Public 77 0.0% 0.0% 2.6%
+Harvey R Newlin Elementary Alamance Public 86 0.0% 1.2% 2.3%
+Haw River Elementary Alamance Public 81 0.0% 0.0% 2.5%
+Highland Elementary Alamance Public 124 0.0% 0.8% 22.6%
+Hillcrest Elementary Alamance Public 110 0.0% 0.0% 4.5%
+Marvin B Smith Elementary Alamance Public 83 0.0% 0.0% 0.0%
+North Graham Elementary Alamance Public 49 0.0% 0.0% 4.1%
+Pleasant Grove Elementary Alamance Public 41 0.0% 0.0% 0.0%
+R.H. Andrews Elementary School Alamance Public 83 0.0% 0.0% 8.4%
+Ray Street Academy Alamance Public 1 0.0% 0.0% 0.0%
+South Mebane Elementary Alamance Public 100 1.0% 3.0% 2.0%
+Sylvan Elementary Alamance Public 52 0.0% 1.9% 1.9%
+Alamance Total 1,840 0.1% 0.5% 3.8%
+Alexander Christian Academy Alexander Private 12 0.0% 33.3% 0.0%
+Bethlehem Elementary Alexander Public 77 0.0% 1.3% 7.8%
+Ellendale Elementary Alexander Public 42 0.0% 0.0% 0.0%
+Hiddenite Elementary Alexander Public 89 0.0% 0.0% 1.1%
+Stony Point Elementary Alexander Public 36 0.0% 0.0% 0.0%
+Sugar Loaf Elementary Alexander Public 41 0.0% 0.0% 0.0%
+Taylorsville Elementary Alexander Public 41 0.0% 2.4% 4.9%
+Wittenburg Elementary Alexander Public 45 0.0% 0.0% 0.0%
+Alexander Total 383 0.0% 1.6% 2.3%
+Blue Ridge Christian School Alleghany Private 4 0.0% 25.0% 0.0%
+Glade Creek Elementary Alleghany Public 18 0.0% 0.0% 0.0%
+Piney Creek Elementary Alleghany Public 14 0.0% 0.0% 0.0%
+Sparta Elementary Alleghany Public 85 1.2% 1.2% 1.2%
+Alleghany Total 121 0.8% 1.7% 0.8%
+Ansonville Elementary School Anson Public 35 0.0% 0.0% 0.0%
+Lilesville Elementary School Anson Public 46 0.0% 0.0% 4.3%
+Morven Elementary School Anson Public 29 0.0% 0.0% 6.9%
+Peachland-Polkton Elementary School Anson Public 70 0.0% 0.0% 1.4%
+Wadesboro Primary School Anson Public 82 0.0% 0.0% 0.0%
+Anson Total 262 0.0% 0.0% 1.9%
+Blue Ridge Elementary Ashe Public 71 0.0% 1.4% 0.0%
+Mountain View Elementary Ashe Public 67 0.0% 0.0% 0.0%
+Westwood Elementary Ashe Public 80 0.0% 0.0% 0.0%
+Ashe Total 218 0.0% 0.5% 0.0%
+Marjorie Williams Academy Avery Charter 5 0.0% 0.0% 20.0%
+Bethel Christian Academy Avery Private 9 11.1% 11.1% 0.0%
+Banner Elk Elementary School Avery Public 27 0.0% 0.0% 3.7%
+Crossnore Elementary Avery Public 34 0.0% 0.0% 5.9%
+Freedom Trail Elementary School Avery Public 30 0.0% 0.0% 0.0%
+Newland Elementary School Avery Public 31 0.0% 0.0% 9.7%
+Riverside Elementary School Avery Public 16 0.0% 6.3% 0.0%
+Avery Total 152 0.7% 1.3% 4.6%
+Washington Montessori Public Charter School Beaufort Charter 50 0.0% 8.0% 0.0%
+Pungo Christian Academy Beaufort Private 24 0.0% 4.2% 8.3%
+Terra Ceia Christian Beaufort Private 10 0.0% 0.0% 0.0%
+Unity Christian Academy Beaufort Private 12 0.0% 0.0% 0.0%
+Bath Elementary Beaufort Public 58 0.0% 3.4% 3.4%
+Chocowinity Primary Beaufort Public 100 0.0% 0.0% 2.0%
+Eastern Elementary School Beaufort Public 265 0.0% 0.8% 6.0%
+Northeast Elementary Beaufort Public 36 0.0% 0.0% 0.0%
+S W Snowden Elementary Beaufort Public 14 0.0% 0.0% 0.0%
+Beaufort Total 569 0.0% 1.6% 3.9%
+Bethel Assembly Christian Academy Bertie Private 10 0.0% 0.0% 0.0%
+Lawrence Academy Bertie Private 19 0.0% 0.0% 0.0%
+Aulander Elementary Bertie Public 18 0.0% 0.0% 0.0%
+Colerain Elementary Bertie Public 22 0.0% 0.0% 90.9%
+West Bertie Elementary Bertie Public 29 0.0% 0.0% 10.3%
+Windsor Elementary Bertie Public 52 0.0% 0.0% 0.0%
+Bertie Total 150 0.0% 0.0% 15.3%
+Emereau: Bladen Bladen Charter 42 0.0% 2.4% 0.0%
+Elizabethtown Christian Academy Bladen Private 11 0.0% 0.0% 0.0%
+B T Washington Primary Bladen Public 28 0.0% 0.0% 7.1%
+Bladen Lakes Primary Bladen Public 36 0.0% 0.0% 11.1%
+Bladenboro Primary Bladen Public 77 0.0% 1.3% 2.6%
+Dublin Primary Bladen Public 47 0.0% 0.0% 4.3%
+East Arcadia Elementary Bladen Public 12 0.0% 0.0% 0.0%
+Elizabethtown Primary Bladen Public 90 0.0% 0.0% 0.0%
+Plain View Primary Bladen Public 28 0.0% 0.0% 10.7%
+Bladen Total 371 0.0% 0.5% 3.5%
+Charter Day School Brunswick Charter 116 2.6% 0.9% 0.0%
+South Brunswick Charter School Brunswick Charter 79 0.0% 3.8% 0.0%
+L&L Montessori School Brunswick Private 9 0.0% 0.0% 22.2%
+Southeastern Christian Academy Brunswick Private 19 0.0% 0.0% 0.0%
+Southport Christian School Brunswick Private 7 0.0% 0.0% 71.4%
+The Academy of Coastal Carolina Brunswick Private 10 0.0% 0.0% 20.0%
+Belville Elementary Brunswick Public 140 0.0% 0.7% 1.4%
+Bolivia Elementary Brunswick Public 62 0.0% 3.2% 1.6%
+Jessie Mae Monroe Elementary Brunswick Public 60 0.0% 1.7% 1.7%
+Lincoln Elementary Brunswick Public 97 0.0% 0.0% 5.2%
+Southport Elementary Brunswick Public 85 0.0% 2.4% 1.2%
+Supply Elementary Brunswick Public 78 0.0% 1.3% 12.8%
+Town Creek Elementary Brunswick Public 99 0.0% 0.0% 9.1%
+Union Elementary School Brunswick Public 80 0.0% 0.0% 1.3%
+Virginia Williamson Elem Brunswick Public 85 0.0% 1.2% 5.9%
+Waccamaw Brunswick Public 37 0.0% 0.0% 0.0%
+Brunswick Total 1,063 0.3% 1.1% 4.1%
+ArtSpace Charter School Buncombe Charter 35 0.0% 31.4% 0.0%
+Evergreen Community Charter Buncombe Charter 44 0.0% 20.5% 15.9%
+Francine Delany New School for Children Buncombe Charter 19 0.0% 5.3% 10.5%
+Invest Collegiate (Buncombe) Buncombe Charter 98 0.0% 3.1% 0.0%
+Asheville Catholic School Buncombe Private 14 7.1% 0.0% 14.3%
+Asheville Christian Academy Buncombe Private 29 0.0% 3.4% 6.9%
+ASHEVILLE-PISGAH CHRISTIAN SCHOOL Buncombe Private 7 0.0% 28.6% 0.0%
+Azalea Mountain School Buncombe Private 28 0.0% 67.9% 0.0%
+CANTERBURY CLASSICAL SCHOOL Buncombe Private 7 0.0% 0.0% 28.6%
+Carolina Day School Buncombe Private 34 0.0% 8.8% 2.9%
+Emmanuel Lutheran School Buncombe Private 9 0.0% 11.1% 0.0%
+NEW CITY CHRISTIAN SCHOOL Buncombe Private 49 0.0% 0.0% 0.0%
+Odyssey Community School Buncombe Private 7 0.0% 42.9% 28.6%
+Providence Christian Academy Buncombe Private 2 0.0% 0.0% 0.0%
+Rainbow Community School Buncombe Private 18 0.0% 27.8% 0.0%
+Reynolds Mountain Christian Academy Buncombe Private 8 0.0% 0.0% 0.0%
+Swannanoa Valley Montessori School Buncombe Private 5 0.0% 60.0% 0.0%
+Temple Baptist School Buncombe Private 14 0.0% 42.9% 0.0%
+The Learning Community School Buncombe Private 7 0.0% 0.0% 0.0%
+The New Classical Academy Buncombe Private 8 0.0% 0.0% 0.0%
+Asheville Primary School Buncombe Public 25 0.0% 24.0% 4.0%
+Avery's Creek Elementary Buncombe Public 103 0.0% 2.9% 3.9%
+Barnardsville Elementary Buncombe Public 30 0.0% 6.7% 6.7%
+Black Mountain Primary Buncombe Public 95 0.0% 4.2% 9.5%
+Candler Elementary Buncombe Public 85 0.0% 1.2% 1.2%
+Charles C Bell Elementary Buncombe Public 53 0.0% 5.7% 0.0%
+Claxton Elementary School Buncombe Public 75 0.0% 6.7% 1.3%
+Emma Elementary Buncombe Public 64 0.0% 3.1% 4.7%
+Fairview Elementary Buncombe Public 134 0.0% 3.0% 0.7%
+Glen Arden Elementary Buncombe Public 128 0.0% 1.6% 1.6%
+Hall Fletcher Elementary Buncombe Public 57 0.0% 5.3% 8.8%
+Haw Creek Elementary Buncombe Public 57 0.0% 7.0% 1.8%
+Hominy Valley Elementary Buncombe Public 79 0.0% 2.5% 0.0%
+Ira B Jones Elementary Buncombe Public 62 0.0% 3.2% 0.0%
+Isaac Dickson Elementary Buncombe Public 67 0.0% 4.5% 6.0%
+Johnston Elementary Buncombe Public 54 0.0% 5.6% 0.0%
+Leicester Elementary Buncombe Public 79 0.0% 3.8% 2.5%
+North Buncombe Elementary Buncombe Public 103 0.0% 3.9% 3.9%
+Oakley Elementary Buncombe Public 77 0.0% 2.6% 0.0%
+Pisgah Elementary Buncombe Public 40 0.0% 2.5% 2.5%
+Sand Hill-Venable Elementary Buncombe Public 103 0.0% 1.9% 3.9%
+Vance Elementary Buncombe Public 58 0.0% 1.7% 6.9%
+W D Williams Elementary Buncombe Public 83 0.0% 0.0% 10.8%
+Weaverville Primary Buncombe Public 118 0.0% 5.9% 12.7%
+West Buncombe Elementary Buncombe Public 107 0.0% 4.7% 4.7%
+William W Estes Elementary Buncombe Public 133 0.8% 1.5% 1.5%
+Woodfin Elementary Buncombe Public 31 0.0% 6.5% 22.6%
+Buncombe Total 2,542 0.1% 5.7% 4.1%
+The New Dimensions School Burke Charter 44 0.0% 0.0% 0.0%
+Christ Classical Academy Burke Private 9 0.0% 11.1% 0.0%
+Morganton Day School Burke Private 11 0.0% 9.1% 9.1%
+Reflections Of Christ Christian Academy Burke Private 1 0.0% 0.0% 0.0%
+Silver Creek Adventist School Burke Private 3 33.3% 0.0% 0.0%
+Chesterfield Elementary Burke Public 26 0.0% 3.8% 7.7%
+Drexel Elementary Burke Public 72 0.0% 0.0% 25.0%
+Forest Hill Elementary Burke Public 65 0.0% 0.0% 1.5%
+George Hildebrand Elementary Burke Public 43 0.0% 0.0% 0.0%
+Glen Alpine Elementary Burke Public 57 0.0% 0.0% 3.5%
+Hildebran Elementary Burke Public 64 0.0% 1.6% 6.3%
+Hillcrest Elementary Burke Public 88 0.0% 0.0% 5.7%
+Icard Elementary Burke Public 51 0.0% 0.0% 0.0%
+Mull Elementary Burke Public 42 0.0% 2.4% 0.0%
+NC School for the Deaf Burke Public 1 0.0% 0.0% 0.0%
+North Liberty Burke Public 7 0.0% 0.0% 0.0%
+Oak Hill Elementary Burke Public 66 1.5% 0.0% 0.0%
+Ray Childers Elementary Burke Public 67 0.0% 1.5% 0.0%
+Rutherford College Elem Burke Public 28 0.0% 0.0% 3.6%
+Salem Elementary Burke Public 52 0.0% 0.0% 0.0%
+Valdese Elementary Burke Public 58 0.0% 1.7% 19.0%
+W A Young Elementary Burke Public 59 0.0% 0.0% 0.0%
+Burke Total 914 0.2% 0.8% 4.9%
+A.C.E. Academy Cabarrus Charter 61 0.0% 1.6% 0.0%
+Cabarrus Charter Academy Cabarrus Charter 108 0.0% 2.8% 11.1%
+Carolina International School Cabarrus Charter 86 0.0% 1.2% 0.0%
+Kannapolis Charter Academy Cabarrus Charter 100 0.0% 4.0% 3.0%
+C3 Concord Christian School Cabarrus Private 4 0.0% 0.0% 0.0%
+Cannon School Cabarrus Private 43 0.0% 2.3% 0.0%
+cfa Academy Cabarrus Private 28 0.0% 0.0% 7.1%
+Faith Christian Academy Cabarrus Private 4 0.0% 0.0% 0.0%
+HOPE Academy Cabarrus Private 27 0.0% 11.1% 0.0%
+A T Allen Elementary Cabarrus Public 114 0.0% 0.9% 2.6%
+Bethel Elementary School Cabarrus Public 85 0.0% 1.2% 0.0%
+Beverly Hills Elementary Cabarrus Public 71 0.0% 2.8% 1.4%
+Carl A Furr Elementary Cabarrus Public 119 0.0% 0.8% 0.8%
+Charles E Boger Elementary Cabarrus Public 112 0.0% 1.8% 2.7%
+Coltrane-Webb Elementary Cabarrus Public 54 0.0% 1.9% 1.9%
+Cox Mill Elementary Cabarrus Public 161 0.0% 5.6% 1.2%
+Forest Park Elementary Cabarrus Public 72 0.0% 0.0% 0.0%
+Fred L Wilson Elementary Cabarrus Public 80 0.0% 0.0% 0.0%
+G W Carver Elementary Cabarrus Public 82 0.0% 1.2% 0.0%
+Harrisburg Elementary Cabarrus Public 153 0.0% 0.7% 0.7%
+Jackson Park Elementary Cabarrus Public 59 0.0% 1.7% 1.7%
+Mount Pleasant Elementary Cabarrus Public 100 0.0% 3.0% 0.0%
+Patriots Elementary Cabarrus Public 166 0.0% 0.6% 3.0%
+Pitts School Road Elementary Cabarrus Public 122 0.0% 0.8% 0.8%
+R Brown McAllister Elementary Cabarrus Public 67 0.0% 0.0% 1.5%
+Rocky River Elementary Cabarrus Public 102 1.0% 2.9% 2.9%
+Royal Oaks Elementary Cabarrus Public 40 0.0% 0.0% 12.5%
+Shadybrook Elementary School Cabarrus Public 54 0.0% 1.9% 1.9%
+Weddington Hills Elementary Cabarrus Public 137 0.7% 0.0% 2.9%
+Winecoff Elementary Cabarrus Public 129 0.0% 0.8% 3.9%
+WM Irvin Elementary School Cabarrus Public 133 0.8% 0.8% 2.3%
+Wolf Meadow Elementary Cabarrus Public 103 0.0% 0.0% 1.0%
+Woodrow Wilson Elementary Cabarrus Public 43 0.0% 0.0% 0.0%
+WR Odell Primary Cabarrus Public 207 0.0% 2.4% 2.4%
+Cabarrus Total 3,026 0.1% 1.6% 2.1%
+Heritage Christian School Caldwell Private 15 0.0% 0.0% 20.0%
+Baton Elementary Caldwell Public 64 0.0% 1.6% 12.5%
+Collettsville Elementary School Caldwell Public 28 0.0% 3.6% 0.0%
+Davenport A+ School Caldwell Public 89 0.0% 0.0% 0.0%
+Dudley Shoals Elementary Caldwell Public 71 0.0% 0.0% 0.0%
+Gamewell Elementary Caldwell Public 77 0.0% 0.0% 0.0%
+Granite Falls Elementary Caldwell Public 101 0.0% 0.0% 1.0%
+Happy Valley Elementary Caldwell Public 25 0.0% 0.0% 4.0%
+Horizons Elementary Caldwell Public 4 0.0% 0.0% 0.0%
+Hudson Elementary Caldwell Public 122 0.0% 0.0% 11.5%
+Kings Creek Elementary Caldwell Public 18 0.0% 5.6% 5.6%
+Lower Creek Elementary Caldwell Public 56 0.0% 0.0% 0.0%
+Oak Hill Elementary School Caldwell Public 11 0.0% 0.0% 27.3%
+Sawmills Elementary Caldwell Public 53 0.0% 0.0% 1.9%
+Valmead Elementary Caldwell Public 18 0.0% 0.0% 5.6%
+West Lenoir Elementary Caldwell Public 22 0.0% 0.0% 4.5%
+Whitnel Elementary Caldwell Public 47 0.0% 0.0% 14.9%
+Caldwell Total 821 0.0% 0.4% 5.0%
+Grandy Primary Camden Public 122 0.0% 1.6% 0.8%
+Camden Total 122 0.0% 1.6% 0.8%
+Tiller School Carteret Charter 36 0.0% 2.8% 0.0%
+Grace Christian School Carteret Private 4 0.0% 25.0% 0.0%
+Gramercy Christian School Carteret Private 9 0.0% 0.0% 0.0%
+New Life Christian Academy Carteret Private 4 0.0% 0.0% 0.0%
+St. Egbert Catholic School Carteret Private 20 0.0% 5.0% 0.0%
+Atlantic Elementary School Carteret Public 16 0.0% 0.0% 0.0%
+Beaufort Elementary School Carteret Public 59 0.0% 1.7% 1.7%
+Bogue Sound Elementary School Carteret Public 72 0.0% 1.4% 2.8%
+Down East Middle School and Smyrna Elementary School Carteret Public 19 0.0% 0.0% 0.0%
+Harkers Island Elementary School Carteret Public 22 0.0% 0.0% 4.5%
+Morehead City Primary School Carteret Public 163 0.0% 1.2% 1.2%
+Newport Elementary School Carteret Public 119 0.0% 0.0% 0.0%
+White Oak Elementary School Carteret Public 117 0.0% 5.1% 0.9%
+Carteret Total 660 0.0% 2.0% 1.1%
+North Elementary School Caswell Public 66 0.0% 1.5% 16.7%
+Oakwood Elementary School Caswell Public 52 0.0% 0.0% 0.0%
+South Elementary School Caswell Public 50 0.0% 0.0% 4.0%
+Stoney Creek Elementary School Caswell Public 31 0.0% 0.0% 6.5%
+Caswell Total 199 0.0% 0.5% 7.5%
+Christian Family Academy Catawba Private 9 0.0% 0.0% 33.3%
+Concordia Christian Day School Catawba Private 16 0.0% 6.3% 0.0%
+Hickory Christian Academy Catawba Private 29 0.0% 20.7% 0.0%
+Hickory Day School Catawba Private 15 0.0% 0.0% 0.0%
+Montessori at Sandy Ford Catawba Private 6 0.0% 16.7% 0.0%
+Tabernacle Christian School Catawba Private 11 0.0% 9.1% 0.0%
+Tri-City Christian School Catawba Private 19 0.0% 10.5% 10.5%
+Balls Creek Elementary Catawba Public 101 1.0% 1.0% 0.0%
+Banoak Elementary Catawba Public 48 0.0% 0.0% 0.0%
+Blackburn Elementary Catawba Public 75 0.0% 0.0% 0.0%
+Catawba Elementary School Catawba Public 43 0.0% 0.0% 2.3%
+Charles H Tuttle Elementary Catawba Public 58 0.0% 0.0% 3.4%
+Claremont Elementary Catawba Public 59 0.0% 0.0% 5.1%
+Clyde Campbell Elementary Catawba Public 77 0.0% 3.9% 0.0%
+Conover Special Education Catawba Public 4 0.0% 0.0% 0.0%
+Lyle Creek Elementary Catawba Public 76 0.0% 1.3% 1.3%
+Maiden Elementary Catawba Public 76 0.0% 0.0% 0.0%
+Mountain View Elementary Catawba Public 93 0.0% 2.2% 0.0%
+North Newton Elementary Catawba Public 74 0.0% 0.0% 2.7%
+Oakwood Elementary School Catawba Public 57 0.0% 0.0% 5.3%
+Oxford Elementary Catawba Public 76 0.0% 0.0% 0.0%
+Saint Stephens Elementary Catawba Public 91 0.0% 1.1% 1.1%
+Sherrills Ford Elementary Catawba Public 65 0.0% 1.5% 0.0%
+Shuford Elementary Catawba Public 77 0.0% 1.3% 0.0%
+Snow Creek Elementary School Catawba Public 82 0.0% 1.2% 2.4%
+South Newton Elementary Catawba Public 71 0.0% 1.4% 4.2%
+Southwest Elementary School Catawba Public 119 0.0% 0.0% 4.2%
+Startown Elementary Catawba Public 83 0.0% 0.0% 0.0%
+Viewmont Elementary Catawba Public 76 0.0% 2.6% 0.0%
+W M Jenkins Elementary Catawba Public 65 0.0% 0.0% 1.5%
+Webb A Murray Elementary Catawba Public 69 0.0% 0.0% 4.3%
+Catawba Total 1,820 0.1% 1.4% 1.8%
+Chatham Charter Chatham Charter 36 0.0% 0.0% 2.8%
+Woods Charter Chatham Charter 32 0.0% 0.0% 0.0%
+Holy Youth Christian Academy Chatham Private 9 0.0% 0.0% 0.0%
+Jordan Lake School of the Arts Chatham Private 1 0.0% 0.0% 0.0%
+Bennett School Chatham Public 13 0.0% 0.0% 15.4%
+Bonlee School Chatham Public 43 0.0% 0.0% 2.3%
+J S Waters School Chatham Public 12 0.0% 8.3% 8.3%
+Moncure School Chatham Public 26 0.0% 0.0% 0.0%
+North Chatham Elementary Chatham Public 78 2.6% 1.3% 2.6%
+Perry W Harrison Elementary Chatham Public 128 0.0% 0.8% 1.6%
+Pittsboro Elementary Chatham Public 107 0.0% 0.9% 2.8%
+Siler City Elementary Chatham Public 104 0.0% 1.9% 1.9%
+Silk Hope School Chatham Public 35 2.9% 2.9% 5.7%
+Virginia Cross Elementary Chatham Public 98 0.0% 0.0% 0.0%
+Chatham Total 722 0.4% 1.0% 2.2%
+The Learning Center Cherokee Charter 24 0.0% 4.2% 0.0%
+Murphy Adventist Christian School Cherokee Private 2 0.0% 100.0% 0.0%
+Andrews Elementary Cherokee Public 63 0.0% 1.6% 4.8%
+Hiwassee Dam Elementary/Middle Cherokee Public 17 0.0% 0.0% 11.8%
+Martins Creek Elementary/Mid Cherokee Public 22 0.0% 4.5% 4.5%
+Murphy Elementary Cherokee Public 68 1.5% 1.5% 1.5%
+Peachtree Elementary Cherokee Public 30 0.0% 0.0% 10.0%
+Ranger Elementary/Middle Cherokee Public 18 0.0% 0.0% 22.2%
+Cherokee Total 244 0.4% 2.5% 5.7%
+White Oak Elementary School Chowan Public 128 0.0% 0.0% 0.0%
+Chowan Total 128 0.0% 0.0% 0.0%
+Hayesville Elementary Clay Public 94 0.0% 4.3% 3.2%
+Clay Total 94 0.0% 4.3% 3.2%
+Pinnacle Classical Academy Cleveland Charter 107 0.0% 0.0% 0.0%
+Grace Christian Academy Cleveland Private 11 0.0% 0.0% 0.0%
+Bethware Elementary School Cleveland Public 85 0.0% 0.0% 1.2%
+Boiling Springs Elementary School Cleveland Public 83 0.0% 0.0% 0.0%
+Casar Elementary Cleveland Public 44 0.0% 0.0% 4.5%
+East Elementary Cleveland Public 47 0.0% 0.0% 8.5%
+Fallston Elementary Cleveland Public 80 0.0% 1.3% 0.0%
+Graham Elementary Cleveland Public 46 0.0% 0.0% 0.0%
+Grover Elementary Cleveland Public 53 0.0% 0.0% 3.8%
+James Love Elementary Cleveland Public 66 0.0% 0.0% 25.8%
+Jefferson Elementary School Cleveland Public 73 0.0% 0.0% 6.8%
+Marion Elementary School Cleveland Public 54 0.0% 1.9% 0.0%
+North Elementary School Cleveland Public 52 0.0% 0.0% 7.7%
+North Shelby School Cleveland Public 2 0.0% 0.0% 0.0%
+Springmore Elementary Cleveland Public 69 0.0% 0.0% 2.9%
+Township Three Elementary Cleveland Public 94 0.0% 1.1% 3.2%
+Union Elementary School Cleveland Public 69 1.4% 0.0% 0.0%
+Washington Math & Science Immersion School Cleveland Public 56 0.0% 0.0% 3.6%
+West Elementary Cleveland Public 53 0.0% 0.0% 0.0%
+Cleveland Total 1,144 0.1% 0.3% 3.7%
+Columbus Charter School Columbus Charter 85 0.0% 0.0% 0.0%
+Acme Delco Elementary Columbus Public 39 0.0% 0.0% 20.5%
+Cerro Gordo Elementary Columbus Public 32 0.0% 0.0% 0.0%
+Chadbourn Elementary Columbus Public 41 0.0% 0.0% 0.0%
+Evergreen Elementary Columbus Public 22 0.0% 0.0% 0.0%
+Guideway Elementary Columbus Public 17 0.0% 0.0% 0.0%
+Hallsboro-Artesia Elementary Columbus Public 55 0.0% 0.0% 0.0%
+Old Dock Elementary Columbus Public 39 0.0% 0.0% 5.1%
+Tabor City Elementary Columbus Public 67 0.0% 0.0% 1.5%
+Whiteville Primary Columbus Public 158 0.0% 0.6% 6.3%
+Williams Township Columbus Public 68 0.0% 0.0% 0.0%
+Columbus Total 623 0.0% 0.2% 3.4%
+Annunciation Catholic School Craven Private 21 9.5% 0.0% 4.8%
+Calvary Baptist Church School Craven Private 10 0.0% 0.0% 0.0%
+New Bern Christian Academy Craven Private 25 0.0% 0.0% 0.0%
+Newport Christian Academy Craven Private 2 0.0% 0.0% 0.0%
+Peletah Academic Center for Excellence Craven Private 2 0.0% 0.0% 0.0%
+Saint Paul Catholic School Craven Private 13 7.7% 0.0% 15.4%
+The Epiphany School of Global Studies Craven Private 32 0.0% 0.0% 0.0%
+Albert H Bangert Elementary Craven Public 78 0.0% 1.3% 3.8%
+Arthur W Edwards Elementary Craven Public 121 0.0% 0.8% 0.8%
+Ben D Quinn Elementary Craven Public 70 0.0% 2.9% 0.0%
+Bridgeton Elementary Craven Public 69 0.0% 1.4% 11.6%
+Creekside Elementary School Craven Public 86 0.0% 3.5% 1.2%
+Graham A. Barden Elementary Craven Public 51 0.0% 2.0% 66.7%
+Havelock Elementary Craven Public 57 0.0% 1.8% 1.8%
+J T Barber Elementary Craven Public 50 0.0% 0.0% 4.0%
+James W Smith Elementary Craven Public 68 0.0% 0.0% 4.4%
+Oaks Road Elementary Craven Public 68 1.5% 0.0% 1.5%
+Roger R Bell Elementary Craven Public 61 0.0% 0.0% 0.0%
+Trent Park Elementray Craven Public 87 0.0% 1.1% 3.4%
+Vanceboro-Farm Life Elementary Craven Public 87 0.0% 0.0% 2.3%
+W Jesse Gurganus Elementary Craven Public 65 0.0% 1.5% 3.1%
+Craven Total 1,123 0.4% 1.1% 5.7%
+Alpha Academy Cumberland Charter 106 0.0% 0.0% 40.6%
+The Capitol Encore Academy Cumberland Charter 62 0.0% 0.0% 3.2%
+Raleigh Road Elementary Cumberland Federal 120 0.0% 0.8% 2.5%
+Balperazim Christian Academy Cumberland Private 3 0.0% 0.0% 0.0%
+Berean Baptist Academy Cumberland Private 50 0.0% 4.0% 8.0%
+Cornerstone Christian Academy Cumberland Private 10 0.0% 0.0% 10.0%
+Falcon Christian Academy Cumberland Private 7 0.0% 0.0% 0.0%
+Fayetteville Academy Cumberland Private 30 0.0% 3.3% 0.0%
+Fayetteville Christian School Cumberland Private 28 0.0% 3.6% 0.0%
+First Impressions Academy Cumberland Private 36 0.0% 0.0% 0.0%
+Flaming Sword Christian Academy Cumberland Private 3 0.0% 0.0% 0.0%
+Freedom Christian Academy Cumberland Private 26 0.0% 0.0% 3.8%
+God's Heritage Christain Academy Cumberland Private 2 0.0% 0.0% 0.0%
+Greater Fayetteville Adventist Academy Cumberland Private 5 0.0% 0.0% 20.0%
+Liberty Christian Academy Cumberland Private 29 0.0% 3.4% 13.8%
+Northview Baptist Academy Cumberland Private 6 0.0% 0.0% 0.0%
+Northwood Temple Academy Cumberland Private 39 0.0% 0.0% 0.0%
+Renaissance Classical Academy Cumberland Private 13 0.0% 0.0% 0.0%
+Riverside Christian Academy Cumberland Private 9 0.0% 0.0% 0.0%
+ST. ANN CATHOLIC SCHOOL Cumberland Private 10 0.0% 0.0% 0.0%
+St. Patrick School Cumberland Private 23 0.0% 0.0% 0.0%
+Trinity Christian School Cumberland Private 23 0.0% 0.0% 0.0%
+Village Christian Academy Cumberland Private 41 0.0% 0.0% 2.4%
+Alderman Road Elementary Cumberland Public 86 0.0% 0.0% 0.0%
+Alma O Easom Elementary Cumberland Public 141 0.0% 0.0% 5.7%
+Armstrong Elementary Cumberland Public 74 0.0% 1.4% 4.1%
+Beaver Dam Elementary Cumberland Public 10 0.0% 0.0% 0.0%
+Benjamin J Martin Elementary School Cumberland Public 92 0.0% 0.0% 9.8%
+Bill Hefner Elementary Cumberland Public 119 0.0% 0.0% 1.7%
+Brentwood Elementary Cumberland Public 86 0.0% 0.0% 17.4%
+C Wayne Collier Elementary Cumberland Public 80 0.0% 1.3% 8.8%
+Cliffdale Elementary Cumberland Public 120 0.0% 0.0% 0.0%
+Cumberland Mills Elementary School Cumberland Public 106 0.0% 0.9% 33.0%
+Cumberland Road Elementary Cumberland Public 73 1.4% 0.0% 6.8%
+District No 7 Elementary Cumberland Public 49 0.0% 2.0% 0.0%
+E E Miller Elementary Cumberland Public 99 0.0% 2.0% 2.0%
+E Melvin Honeycutt Elementary School Cumberland Public 133 0.8% 0.0% 1.5%
+Eastover-Central Elementary Cumberland Public 57 0.0% 0.0% 7.0%
+Ed V Baldwin Elementary Cumberland Public 118 0.0% 0.0% 2.5%
+Elizabeth M Cashwell Elementary School Cumberland Public 96 0.0% 0.0% 32.3%
+Ferguson-Easley Elementary Cumberland Public 38 0.0% 0.0% 2.6%
+Gallberry Farm Elementary Cumberland Public 164 0.0% 0.0% 13.4%
+Glendale Acres Elementary Cumberland Public 86 0.0% 0.0% 3.5%
+Grays Creek Elementary Cumberland Public 64 0.0% 1.6% 4.7%
+Howard L Hall Elementary Cumberland Public 123 0.0% 0.8% 1.6%
+J W Coon Elementary Cumberland Public 33 0.0% 3.0% 6.1%
+J W Seabrook Elementary Cumberland Public 45 0.0% 0.0% 2.2%
+Lake Rim Elementary Cumberland Public 294 0.0% 0.3% 4.4%
+Lillian Black Elementary Cumberland Public 41 0.0% 0.0% 41.5%
+Loyd E Auman Elementary Cumberland Public 78 0.0% 0.0% 3.8%
+Lucile Souders Elementary Cumberland Public 76 0.0% 2.6% 10.5%
+Manchester Elementary Cumberland Public 71 0.0% 0.0% 12.7%
+Margaret Willis Elementary Cumberland Public 38 0.0% 0.0% 39.5%
+Mary McArthur Elementary Cumberland Public 69 0.0% 2.9% 15.9%
+Montclair Elementary Cumberland Public 64 0.0% 0.0% 18.8%
+Morganton Road Elementary Cumberland Public 85 0.0% 0.0% 2.4%
+New Century International Elementary Cumberland Public 115 0.0% 0.9% 1.7%
+Rockfish Elementary Cumberland Public 92 0.0% 0.0% 10.9%
+Sherwood Park Elementary Cumberland Public 51 0.0% 2.0% 2.0%
+Stedman Primary Cumberland Public 90 0.0% 1.1% 0.0%
+Stoney Point Elementary Cumberland Public 118 0.0% 0.0% 0.8%
+Sunnyside Elementary Cumberland Public 47 0.0% 0.0% 8.5%
+Teresa C Berrien Elementary Cumberland Public 37 0.0% 0.0% 29.7%
+Walker Spivey Elementary Cumberland Public 50 0.0% 0.0% 4.0%
+Warrenwood Elementary Cumberland Public 51 0.0% 0.0% 2.0%
+Westarea Elementary Cumberland Public 112 0.0% 0.0% 0.0%
+William H Owen Elementary Cumberland Public 76 0.0% 1.3% 0.0%
+William T Brown Elementary Cumberland Public 49 0.0% 0.0% 36.7%
+Cumberland Total 4,477 0.0% 0.5% 8.0%
+Water's Edge Village School Currituck Charter 4 0.0% 0.0% 0.0%
+Jarvisburg Christian Academy Currituck Private 3 0.0% 33.3% 0.0%
+Central Elementary School Currituck Public 39 2.6% 7.7% 0.0%
+Dr. W.T. Griggs Elementary School Currituck Public 33 3.0% 3.0% 0.0%
+Jarvisburg Elementary Currituck Public 39 0.0% 2.6% 0.0%
+Knotts Island Elementary Currituck Public 15 0.0% 0.0% 6.7%
+Moyock Elementary Currituck Public 80 0.0% 1.3% 0.0%
+Shawboro Elementary School Currituck Public 83 0.0% 1.2% 0.0%
+Currituck Total 296 0.7% 2.7% 0.3%
+WANCHESE CHRISTIAN CHRISTIAN Dare Private 3 0.0% 0.0% 33.3%
+Cape Hatteras Elementary School Dare Public 53 0.0% 0.0% 3.8%
+First Flight Elementary School Dare Public 47 0.0% 0.0% 2.1%
+Kitty Hawk Elementary School Dare Public 79 0.0% 5.1% 2.5%
+Manteo Elementary School Dare Public 132 0.0% 0.8% 1.5%
+Nags Head Elementary School Dare Public 95 1.1% 3.2% 2.1%
+Dare Total 409 0.2% 2.0% 2.4%
+ABC of NC Child Development Center Davidson Private 5 0.0% 20.0% 0.0%
+Bethany Christian School Davidson Private 13 0.0% 0.0% 0.0%
+Carolina Christian Academy Davidson Private 11 0.0% 18.2% 0.0%
+Sheets Memorial Christian School Davidson Private 14 0.0% 7.1% 0.0%
+Union Grove Christain School Davidson Private 43 0.0% 4.7% 2.3%
+Walters Grove Baptist Academy Davidson Private 2 0.0% 0.0% 0.0%
+Westchester Country Day School Davidson Private 24 0.0% 4.2% 0.0%
+Brier Creek Elementary Davidson Public 57 0.0% 0.0% 1.8%
+Churchland Elementary Davidson Public 63 0.0% 1.6% 0.0%
+Davis-Townsend Elementary Davidson Public 75 0.0% 0.0% 2.7%
+Denton Elementary Davidson Public 55 0.0% 1.8% 7.3%
+Fair Grove Elementary Davidson Public 89 0.0% 1.1% 0.0%
+Friedberg Elementary Davidson Public 77 0.0% 1.3% 0.0%
+Friendship Elementary Davidson Public 74 0.0% 1.4% 1.4%
+Hasty Elementary Davidson Public 86 0.0% 0.0% 38.4%
+Midway Elementary Davidson Public 86 0.0% 0.0% 0.0%
+Northwest Elementary School Davidson Public 74 1.4% 0.0% 0.0%
+Pilot Elementary School Davidson Public 80 0.0% 1.3% 12.5%
+Reeds Elementary Davidson Public 48 0.0% 0.0% 0.0%
+Silver Valley Elementary Davidson Public 36 0.0% 2.8% 13.9%
+South Lexington Development Center Davidson Public 2 0.0% 0.0% 0.0%
+South Lexington School Davidson Public 221 0.0% 0.0% 5.0%
+Southmont Elementary School Davidson Public 56 0.0% 1.8% 1.8%
+Southwood Elementary Davidson Public 105 0.0% 0.0% 0.0%
+Stoner-Thomas School Davidson Public 1 0.0% 0.0% 0.0%
+Thomasville Primary School Davidson Public 200 0.0% 0.5% 0.5%
+Tyro Elementary Davidson Public 60 0.0% 1.7% 0.0%
+Wallburg Elementary Davidson Public 132 0.0% 0.0% 1.5%
+Welcome Elementary Davidson Public 87 0.0% 0.0% 2.3%
+Davidson Total 1,876 0.1% 0.9% 3.9%
+Trinity Baptist Academy Davie Private 7 0.0% 14.3% 14.3%
+Cooleemee Elementary School Davie Public 75 0.0% 0.0% 2.7%
+Cornatzer Elementary Davie Public 58 0.0% 0.0% 0.0%
+Mocksville Elementary School Davie Public 86 1.2% 0.0% 0.0%
+Pinebrook Elementary School Davie Public 81 0.0% 1.2% 2.5%
+Shady Grove Elementary School Davie Public 76 0.0% 0.0% 2.6%
+William R Davie Elementary School Davie Public 62 0.0% 1.6% 50.0%
+Davie Total 445 0.2% 0.7% 8.5%
+B F Grady Elementary Duplin Public 93 0.0% 0.0% 4.3%
+Beulaville Elementary Duplin Public 96 0.0% 0.0% 1.0%
+Chinquapin Elementary Duplin Public 52 0.0% 0.0% 0.0%
+Kenansville Elementary Duplin Public 66 0.0% 0.0% 1.5%
+North Duplin Elementary Duplin Public 96 0.0% 0.0% 0.0%
+Rose Hill-Magnolia Elementary Duplin Public 123 0.0% 0.0% 3.3%
+Wallace Elementary Duplin Public 115 0.0% 0.0% 0.9%
+Warsaw Elementary Duplin Public 91 0.0% 0.0% 1.1%
+Duplin Total 732 0.0% 0.0% 1.6%
+Carter Community Charter School, Inc. Durham Charter 28 0.0% 0.0% 0.0%
+Central Park School for Children Durham Charter 47 0.0% 0.0% 0.0%
+Excelsior Classical Academy CFA Durham Charter 95 0.0% 1.1% 0.0%
+Global Scholars Academy Durham Charter 22 4.5% 0.0% 40.9%
+Healthy Start Academy Durham Charter 38 0.0% 0.0% 5.3%
+Kestrel Heights School Durham Charter 41 0.0% 0.0% 0.0%
+Maureen Joy Charter School Durham Charter 62 0.0% 0.0% 0.0%
+NC Virtual Academy Durham Charter 109 0.0% 12.8% 0.9%
+North Carolina Connections Academy Durham Charter 59 5.1% 13.6% 0.0%
+Reaching All Minds Academy Durham Charter 34 0.0% 0.0% 0.0%
+Research Triangle Charter Academy Durham Charter 85 0.0% 0.0% 0.0%
+The Institute for the Development of Young Leaders Durham Charter 68 0.0% 0.0% 39.7%
+Voyager Academy Durham Charter 101 0.0% 1.0% 0.0%
+Al Huda Academy Durham Private 17 0.0% 17.6% 0.0%
+Bethesda Christian Academy Durham Private 21 0.0% 0.0% 0.0%
+Camelot Academy Durham Private 3 0.0% 0.0% 0.0%
+Carolina Friends School Durham Early School Durham Private 11 0.0% 0.0% 0.0%
+Cresset Christian Academy Durham Private 9 0.0% 0.0% 11.1%
+Duke School Durham Private 47 0.0% 2.1% 38.3%
+Durham Academy Durham Private 70 0.0% 0.0% 0.0%
+Faith Assembly Christian Academy Durham Private 6 0.0% 0.0% 0.0%
+Five Oaks Adventist Christian School Durham Private 4 0.0% 50.0% 0.0%
+Gorman Christian Academy Durham Private 14 0.0% 0.0% 0.0%
+Immaculata School Durham Private 43 0.0% 0.0% 0.0%
+Just Right Academy, Inc. Durham Private 1 0.0% 0.0% 0.0%
+Lerner Jewish Community Day School Durham Private 16 0.0% 0.0% 18.8%
+Montessori CHildren's House of Durham Durham Private 11 0.0% 0.0% 0.0%
+Montessori Community School Durham Private 17 0.0% 0.0% 11.8%
+Montessori Farm School Durham Private 3 0.0% 0.0% 0.0%
+Our PlayHouse Preschool & KIndergarten Durham Private 10 0.0% 0.0% 0.0%
+Quality Education Institute of Durham Durham Private 11 0.0% 0.0% 27.3%
+Triangle Day School Durham Private 23 0.0% 0.0% 0.0%
+Trinity School of Durham and Chapel Hill Durham Private 21 4.8% 0.0% 0.0%
+Bethesda Elementary Durham Public 97 0.0% 0.0% 4.1%
+Burton Elementary Durham Public 66 0.0% 0.0% 1.5%
+C C Spaulding Elementary Durham Public 37 0.0% 0.0% 0.0%
+Club Boulevard Elementary Durham Public 92 0.0% 0.0% 45.7%
+Creekside Elementary School Durham Public 156 0.6% 0.6% 6.4%
+E K Powe Elementary Durham Public 81 0.0% 2.5% 0.0%
+Easley Elementary Durham Public 89 1.1% 0.0% 0.0%
+Eastway Elementary Durham Public 88 0.0% 1.1% 0.0%
+Eno Valley Elementary Durham Public 62 0.0% 0.0% 24.2%
+Fayetteville Street Elementary Durham Public 44 0.0% 0.0% 11.4%
+Forest View Elementary Durham Public 151 0.0% 0.0% 7.9%
+George Watts Elementary Durham Public 65 0.0% 0.0% 0.0%
+Glenn Elementary Durham Public 102 0.0% 1.0% 2.9%
+Hillandale Elementary Durham Public 118 0.0% 0.8% 12.7%
+Holt Elementary Durham Public 113 0.9% 0.0% 4.4%
+Hope Valley Elementary Durham Public 111 0.0% 0.0% 37.8%
+Lakewood Elementary Durham Public 57 0.0% 0.0% 75.4%
+Little River Elementary Durham Public 47 0.0% 0.0% 2.1%
+Mangum Elementary Durham Public 52 0.0% 0.0% 0.0%
+Merrick-Moore Elementary Durham Public 90 0.0% 0.0% 10.0%
+Morehead Montessori Durham Public 40 0.0% 0.0% 0.0%
+Oak Grove Elementary Durham Public 92 0.0% 0.0% 4.3%
+Parkwood Elementary Durham Public 79 0.0% 1.3% 7.6%
+Pearsontown Elementary Durham Public 132 0.0% 0.8% 0.0%
+R N Harris Elementary Durham Public 69 15.9% 0.0% 5.8%
+Sandy Ridge Elementary Durham Public 89 0.0% 0.0% 2.2%
+Southwest Elementary Durham Public 99 0.0% 0.0% 0.0%
+Spring Valley Elementary School Durham Public 97 0.0% 2.1% 0.0%
+W G Pearson Elementary Durham Public 79 0.0% 0.0% 7.6%
+Y E Smith Elementary Durham Public 58 0.0% 0.0% 0.0%
+Durham Total 3,699 0.5% 1.1% 8.0%
+North East Carolina Preparatory Edgecombe Charter 46 0.0% 2.2% 26.1%
+Coker-Wimberly Elementary Edgecombe Public 48 0.0% 0.0% 2.1%
+Fairview Elementary School Edgecombe Public 128 0.0% 0.0% 13.3%
+G W Bulluck Elementary Edgecombe Public 116 0.0% 0.0% 1.7%
+G W Carver Elementary Edgecombe Public 99 0.0% 0.0% 2.0%
+Martin Millennium Academy Edgecombe Public 95 0.0% 0.0% 1.1%
+Princeville Elementary Edgecombe Public 24 0.0% 0.0% 4.2%
+Stocks Elementary Edgecombe Public 97 0.0% 0.0% 2.1%
+Edgecombe Total 653 0.0% 0.2% 5.8%
+Carter G Woodson School Forsyth Charter 33 0.0% 3.0% 0.0%
+Forsyth Academy Forsyth Charter 97 0.0% 0.0% 6.2%
+NC Leadership Charter Academy Forsyth Charter 63 0.0% 0.0% 0.0%
+Quality Education Academy Forsyth Charter 56 0.0% 7.1% 1.8%
+The Arts Based School Forsyth Charter 60 0.0% 8.3% 0.0%
+Cedar Forest Christian School Forsyth Private 2 0.0% 0.0% 0.0%
+Forsyth Country Day School Forsyth Private 39 0.0% 2.6% 0.0%
+Gospel Light Christian School Forsyth Private 23 0.0% 0.0% 0.0%
+Montessori Children's Center, Inc. Forsyth Private 26 0.0% 7.7% 0.0%
+Our Lady of Mercy Catholic Schoo Forsyth Private 14 0.0% 7.1% 0.0%
+Redeemer School Forsyth Private 24 0.0% 4.2% 0.0%
+Salem Baptist Christian School Forsyth Private 13 0.0% 0.0% 0.0%
+St. John's Lutheran Forsyth Private 18 0.0% 0.0% 0.0%
+St. Leo Catholic School Forsyth Private 17 0.0% 0.0% 0.0%
+Summit School Forsyth Private 45 0.0% 4.4% 0.0%
+Triad Baptist Christian Academy Forsyth Private 20 0.0% 0.0% 0.0%
+Winston Salem Christian School Forsyth Private 27 0.0% 3.7% 0.0%
+Woodland Baptist Forsyth Private 12 0.0% 0.0% 0.0%
+Bolton Elementary Forsyth Public 60 0.0% 0.0% 0.0%
+Brunson Elementary Forsyth Public 76 0.0% 0.0% 1.3%
+Caleb's Creek Elementary Forsyth Public 115 0.0% 2.6% 0.9%
+Cash Elementary Forsyth Public 104 0.0% 2.9% 0.0%
+Children's Center Forsyth Public 14 0.0% 0.0% 7.1%
+Clemmons Elementary Forsyth Public 125 0.0% 0.8% 0.0%
+Cook Elementary Forsyth Public 48 0.0% 0.0% 2.1%
+Diggs-Latham Elementary Forsyth Public 81 0.0% 0.0% 3.7%
+Easton Elementary Forsyth Public 87 0.0% 0.0% 2.3%
+Forest Park Elementary Forsyth Public 116 0.0% 0.0% 28.4%
+Frank Morgan Elementary School Forsyth Public 100 0.0% 0.0% 0.0%
+Gibson Elementary Forsyth Public 89 0.0% 1.1% 4.5%
+Griffith Elementary Forsyth Public 116 0.0% 0.9% 10.3%
+Hall-Woodward Elementary Forsyth Public 112 0.0% 0.9% 2.7%
+Ibraham Elementary Forsyth Public 74 0.0% 0.0% 48.6%
+Jefferson Elementary Forsyth Public 76 0.0% 1.3% 0.0%
+Kernersville Elementary Forsyth Public 136 0.0% 0.7% 0.7%
+Kimberley Park Elementary Forsyth Public 34 0.0% 0.0% 0.0%
+Kimmel Farm Elementary Forsyth Public 110 0.9% 2.7% 0.9%
+Kingswood School at the Children's Home Forsyth Public 1 0.0% 0.0% 0.0%
+Konnoak Elementary Forsyth Public 84 0.0% 0.0% 0.0%
+Lewisville Elementary Forsyth Public 94 0.0% 1.1% 0.0%
+Meadowlark Elementary Forsyth Public 151 0.7% 2.0% 0.0%
+Middle Fork Elementary Forsyth Public 46 0.0% 0.0% 0.0%
+Mineral Springs Elementary Forsyth Public 82 0.0% 0.0% 1.2%
+Moore Elementary Forsyth Public 96 0.0% 0.0% 1.0%
+North Hills Elementary Forsyth Public 88 0.0% 1.1% 4.5%
+Old Richmond Elementary Forsyth Public 83 0.0% 0.0% 1.2%
+Old Town Elementary Forsyth Public 97 0.0% 0.0% 0.0%
+Petree Elementary Forsyth Public 81 0.0% 1.2% 2.5%
+Piney Grove Elementary Forsyth Public 99 0.0% 5.1% 0.0%
+Rural Hall Elementary Forsyth Public 128 0.0% 0.0% 0.0%
+Sedge Garden Elementary Forsyth Public 92 0.0% 1.1% 2.2%
+Sherwood Forest Elementary Forsyth Public 121 0.0% 0.0% 0.8%
+Smith Farm Elementary School Forsyth Public 111 0.0% 0.0% 2.7%
+South Fork Elementary Forsyth Public 106 0.0% 0.9% 0.0%
+South Fork ES Forsyth Public 102 0.0% 2.0% 0.0%
+Southwest Elementary Forsyth Public 79 0.0% 0.0% 0.0%
+Speas Elementary Forsyth Public 127 0.0% 0.0% 0.0%
+The Downtown School Forsyth Public 45 0.0% 0.0% 0.0%
+The Special Children's School Forsyth Public 11 0.0% 0.0% 0.0%
+Union Cross Elementary Forsyth Public 77 0.0% 0.0% 0.0%
+Vienna Elementary Forsyth Public 113 0.0% 0.9% 0.0%
+Walkertown Elementary Forsyth Public 111 0.0% 0.0% 0.0%
+Ward Elementary Forsyth Public 95 0.0% 0.0% 2.1%
+Whitaker Elementary Forsyth Public 109 0.0% 3.7% 0.0%
+Forsyth Total 4,691 0.0% 1.1% 2.6%
+Crosscreek Charter School Franklin Charter 29 0.0% 3.4% 3.4%
+Youngsville Academy Franklin Charter 63 0.0% 0.0% 0.0%
+Agape International Christian Academy Franklin Private 1 0.0% 0.0% 0.0%
+Calvary Christian School Franklin Private 1 0.0% 0.0% 0.0%
+Bunn Elementary Franklin Public 111 0.9% 0.9% 2.7%
+Edward Best Elementary Franklin Public 76 0.0% 1.3% 1.3%
+Franklinton Elementary Franklin Public 68 0.0% 0.0% 1.5%
+Laurel Mill Elementary Franklin Public 41 0.0% 0.0% 0.0%
+Long Mill Elementary Franklin Public 54 0.0% 0.0% 0.0%
+Louisburg Elementary Franklin Public 63 0.0% 0.0% 0.0%
+Royal Elementary Franklin Public 87 0.0% 0.0% 2.3%
+Youngsville Elementary Franklin Public 50 0.0% 2.0% 2.0%
+Franklin Total 644 0.2% 0.6% 1.4%
+Mountain Island Charter School Gaston Charter 84 0.0% 1.2% 0.0%
+Piedmont Community Charter School Gaston Charter 110 0.0% 2.7% 0.0%
+Community Christian Academy Gaston Private 14 0.0% 0.0% 0.0%
+Cramerton Christian Academy Gaston Private 34 0.0% 8.8% 0.0%
+First Wesleyan Christian School Gaston Private 33 0.0% 0.0% 0.0%
+Gaston Christian School Gaston Private 60 0.0% 1.7% 0.0%
+Gaston Day School Gaston Private 20 0.0% 0.0% 0.0%
+Saint Michael Catholic School Gaston Private 9 0.0% 0.0% 0.0%
+Bessemer City Primary School Gaston Public 160 0.0% 0.0% 25.0%
+Brookside Elementary School Gaston Public 103 0.0% 1.0% 1.0%
+Carr Elementary School Gaston Public 119 0.0% 0.0% 0.8%
+Catawba Heights Elementary School Gaston Public 70 0.0% 1.4% 4.3%
+Chapel Grove Elementary School Gaston Public 91 0.0% 1.1% 1.1%
+Cherryville Elementary School Gaston Public 104 0.0% 0.0% 3.8%
+Costner Elementary School Gaston Public 66 0.0% 0.0% 0.0%
+Edward D Sadler Jr Elementary School Gaston Public 66 0.0% 1.5% 3.0%
+Gardner Park Elementary School Gaston Public 92 0.0% 0.0% 4.3%
+Hawks Nest Intermediate School Gaston Public 60 0.0% 10.0% 0.0%
+Hershal H Beam Elementary School Gaston Public 105 0.0% 0.0% 4.8%
+Ida Rankin Elementary School Gaston Public 100 0.0% 3.0% 0.0%
+J B Page Primary School Gaston Public 183 0.5% 1.6% 3.3%
+Lingerfeldt Elementary School Gaston Public 86 0.0% 1.2% 52.3%
+Lowell Elementary School Gaston Public 76 0.0% 0.0% 2.6%
+McAdenville Elementary School Gaston Public 28 0.0% 3.6% 3.6%
+New Hope Elementary Gaston Public 82 0.0% 0.0% 18.3%
+North Belmont Elementary School Gaston Public 58 0.0% 0.0% 0.0%
+Pinewood Elementary Gaston Public 82 0.0% 0.0% 2.4%
+Pleasant Ridge Elementary School Gaston Public 154 0.0% 1.9% 0.6%
+Robinson Elementary School Gaston Public 61 0.0% 0.0% 37.7%
+Sherwood Elementary School Gaston Public 75 1.3% 1.3% 24.0%
+Springfield Primary School Gaston Public 149 0.0% 0.7% 0.7%
+Tryon Elementary School Gaston Public 62 0.0% 0.0% 3.2%
+W A Bess Elementary School Gaston Public 100 0.0% 2.0% 4.0%
+Webb Street School Gaston Public 4 0.0% 0.0% 100.0%
+Woodhill Elementary School Gaston Public 101 0.0% 3.0% 15.8%
+Gaston Total 2,801 0.1% 1.3% 7.2%
+Buckland Elementary Gates Public 38 0.0% 2.6% 5.3%
+Gatesville Elementary Gates Public 53 0.0% 1.9% 5.7%
+T S Cooper Elementary Gates Public 29 0.0% 0.0% 3.4%
+Gates Total 120 0.0% 1.7% 5.0%
+Robbinsville Elementary Graham Public 77 0.0% 1.3% 5.2%
+South Graham Elementary Graham Public 87 0.0% 0.0% 2.3%
+Graham Total 164 0.0% 0.6% 3.7%
+Falls Lake Academy Granville Charter 83 0.0% 1.2% 1.2%
+Christian Faith Center Academy Granville Private 9 0.0% 0.0% 0.0%
+Butner-Stem Elementary Granville Public 74 0.0% 0.0% 5.4%
+C. G. Credle Elementary Granville Public 62 0.0% 0.0% 1.6%
+Creedmoor Elementary Granville Public 53 1.9% 0.0% 5.7%
+Joe Toler-Oak Hill Elementary Granville Public 36 0.0% 0.0% 0.0%
+Mount Energy Elementary Granville Public 54 0.0% 3.7% 0.0%
+Stovall-Shaw Elementary Granville Public 49 0.0% 0.0% 4.1%
+Tar River Elementary School Granville Public 62 0.0% 0.0% 0.0%
+West Oxford Elementary Granville Public 73 1.4% 0.0% 1.4%
+Wilton Elementary Granville Public 60 0.0% 3.3% 1.7%
+Granville Total 615 0.3% 0.8% 2.1%
+Covenant of Faith Christian Academy Greene Private 2 0.0% 0.0% 0.0%
+Mt. Calvary Christian Academy Greene Private 10 0.0% 0.0% 0.0%
+Snow Hill Primary School Greene Public 211 0.0% 0.5% 0.0%
+Greene Total 223 0.0% 0.4% 0.0%
+Greensboro Academy Guilford Charter 81 0.0% 0.0% 0.0%
+Guilford Preparatory Academy Guilford Charter 32 0.0% 0.0% 0.0%
+Phoenix Academy Inc Guilford Charter 135 0.0% 1.5% 0.0%
+Summerfield Charter Academy Guilford Charter 87 0.0% 1.1% 0.0%
+The College Preparatory and Leadership Academy of High Point Guilford Charter 60 0.0% 1.7% 6.7%
+Triad Math and Science Academy Guilford Charter 91 0.0% 0.0% 0.0%
+Bnai Shalom Day School Guilford Private 8 0.0% 0.0% 12.5%
+Caldwell Academy Guilford Private 44 0.0% 2.3% 2.3%
+CANTERBURY SCHOOL Guilford Private 29 0.0% 0.0% 0.0%
+Greater Vision Academy Guilford Private 3 0.0% 0.0% 0.0%
+Greensboro Day School Guilford Private 36 0.0% 2.8% 2.8%
+Greensboro Islamic Academy Guilford Private 12 0.0% 0.0% 0.0%
+Hayworth Christian School Guilford Private 6 0.0% 0.0% 0.0%
+High Point Christian Academy Guilford Private 39 0.0% 0.0% 0.0%
+High Point Friends School Guilford Private 20 0.0% 0.0% 10.0%
+Immaculate Heart of Mary Catholic School Guilford Private 16 0.0% 0.0% 0.0%
+Impact Journey School Guilford Private 9 0.0% 0.0% 0.0%
+New Garden Friends School Guilford Private 13 0.0% 0.0% 0.0%
+Our Children's Community School Guilford Private 3 0.0% 0.0% 0.0%
+Our Lady of Grace Catholic School Guilford Private 21 0.0% 0.0% 0.0%
+Primrose School of New Irving Park Guilford Private 9 0.0% 0.0% 11.1%
+Shining Light Academy and Preschool Guilford Private 10 0.0% 10.0% 10.0%
+St. Pius X Catholic School Guilford Private 36 0.0% 0.0% 8.3%
+The Covenant School Guilford Private 12 0.0% 25.0% 0.0%
+The Piedmont School Guilford Private 2 0.0% 0.0% 0.0%
+Wesleyan Christian Academy Guilford Private 88 0.0% 1.1% 13.6%
+Alamance Elementary School Guilford Public 70 0.0% 0.0% 1.4%
+Allen Jay Elementary School Guilford Public 92 1.1% 0.0% 6.5%
+Archer Elementary School Guilford Public 63 0.0% 0.0% 1.6%
+Bessemer Elementary School Guilford Public 76 0.0% 1.3% 5.3%
+Bluford Science, Technology, Engineering, Math Academy Guilford Public 40 0.0% 0.0% 5.0%
+Brightwood Elementary School Guilford Public 87 0.0% 0.0% 20.7%
+Brooks Global Studies School Guilford Public 66 0.0% 4.5% 0.0%
+Ceasar Cone Elementary School Guilford Public 87 0.0% 0.0% 5.7%
+Clara J Peck Elementary School Guilford Public 50 0.0% 0.0% 6.0%
+Claxton Elementary School Guilford Public 97 0.0% 2.1% 0.0%
+Colfax Elementary School Guilford Public 94 0.0% 0.0% 0.0%
+Cornerstone Charter Academy Guilford Public 100 0.0% 6.0% 0.0%
+Cyrus P. Frazier Elementary School Guilford Public 69 0.0% 0.0% 2.9%
+David D. Jones Elementary School Guilford Public 120 0.8% 1.7% 1.7%
+E.P. Pearce Elementary School Guilford Public 108 0.0% 0.0% 0.0%
+Edwin A Alderman Elementary School Guilford Public 71 0.0% 0.0% 0.0%
+Erwin Montessori School Guilford Public 47 0.0% 0.0% 0.0%
+Fairview Elementary School Guilford Public 75 0.0% 0.0% 16.0%
+Florence Elementary School Guilford Public 112 0.0% 0.0% 0.0%
+Gateway Education Center Guilford Public 5 0.0% 0.0% 40.0%
+General Greene Elementary School Guilford Public 83 0.0% 1.2% 0.0%
+George C Simkins Jr Elementary School Guilford Public 81 0.0% 0.0% 4.9%
+Gibsonville Elementary School Guilford Public 77 0.0% 0.0% 0.0%
+Gillespie Park Elementary School Guilford Public 36 0.0% 0.0% 30.6%
+Guilford Elementary School Guilford Public 83 0.0% 0.0% 2.4%
+Hampton Elementary University Partnership Guilford Public 55 0.0% 0.0% 5.5%
+Haynes Inman Education Center Guilford Public 5 0.0% 0.0% 0.0%
+Herbin Metz Education Center Guilford Public 10 0.0% 10.0% 0.0%
+Hunter Elementary School Guilford Public 95 0.0% 0.0% 5.3%
+Irving Park Elementary School Guilford Public 105 0.0% 0.0% 3.8%
+Jamestown Elementary School Guilford Public 60 0.0% 1.7% 0.0%
+Jefferson Elementary School Guilford Public 107 0.0% 0.0% 1.9%
+Jesse Wharton Elementary School Guilford Public 99 0.0% 1.0% 0.0%
+John Van Lindley Elementary School Guilford Public 74 0.0% 2.7% 1.4%
+Johnson Street Global Studies Guilford Public 56 0.0% 0.0% 0.0%
+Joyner Elementary Guilford Public 32 0.0% 0.0% 0.0%
+Julius I. Foust Elementary School Guilford Public 71 0.0% 0.0% 0.0%
+Kirkman Park Elementary School Guilford Public 58 0.0% 0.0% 3.4%
+Madison Elementary School Guilford Public 28 0.0% 7.1% 0.0%
+McLeansville Elementary School Guilford Public 57 0.0% 0.0% 5.3%
+Millis Road Elementary School Guilford Public 91 0.0% 1.1% 2.2%
+Monticello-Brown Summit Elementary School Guilford Public 52 0.0% 0.0% 11.5%
+Montlieu Elementary Academy of Technology Guilford Public 110 0.0% 0.9% 0.0%
+Morehead Elementary School Guilford Public 87 0.0% 0.0% 3.4%
+Murphey Traditional Academy Guilford Public 37 0.0% 0.0% 0.0%
+Nathanael Greene Elementary School Guilford Public 46 0.0% 0.0% 8.7%
+Northern Guilford Elementary School Guilford Public 102 0.0% 2.0% 2.0%
+Northwood Elementary School Guilford Public 81 0.0% 0.0% 0.0%
+Oak Hill Elementary School Guilford Public 68 0.0% 2.9% 2.9%
+Oak Ridge Elementary School Guilford Public 105 0.0% 0.0% 1.0%
+Oak View Elementary School Guilford Public 89 0.0% 0.0% 0.0%
+Parkview Village Elementary Expressive Arts Magnet School Guilford Public 57 0.0% 0.0% 21.1%
+Peeler Open School for the Performing Arts Guilford Public 35 0.0% 2.9% 14.3%
+Pilot Elementary Guilford Public 89 0.0% 0.0% 3.4%
+Pleasant Garden Elementary School Guilford Public 71 0.0% 0.0% 12.7%
+Rankin Elementary School Guilford Public 119 0.0% 0.8% 3.4%
+Reedy Fork Elementary School Guilford Public 83 0.0% 0.0% 25.3%
+Ronald E. McNair Elementary School Guilford Public 79 0.0% 0.0% 5.1%
+Sedalia Elementary School Guilford Public 71 0.0% 0.0% 1.4%
+Sedgefield Elementary Guilford Public 84 0.0% 0.0% 1.2%
+Shadybrook Elementary School Guilford Public 74 0.0% 0.0% 6.8%
+Southern Elementary School Guilford Public 46 0.0% 2.2% 0.0%
+Southwest Elementary School Guilford Public 121 0.0% 1.7% 0.0%
+Sternberger Elementary School Guilford Public 70 0.0% 0.0% 0.0%
+Stokesdale Elementary School Guilford Public 88 0.0% 0.0% 0.0%
+Summerfield Elementary School Guilford Public 95 0.0% 3.2% 3.2%
+Sumner Elementary School Guilford Public 91 0.0% 1.1% 1.1%
+Triangle Lake Montessori Elementary School Guilford Public 101 0.0% 1.0% 1.0%
+Union Hill Elementary School Guilford Public 77 0.0% 0.0% 2.6%
+Vandalia Elementary School Guilford Public 35 0.0% 2.9% 14.3%
+Waldo C. Falkener Sr Elementary Guilford Public 90 0.0% 1.1% 7.8%
+Washington Montessori School Guilford Public 60 0.0% 3.3% 41.7%
+Wiley Elementary Guilford Public 43 0.0% 0.0% 18.6%
+Guilford Total 6,250 0.0% 0.8% 4.1%
+Gaston College Preparatory Halifax Charter 96 0.0% 0.0% 0.0%
+Cornerstone Christian School Halifax Private 13 0.0% 0.0% 0.0%
+Halifax Academy Halifax Private 19 0.0% 0.0% 0.0%
+Hobgood Academy Halifax Private 5 0.0% 0.0% 20.0%
+Aurelian Springs Elementary Halifax Public 28 0.0% 0.0% 3.6%
+Belmont Elementary School Halifax Public 94 1.1% 0.0% 0.0%
+Everetts Elementary Halifax Public 31 0.0% 0.0% 3.2%
+Hollister Elementary Halifax Public 32 0.0% 0.0% 0.0%
+Inborden Elementary Halifax Public 36 0.0% 0.0% 19.4%
+Pittman Elementary Halifax Public 21 0.0% 0.0% 0.0%
+Scotland Neck Elementary Leadership Academy Halifax Public 33 0.0% 0.0% 3.0%
+Weldon Elementary Global Academy Halifax Public 34 0.0% 0.0% 2.9%
+William L Manning Elementary Halifax Public 101 0.0% 0.0% 1.0%
+Halifax Total 543 0.2% 0.0% 2.4%
+Anderson Creek Academy (formerly: Anderson Creek Club Charter School) Harnett Charter 38 0.0% 0.0% 0.0%
+Cape Fear Christian Academy Harnett Private 29 0.0% 3.4% 0.0%
+Dream Big Christian Academy K-12, Inc. Harnett Private 4 0.0% 0.0% 0.0%
+Faith Education Academy Harnett Private 2 0.0% 0.0% 0.0%
+Foundations Christian Academy Harnett Private 2 0.0% 0.0% 0.0%
+Independence Montessori Academy Harnett Private 11 0.0% 0.0% 0.0%
+LearningTime Academy Harnett Private 4 0.0% 0.0% 50.0%
+Anderson Creek Primary Harnett Public 201 0.0% 1.0% 0.0%
+Benhaven Elementary Harnett Public 59 0.0% 1.7% 0.0%
+Boone Trail Elementary Harnett Public 162 0.0% 0.0% 2.5%
+Buies Creek Elementary Harnett Public 43 0.0% 0.0% 0.0%
+Coats Elementary Harnett Public 112 0.0% 0.0% 1.8%
+Gentry Primary Harnett Public 86 0.0% 1.2% 9.3%
+Harnett Primary Harnett Public 133 0.8% 0.8% 0.0%
+Highland Elementary Harnett Public 192 1.0% 2.1% 2.6%
+Johnsonville Elementary Harnett Public 96 0.0% 0.0% 4.2%
+LaFayette Elementary Harnett Public 108 0.0% 1.9% 1.9%
+Lillington-Shawtown Elementary Harnett Public 99 0.0% 1.0% 0.0%
+North Harnett Primary Harnett Public 143 0.0% 1.4% 2.8%
+Overhills Elementary Harnett Public 155 0.0% 1.3% 2.6%
+Harnett Total 1,679 0.2% 1.0% 2.1%
+Shining Rock Classical Academy: CFA Haywood Charter 44 0.0% 9.1% 2.3%
+Blue Ridge Adventist Christian School Haywood Private 1 0.0% 0.0% 0.0%
+Haywood Christian Academy Haywood Private 9 0.0% 11.1% 0.0%
+Bethel Elementary School Haywood Public 84 0.0% 0.0% 1.2%
+Clyde Elementary Haywood Public 86 1.2% 1.2% 2.3%
+Hazelwood Elementary Haywood Public 120 0.0% 0.0% 6.7%
+Jonathan Valley Elementary Haywood Public 80 0.0% 2.5% 2.5%
+Junaluska Elementary Haywood Public 80 0.0% 0.0% 2.5%
+Meadowbrook Elementary Haywood Public 52 0.0% 0.0% 3.8%
+North Canton Elementary Haywood Public 62 0.0% 6.5% 0.0%
+Riverbend Elementary Haywood Public 38 2.6% 0.0% 0.0%
+Haywood Total 656 0.3% 1.8% 2.7%
+FernLeaf Community Charter School Henderson Charter 40 0.0% 15.0% 0.0%
+The Mountain Community Sch Henderson Charter 21 0.0% 0.0% 14.3%
+Captain Gilmer Christian School Henderson Private 13 0.0% 23.1% 0.0%
+Faith-Covenant Christian Academy Henderson Private 3 0.0% 0.0% 0.0%
+Immaculata Catholic School Henderson Private 16 0.0% 0.0% 37.5%
+Mills River SDA School Henderson Private 2 50.0% 0.0% 0.0%
+Mud Creek Christian School Henderson Private 7 0.0% 0.0% 0.0%
+Naturally Grown School Henderson Private 4 0.0% 50.0% 0.0%
+The Way Christian Academy Henderson Private 3 0.0% 33.3% 0.0%
+Veritas Christian Academy Henderson Private 24 0.0% 8.3% 0.0%
+Atkinson Elementary Henderson Public 58 0.0% 5.2% 6.9%
+Bruce Drysdale Elementary Henderson Public 73 0.0% 0.0% 4.1%
+Clear Creek Elementary Henderson Public 97 0.0% 1.0% 6.2%
+Dana Elementary Henderson Public 84 0.0% 1.2% 1.2%
+Edneyville Elementary Henderson Public 67 0.0% 1.5% 3.0%
+Etowah Elementary Henderson Public 68 0.0% 1.5% 5.9%
+Fletcher Elementary Henderson Public 78 0.0% 3.8% 3.8%
+Glenn C Marlow Elementary Henderson Public 95 0.0% 1.1% 2.1%
+Hendersonville Elementary Henderson Public 55 0.0% 1.8% 0.0%
+Hillandale Elementary Henderson Public 93 0.0% 2.2% 3.2%
+Mills River Elementary Henderson Public 91 0.0% 1.1% 8.8%
+Sugarloaf Elementary Henderson Public 66 0.0% 0.0% 0.0%
+Upward Elementary Henderson Public 66 0.0% 3.0% 7.6%
+Henderson Total 1,124 0.1% 2.8% 4.4%
+Ahoskie Christian School Hertford Private 23 0.0% 0.0% 4.3%
+Ridgecroft School Hertford Private 12 0.0% 0.0% 0.0%
+Bearfield Primary School Hertford Public 129 0.0% 0.0% 3.1%
+Riverview Elementary School Hertford Public 51 0.0% 0.0% 9.8%
+Hertford Total 215 0.0% 0.0% 4.7%
+ROCKFISH CHRISTIAN ACADEMY Hoke Private 8 0.0% 0.0% 25.0%
+Don D Steed Elementary Hoke Public 98 0.0% 1.0% 1.0%
+Hawk Eye Elementary Hoke Public 78 0.0% 0.0% 3.8%
+J W McLauchlin Elementary Hoke Public 51 0.0% 0.0% 5.9%
+Rockfish Hoke Elementary Hoke Public 163 0.0% 0.0% 14.1%
+Sandy Grove Elementary Hoke Public 90 0.0% 1.1% 25.6%
+Scurlock Elementary Hoke Public 116 0.0% 0.0% 1.7%
+Upchurch Elementary Hoke Public 100 0.0% 3.0% 6.0%
+West Hoke Elementary Hoke Public 65 0.0% 0.0% 13.8%
+Hoke Total 769 0.0% 0.7% 9.4%
+Mattamuskeet Elementary Hyde Public 37 0.0% 0.0% 0.0%
+Ocracoke School Hyde Public 12 0.0% 0.0% 0.0%
+Hyde Total 49 0.0% 0.0% 0.0%
+Iredell Charter Academy Iredell Charter 77 0.0% 2.6% 0.0%
+Langtree Charter Academy Iredell Charter 132 0.0% 0.8% 0.0%
+Pine Lake Preparatory, Inc. Iredell Charter 107 0.0% 3.7% 4.7%
+Success Charter School Iredell Charter 10 0.0% 0.0% 10.0%
+Cornerstone Christian Academy Iredell Private 11 0.0% 9.1% 0.0%
+Crossroads Christian School of Statesville Iredell Private 1 0.0% 0.0% 0.0%
+Davidson Day School Iredell Private 17 0.0% 5.9% 0.0%
+Liberty Preparatory Christian Academy Iredell Private 15 0.0% 26.7% 13.3%
+Southview Christian School Iredell Private 7 0.0% 14.3% 0.0%
+Statesville Christian School Iredell Private 8 0.0% 12.5% 0.0%
+Statesville Montessori School Iredell Private 7 0.0% 28.6% 0.0%
+Woodlawn School Iredell Private 7 0.0% 14.3% 0.0%
+Celeste Henkel Elementary School Iredell Public 81 0.0% 0.0% 1.2%
+Central Elementary School Iredell Public 63 0.0% 1.6% 0.0%
+Cloverleaf Elementary School Iredell Public 88 0.0% 1.1% 5.7%
+Coddle Creek Elementary School Iredell Public 90 0.0% 4.4% 11.1%
+Cool Spring Elementary School Iredell Public 63 0.0% 1.6% 0.0%
+East Iredell Elementary School Iredell Public 113 0.0% 0.0% 0.9%
+Harmony Elementary School Iredell Public 76 2.6% 2.6% 2.6%
+Lake Norman Elementary School Iredell Public 84 0.0% 1.2% 1.2%
+Lakeshore Elementary School Iredell Public 99 0.0% 3.0% 3.0%
+N B Mills Elementary School Iredell Public 59 0.0% 0.0% 3.4%
+Park View Elementary Iredell Public 123 0.0% 1.6% 37.4%
+Rocky River Elementary Iredell Public 155 0.0% 3.9% 0.0%
+Scotts Elementary School Iredell Public 52 0.0% 1.9% 3.8%
+Sharon Elementary School Iredell Public 43 0.0% 0.0% 0.0%
+Shepherd Elementary School Iredell Public 69 0.0% 2.9% 2.9%
+South Elementary School Iredell Public 132 0.0% 1.5% 0.0%
+Third Creek Elementary School Iredell Public 77 0.0% 0.0% 6.5%
+Troutman Elementary School Iredell Public 97 0.0% 0.0% 3.1%
+Union Grove Elementary School Iredell Public 43 2.3% 2.3% 2.3%
+Woodland Heights Elementary School Iredell Public 101 0.0% 2.0% 0.0%
+Iredell Total 2,107 0.1% 2.2% 4.4%
+Summit Charter School Jackson Charter 28 0.0% 7.1% 0.0%
+Victory Christian School Jackson Private 7 0.0% 14.3% 0.0%
+Blue Ridge Elementary Jackson Public 23 0.0% 0.0% 0.0%
+Cullowhee Valley School Jackson Public 63 1.6% 0.0% 3.2%
+Fairview Elementary School Jackson Public 94 0.0% 1.1% 1.1%
+Scotts Creek Elementary Jackson Public 51 0.0% 0.0% 7.8%
+Smokey Mountain Elementary Jackson Public 37 0.0% 0.0% 8.1%
+Jackson Total 303 0.3% 1.3% 3.3%
+Neuse Charter School Johnston Charter 72 0.0% 1.4% 0.0%
+LifeSpring Academy Johnston Private 4 0.0% 0.0% 0.0%
+Southside Christian School Johnston Private 27 0.0% 7.4% 0.0%
+Star Christian Academy Johnston Private 1 0.0% 0.0% 0.0%
+Benson Elementary Johnston Public 125 0.0% 0.0% 0.8%
+Cleveland Elementary Johnston Public 141 0.0% 0.0% 0.7%
+Cooper Elementary Johnston Public 128 0.0% 5.5% 5.5%
+Corinth-Holders Elementary Johnston Public 85 0.0% 0.0% 0.0%
+Dixon Road Elementary Johnston Public 97 0.0% 0.0% 1.0%
+East Clayton Elementary Johnston Public 99 0.0% 8.1% 1.0%
+Four Oaks Elementary Johnston Public 171 0.0% 0.0% 0.0%
+Glendale-Kenly Elementary Johnston Public 81 0.0% 0.0% 1.2%
+McGee's Crossroads Elementary Johnston Public 132 0.0% 0.0% 0.8%
+Meadow School Johnston Public 72 0.0% 0.0% 0.0%
+Micro elementary Johnston Public 59 0.0% 0.0% 1.7%
+Pine Level Elementary School Johnston Public 64 0.0% 0.0% 4.7%
+Polenta Elementary Johnston Public 147 0.0% 0.7% 7.5%
+Powhatan Elementary Johnston Public 93 0.0% 1.1% 1.1%
+Princeton Elementary Johnston Public 101 0.0% 0.0% 0.0%
+River Dell Elementary Johnston Public 162 0.0% 1.2% 0.0%
+Riverwood Elementary Johnston Public 138 0.0% 2.2% 2.2%
+Selma Elementary Johnston Public 135 0.0% 0.0% 0.0%
+South Smithfield Elementary Johnston Public 94 1.1% 0.0% 3.2%
+West Clayton Elementary Johnston Public 142 0.0% 3.5% 2.1%
+West Johnston High Johnston Public 65 0.0% 1.5% 16.9%
+West Smithfield Elementary Johnston Public 78 0.0% 0.0% 3.8%
+West View Elementary Johnston Public 160 0.0% 0.0% 5.6%
+Wilson's Mills Elementary Johnston Public 55 0.0% 1.8% 3.6%
+Johnston Total 2,728 0.0% 1.2% 2.3%
+Comfort Elementary Jones Public 16 0.0% 0.0% 6.3%
+Maysville Elementary Jones Public 19 0.0% 0.0% 0.0%
+Pollocksville Elementary Jones Public 18 0.0% 0.0% 0.0%
+Trenton Elementary Jones Public 29 0.0% 0.0% 0.0%
+Jones Total 82 0.0% 0.0% 1.2%
+Calvary Education Center Lee Private 4 0.0% 0.0% 25.0%
+Grace Christian School Lee Private 25 0.0% 0.0% 0.0%
+Benjamin T. Bullock Elementary School Lee Public 99 0.0% 1.0% 3.0%
+Broadway Elementary School Lee Public 89 0.0% 0.0% 3.4%
+Deep River Elementary School Lee Public 79 0.0% 1.3% 0.0%
+Floyd L. Knight, The Children's Center Lee Public 3 0.0% 0.0% 0.0%
+Greenwood Elementary School Lee Public 103 0.0% 0.0% 2.9%
+J. Glenn Edwards Elementary School Lee Public 116 0.0% 0.0% 4.3%
+JR Ingram, Jr. Elementary School Lee Public 98 0.0% 1.0% 0.0%
+Tramway Elementary School Lee Public 108 0.0% 0.0% 0.9%
+Lee Total 724 0.0% 0.4% 2.2%
+The Children's Village Academy Lenoir Charter 15 0.0% 0.0% 6.7%
+Arendell Parrott Academy Lenoir Private 41 0.0% 0.0% 0.0%
+Bethel Christian Academy Lenoir Private 23 0.0% 0.0% 0.0%
+Miss Charlie's child development center Lenoir Private 5 0.0% 0.0% 0.0%
+Banks Elementary Lenoir Public 92 0.0% 0.0% 0.0%
+College Lakes Elementary Lenoir Public 90 0.0% 0.0% 0.0%
+Contentnea-Savannah School Lenoir Public 79 0.0% 3.8% 25.3%
+La Grange Elementary Lenoir Public 74 0.0% 0.0% 1.4%
+Moss Hill Elementary Lenoir Public 65 0.0% 0.0% 1.5%
+Northeast Elementary School Lenoir Public 74 0.0% 1.4% 2.7%
+Northwest Elementary Lenoir Public 63 0.0% 0.0% 7.9%
+Pink Hill Elementary Lenoir Public 67 0.0% 0.0% 7.5%
+Southeast Elementary Lenoir Public 40 0.0% 0.0% 5.0%
+Southwood Elementary Lenoir Public 54 0.0% 0.0% 5.6%
+Lenoir Total 782 0.0% 0.5% 5.1%
+Lincoln Charter School Lincoln Charter 131 0.0% 1.5% 4.6%
+Denver Christian Academy Lincoln Private 8 0.0% 25.0% 0.0%
+Long Shoals Wesleyan Academy Lincoln Private 13 0.0% 7.7% 0.0%
+Battleground Elementary School Lincoln Public 69 0.0% 1.4% 8.7%
+Catawba Springs Elementary Lincoln Public 92 0.0% 2.2% 4.3%
+Childers Elementary Lincoln Public 70 0.0% 0.0% 4.3%
+GE Massey Elementary Lincoln Public 51 0.0% 2.0% 2.0%
+Iron Station Elementary Lincoln Public 79 0.0% 0.0% 5.1%
+Love Memorial Elementary Lincoln Public 45 0.0% 0.0% 11.1%
+North Brook Elementary Lincoln Public 55 0.0% 0.0% 7.3%
+Pumpkin Center Primary Lincoln Public 101 0.0% 1.0% 1.0%
+Rock Springs Elementary Lincoln Public 78 0.0% 1.3% 2.6%
+S Ray Lowder Elementary Lincoln Public 59 0.0% 0.0% 6.8%
+St James Elementary Lincoln Public 107 0.0% 0.9% 4.7%
+Union Elementary School Lincoln Public 54 0.0% 0.0% 3.7%
+Lincoln Total 1,012 0.0% 1.2% 4.6%
+Trimont Macon Private 6 0.0% 0.0% 0.0%
+Cartoogechaye Elementary Macon Public 62 0.0% 1.6% 11.3%
+East Franklin Elementary Macon Public 67 0.0% 0.0% 10.4%
+Highlands School Macon Public 25 0.0% 0.0% 4.0%
+Iotla Valley Elementary Macon Public 79 0.0% 2.5% 2.5%
+Nantahala School Macon Public 9 0.0% 0.0% 0.0%
+South Macon Elementary Macon Public 97 0.0% 0.0% 3.1%
+Macon Total 345 0.0% 0.9% 5.8%
+Woodson Branch Nature School Madison Private 8 0.0% 37.5% 0.0%
+Brush Creek Elementary School Madison Public 67 0.0% 0.0% 3.0%
+Hot Springs Elementary School Madison Public 21 0.0% 0.0% 4.8%
+Mars Hill Elementary School Madison Public 99 0.0% 1.0% 4.0%
+Madison Total 195 0.0% 2.1% 3.6%
+East End Elementary Martin Public 38 0.0% 0.0% 0.0%
+Enda Andrews Elementary Martin Public 13 0.0% 0.0% 7.7%
+Jamesville Elementary Martin Public 29 0.0% 0.0% 0.0%
+Rodgers Elementary Martin Public 42 0.0% 2.4% 0.0%
+Williamston Primary Martin Public 120 0.0% 0.0% 2.5%
+Martin Total 242 0.0% 0.4% 1.7%
+New Manna Christian School McDowell Private 8 0.0% 0.0% 0.0%
+Eastfield Global Magnet School McDowell Public 42 0.0% 0.0% 4.8%
+Glenwood Elementary School McDowell Public 57 0.0% 3.5% 0.0%
+Marion Elementary School McDowell Public 56 0.0% 0.0% 5.4%
+Nebo Elementary School McDowell Public 53 0.0% 0.0% 0.0%
+North Cove Elementary School McDowell Public 37 2.7% 0.0% 0.0%
+Old Fort Elementary School McDowell Public 53 0.0% 0.0% 0.0%
+Pleasant Gardens Elementary School McDowell Public 52 0.0% 1.9% 3.8%
+West Marion Elementary School McDowell Public 55 0.0% 0.0% 3.6%
+McDowell Total 413 0.2% 0.7% 2.2%
+Aristotle Preparatory Academy: A Challenge Foundation Academ Mecklenburg Charter 11 0.0% 0.0% 72.7%
+Bradford Preparatory School Mecklenburg Charter 76 0.0% 5.3% 2.6%
+Charlotte Choice Charter Mecklenburg Charter 19 0.0% 0.0% 0.0%
+Charlotte Lab School Mecklenburg Charter 73 0.0% 0.0% 0.0%
+Community School of Davidson Mecklenburg Charter 82 3.7% 4.9% 0.0%
+Corvian Community School Mecklenburg Charter 88 0.0% 6.8% 0.0%
+Invest Collegiate Transform Mecklenburg Charter 64 0.0% 4.7% 9.4%
+KIPP Charlotte Mecklenburg Charter 105 0.0% 2.9% 25.7%
+Lake Norman Charter Mecklenburg Charter 100 1.0% 1.0% 2.0%
+Mallard Creek STEM Academy Mecklenburg Charter 86 0.0% 1.2% 0.0%
+Matthews Charter Academy Mecklenburg Charter 91 0.0% 0.0% 0.0%
+Metrolina Regional Scholars Academy Mecklenburg Charter 36 0.0% 5.6% 0.0%
+Movement Charter School Mecklenburg Charter 123 0.0% 0.0% 55.3%
+Pioneer Springs Community School Mecklenburg Charter 46 0.0% 17.4% 0.0%
+Queen City STEM School Mecklenburg Charter 80 0.0% 0.0% 16.3%
+Queen's Grant Community School Mecklenburg Charter 85 0.0% 11.8% 0.0%
+Socrates Academy Mecklenburg Charter 79 0.0% 1.3% 0.0%
+Sugar Creek Charter Mecklenburg Charter 129 0.0% 0.0% 13.2%
+United Community School Mecklenburg Charter 31 0.0% 9.7% 9.7%
+Unity Classical Charter School Mecklenburg Charter 67 0.0% 1.5% 4.5%
+VERITAS Community School: A Challenge Foundation Academy Mecklenburg Charter 30 0.0% 3.3% 10.0%
+Adventist Christian Academy Mecklenburg Private 2 0.0% 0.0% 0.0%
+ALC Mosaic (The Mosaic School) Mecklenburg Private 4 0.0% 50.0% 0.0%
+Anami Montessori School Mecklenburg Private 11 0.0% 0.0% 0.0%
+Back Creek Christian Academy Mecklenburg Private 9 0.0% 0.0% 0.0%
+Berean Junior Academy Mecklenburg Private 1 0.0% 0.0% 0.0%
+Bible Baptist Christian School Mecklenburg Private 15 0.0% 6.7% 0.0%
+Brisbane Academy Preparatory School Mecklenburg Private 12 0.0% 8.3% 0.0%
+British International School of Charlotte Mecklenburg Private 11 0.0% 18.2% 27.3%
+Carmel Christian School Mecklenburg Private 52 0.0% 3.8% 15.4%
+Cedarwood Academy Mecklenburg Private 3 0.0% 0.0% 0.0%
+Charlotte Christian School Mecklenburg Private 45 0.0% 0.0% 0.0%
+Charlotte CountryDay School Mecklenburg Private 96 0.0% 1.0% 1.0%
+Charlotte Islamic Academy Mecklenburg Private 15 0.0% 0.0% 0.0%
+Charlotte Jewish Day School Mecklenburg Private 16 0.0% 0.0% 18.8%
+Charlotte Latin School Mecklenburg Private 89 0.0% 0.0% 0.0%
+Charlotte Preparatory School Mecklenburg Private 28 0.0% 3.6% 7.1%
+Chesterbrook Academy Mecklenburg Private 3 0.0% 0.0% 0.0%
+Covenant Day School Mecklenburg Private 50 0.0% 6.0% 4.0%
+Crossway Academy Mecklenburg Private 1 0.0% 0.0% 0.0%
+Davidson Green School Mecklenburg Private 8 0.0% 25.0% 0.0%
+Friendship Day School for the Sciences and The Arts Mecklenburg Private 13 0.0% 0.0% 53.8%
+Grace Covenant Academy Mecklenburg Private 32 0.0% 15.6% 0.0%
+Guidepost Montessori Mecklenburg Private 18 0.0% 5.6% 27.8%
+Hickory Grove Christian School Mecklenburg Private 63 0.0% 4.8% 0.0%
+Kiddie Academy of Charlotte at Blakeney Mecklenburg Private 9 0.0% 0.0% 0.0%
+Kids R Kids-The Academy at Blakeney Mecklenburg Private 15 0.0% 0.0% 0.0%
+Knowledge Is Power Mecklenburg Private 1 0.0% 0.0% 0.0%
+Lake Norman Christian School Mecklenburg Private 5 0.0% 0.0% 20.0%
+Mountain Island Day School Mecklenburg Private 20 5.0% 0.0% 5.0%
+National Child Care Institute - Scholastics Achievement Program Mecklenburg Private 1 0.0% 0.0% 0.0%
+Northside Christian Academy Mecklenburg Private 22 0.0% 4.5% 4.5%
+Omni Montessori Mecklenburg Private 22 0.0% 13.6% 22.7%
+Our Lady of the Assumption Catholic School Mecklenburg Private 8 0.0% 0.0% 0.0%
+Palisades Episcopal School Mecklenburg Private 20 0.0% 10.0% 5.0%
+Paw Creek Christian Academy Mecklenburg Private 3 0.0% 33.3% 0.0%
+Phoenix Montessori Academy Mecklenburg Private 6 0.0% 16.7% 0.0%
+Providence Day School Mecklenburg Private 69 0.0% 0.0% 1.4%
+RC Smith Christian Academy Mecklenburg Private 1 0.0% 0.0% 0.0%
+Sedgefield School, Inc. Mecklenburg Private 7 0.0% 0.0% 0.0%
+Shining Stars Academy Mecklenburg Private 6 0.0% 0.0% 0.0%
+South Charlotte Baptist Mecklenburg Private 8 0.0% 0.0% 0.0%
+Southlake Christian Academy Mecklenburg Private 17 0.0% 5.9% 0.0%
+St Ann Catholic School Mecklenburg Private 25 0.0% 0.0% 0.0%
+St Gabriel's Catholic School Mecklenburg Private 78 0.0% 0.0% 2.6%
+St Patrick Catholic School Mecklenburg Private 32 3.1% 0.0% 0.0%
+St. Mark Catholic School Mecklenburg Private 57 0.0% 0.0% 1.8%
+St. Matthew School Mecklenburg Private 61 0.0% 0.0% 0.0%
+The Cyzner Institute Mecklenburg Private 3 0.0% 0.0% 0.0%
+The Fletcher School Mecklenburg Private 4 0.0% 0.0% 0.0%
+Trinity Episcopal School Mecklenburg Private 46 2.2% 0.0% 0.0%
+United Faith Christian Academy Mecklenburg Private 12 0.0% 8.3% 0.0%
+Victory Christian Center School Mecklenburg Private 10 0.0% 10.0% 0.0%
+Albemarle Road Elementary Mecklenburg Public 176 0.0% 0.6% 6.3%
+Allenbrook Elementary Mecklenburg Public 77 0.0% 0.0% 9.1%
+Ashley Park PreK-8 School Mecklenburg Public 53 0.0% 1.9% 1.9%
+Bain Elementary Mecklenburg Public 142 0.0% 4.2% 2.1%
+Ballantyne Elementary Mecklenburg Public 118 0.0% 0.0% 0.0%
+Barnette Elementary Mecklenburg Public 121 0.0% 1.7% 0.0%
+Barringer Academic Center Mecklenburg Public 74 0.0% 0.0% 0.0%
+Berewick Elementary Mecklenburg Public 127 0.8% 3.9% 7.9%
+Berryhill School Mecklenburg Public 40 0.0% 0.0% 5.0%
+Beverly Woods Elementary Mecklenburg Public 115 0.0% 0.9% 0.0%
+Billingsville Elementary Mecklenburg Public 55 0.0% 3.6% 1.8%
+Briarwood Academy Mecklenburg Public 132 0.0% 1.5% 7.6%
+Bruns Academy Mecklenburg Public 83 0.0% 0.0% 4.8%
+Chantilly Montessori Mecklenburg Public 56 0.0% 3.6% 0.0%
+Clear Creek Elementary Mecklenburg Public 69 0.0% 4.3% 13.0%
+Cornelius Elementary Mecklenburg Public 94 0.0% 0.0% 0.0%
+Cotswold Elementary Mecklenburg Public 115 0.0% 1.7% 0.9%
+Croft Community School Mecklenburg Public 79 0.0% 3.8% 26.6%
+Crown Point Elementary Mecklenburg Public 86 0.0% 1.2% 9.3%
+Davidson Elementary Mecklenburg Public 104 1.0% 10.6% 0.0%
+Devonshire Elementary Mecklenburg Public 129 0.0% 1.6% 15.5%
+Dilworth Elementary Mecklenburg Public 109 0.0% 1.8% 0.0%
+E E Waddell Language Academy Mecklenburg Public 164 0.0% 6.1% 18.3%
+Eastover Elementary Mecklenburg Public 82 0.0% 3.7% 1.2%
+Elizabeth Lane Elem Mecklenburg Public 152 0.0% 2.6% 42.1%
+Elizabeth Traditional Elem Mecklenburg Public 79 1.3% 1.3% 0.0%
+Elon Park Elementary Mecklenburg Public 158 0.0% 0.0% 3.2%
+Endhaven Elementary Mecklenburg Public 117 0.9% 4.3% 0.0%
+First Ward Creative Arts Acad Mecklenburg Public 95 0.0% 2.1% 0.0%
+Grand Oak Elementary School Mecklenburg Public 105 1.0% 0.0% 1.0%
+Greenway Park Elementary Mecklenburg Public 89 1.1% 0.0% 10.1%
+Hawk Ridge Elementary Mecklenburg Public 129 0.0% 1.6% 0.0%
+Hickory Grove Elementary Mecklenburg Public 102 1.0% 2.0% 9.8%
+Highland Creek Elementary Mecklenburg Public 98 0.0% 3.1% 1.0%
+Highland Mill Montessori Elementary Mecklenburg Public 52 0.0% 0.0% 0.0%
+Highland Renaissance Academy Mecklenburg Public 56 0.0% 0.0% 5.4%
+Hornets Nest Elementary Mecklenburg Public 112 0.0% 0.9% 1.8%
+Huntersville Elementary Mecklenburg Public 143 0.0% 3.5% 3.5%
+Huntingtowne Farms Elementary Mecklenburg Public 118 0.0% 0.8% 6.8%
+Idlewild Elementary Mecklenburg Public 164 0.0% 1.2% 42.1%
+Irwin Academic Center Mecklenburg Public 39 0.0% 2.6% 0.0%
+J H Gunn Elementary Mecklenburg Public 143 0.0% 1.4% 0.0%
+J.V. Washam Elementary Mecklenburg Public 150 0.0% 4.7% 4.7%
+John Motley Morehead STEM Academy Mecklenburg Public 107 0.9% 0.0% 0.9%
+Joseph W Grier Academy Mecklenburg Public 122 0.0% 0.0% 5.7%
+Lake Wylie Elementary Mecklenburg Public 95 0.0% 1.1% 1.1%
+Lansdowne IB Word Elementary School Mecklenburg Public 85 0.0% 5.9% 2.4%
+Lawrence Orr Elementary School Mecklenburg Public 129 0.0% 0.0% 12.4%
+Lebanon Road Elementary Mecklenburg Public 130 0.0% 0.8% 0.8%
+Legette Blythe Elementary Mecklenburg Public 178 0.0% 0.0% 16.3%
+Long Creek Elementary Mecklenburg Public 76 0.0% 2.6% 3.9%
+Mallard Creek Elementary Mecklenburg Public 109 0.0% 1.8% 6.4%
+Marie G. Davis Mecklenburg Public 45 0.0% 0.0% 0.0%
+Matthews Elementary Mecklenburg Public 179 0.6% 2.8% 1.1%
+McAlpine Elementary Mecklenburg Public 81 0.0% 1.2% 0.0%
+McKee Road Elementary Mecklenburg Public 70 0.0% 1.4% 0.0%
+Merry Oaks Elementary Mecklenburg Public 95 0.0% 1.1% 11.6%
+Metro School Mecklenburg Public 8 0.0% 0.0% 100.0%
+Montclaire Elementary Mecklenburg Public 72 0.0% 1.4% 0.0%
+Mountain Island Lake Academy Mecklenburg Public 94 0.0% 1.1% 26.6%
+Myers Park Traditional Elementary Mecklenburg Public 119 0.0% 0.0% 1.7%
+Nathaniel Alexander Elementary Mecklenburg Public 126 0.0% 0.8% 23.8%
+Nations Ford Elementary Mecklenburg Public 129 0.0% 0.0% 10.9%
+Newell Elementary Mecklenburg Public 140 0.0% 0.0% 2.1%
+Oakdale Elementary Mecklenburg Public 88 0.0% 1.1% 6.8%
+Oakhurst STEAM Academy Mecklenburg Public 110 0.9% 0.9% 0.0%
+Oaklawn Language Academy Mecklenburg Public 95 0.0% 1.1% 0.0%
+Olde Providence Elementary Mecklenburg Public 121 0.8% 0.8% 0.0%
+Palisades Park Elementary Mecklenburg Public 123 0.0% 0.8% 0.0%
+Park Road Montessori Mecklenburg Public 76 0.0% 6.6% 1.3%
+Parkside Elementary School Mecklenburg Public 47 0.0% 4.3% 4.3%
+Paw Creek Elementary Mecklenburg Public 97 0.0% 3.1% 1.0%
+Pineville Elementary Mecklenburg Public 123 0.0% 1.6% 0.0%
+Piney Grove Elementary Mecklenburg Public 125 0.0% 0.8% 8.8%
+Polo Ridge Elementary Mecklenburg Public 147 0.0% 2.0% 1.4%
+Providence Spring Elementary Mecklenburg Public 150 0.0% 0.7% 0.0%
+Rama Road Elementary Mecklenburg Public 103 0.0% 1.0% 28.2%
+Reid Park Academy Mecklenburg Public 64 0.0% 0.0% 6.3%
+Renaissance West STEAM Academy Mecklenburg Public 76 0.0% 0.0% 88.2%
+River Gate Elementary Mecklenburg Public 112 0.0% 1.8% 2.7%
+River Oaks Middle Mecklenburg Public 112 0.0% 1.8% 2.7%
+Selwyn Elementary Mecklenburg Public 126 0.8% 1.6% 0.0%
+Shamrock Gardens Elementary Mecklenburg Public 79 0.0% 1.3% 0.0%
+Sharon Elementary Mecklenburg Public 146 0.0% 0.0% 3.4%
+Smithfield Elementary Mecklenburg Public 103 0.0% 1.0% 1.0%
+Starmount Acad of Excellence Mecklenburg Public 81 0.0% 0.0% 39.5%
+Statesville Road Elementary Mecklenburg Public 85 0.0% 0.0% 4.7%
+Steele Creek Elementary Mecklenburg Public 125 0.0% 1.6% 5.6%
+Stoney Creek Elementary Mecklenburg Public 133 0.0% 1.5% 10.5%
+Thomasboro Academy Mecklenburg Public 47 0.0% 0.0% 4.3%
+Torrence Creek Elementary Mecklenburg Public 109 1.8% 10.1% 0.9%
+Trillium Springs Montessori Mecklenburg Public 28 0.0% 3.6% 7.1%
+Tuckaseegee Elementary Mecklenburg Public 100 0.0% 0.0% 20.0%
+University Meadows Elementary Mecklenburg Public 137 0.0% 1.5% 29.9%
+University Park Creative Arts Mecklenburg Public 66 0.0% 0.0% 18.2%
+Westerly Hills Academy Mecklenburg Public 53 0.0% 1.9% 28.3%
+Whitewater Academy Mecklenburg Public 98 0.0% 0.0% 5.1%
+Winding Springs Elementary Mecklenburg Public 115 0.0% 1.7% 0.0%
+Windsor Park Elementary Mecklenburg Public 113 0.0% 0.0% 0.0%
+Winget Park Elementary Mecklenburg Public 117 0.0% 0.9% 0.0%
+Winterfield Elementary Mecklenburg Public 109 0.0% 0.0% 1.8%
+Mecklenburg Total 13,095 0.2% 1.9% 7.4%
+Spruce Pine Montessori School Mitchell Private 7 14.3% 0.0% 0.0%
+Tri County Christian School Mitchell Private 2 0.0% 0.0% 0.0%
+Gouge Elementary Mitchell Public 63 0.0% 1.6% 0.0%
+Greenlee Primary Mitchell Public 90 0.0% 3.3% 6.7%
+Mitchell Total 162 0.6% 2.5% 3.7%
+Long Hill Christian School Montgomery Private 2 0.0% 0.0% 50.0%
+Wescare Christian Academy Montgomery Private 10 0.0% 0.0% 0.0%
+Candor Elementary Montgomery Public 58 0.0% 0.0% 1.7%
+Green Ridge Elementary School Montgomery Public 56 0.0% 0.0% 0.0%
+Mount Gilead Elementary Montgomery Public 48 0.0% 4.2% 2.1%
+Star Elementary Montgomery Public 62 0.0% 0.0% 0.0%
+Troy Elementary Montgomery Public 98 0.0% 0.0% 0.0%
+Montgomery Total 334 0.0% 0.6% 0.9%
+Sandhills Theatre Arts Renaissance School Moore Charter 51 0.0% 0.0% 7.8%
+The Academy of Moore County Moore Charter 90 0.0% 3.3% 10.0%
+Covenant Preparatory School Moore Private 10 0.0% 0.0% 10.0%
+Episcopal Day School Moore Private 30 0.0% 3.3% 0.0%
+Fellowship Christian Academy Moore Private 8 0.0% 0.0% 12.5%
+Sandhills Classical Christian School Moore Private 32 0.0% 3.1% 3.1%
+Solid Rock Christian School Moore Private 6 0.0% 0.0% 100.0%
+The O'Neal School Moore Private 30 0.0% 3.3% 46.7%
+Aberdeen Primary School Moore Public 102 0.0% 0.0% 1.0%
+Cameron Elementary School Moore Public 38 0.0% 0.0% 0.0%
+Carthage Elementary School Moore Public 71 0.0% 1.4% 2.8%
+Highfalls Elementary School Moore Public 25 0.0% 0.0% 0.0%
+Pinehurst Elementary School Moore Public 129 0.0% 0.0% 1.6%
+Robbins Elementary School Moore Public 52 0.0% 0.0% 0.0%
+Sandhills Farm Life Elementary School Moore Public 126 0.0% 0.0% 0.0%
+Southern Pines Primary School Moore Public 101 0.0% 1.0% 0.0%
+Vass-Lakeview Elementary School Moore Public 84 1.2% 0.0% 1.2%
+West End Elementary School Moore Public 73 0.0% 1.4% 0.0%
+West Pine Elementary School Moore Public 79 0.0% 1.3% 10.1%
+Westmoore Elementary School Moore Public 34 0.0% 0.0% 2.9%
+Moore Total 1,171 0.1% 0.9% 4.4%
+Englewood Baptist Weekday Preschool Nash Private 8 0.0% 0.0% 0.0%
+Faith Christian School Nash Private 18 0.0% 0.0% 0.0%
+FUMC preschool/kindergarten Nash Private 10 0.0% 0.0% 0.0%
+New Life Christian Academy Nash Private 40 0.0% 0.0% 5.0%
+Our Lady of Perpetual Help Catholic School Nash Private 14 0.0% 0.0% 0.0%
+Rocky Mount Academy Nash Private 22 0.0% 4.5% 0.0%
+St. Andrew's Episcopal School Nash Private 6 0.0% 0.0% 0.0%
+Bailey Elementary Nash Public 95 0.0% 2.1% 1.1%
+Baskerville Elementary Nash Public 50 0.0% 0.0% 14.0%
+Benvenue Elementary Nash Public 77 0.0% 0.0% 10.4%
+Cedar Grove Elementary Nash Public 30 0.0% 0.0% 0.0%
+Coopers Elementary Nash Public 92 0.0% 0.0% 1.1%
+M B Hubbard Elementary Nash Public 72 0.0% 0.0% 4.2%
+Middlesex Elementary Nash Public 50 0.0% 0.0% 2.0%
+Nashville Elementary Nash Public 113 0.9% 0.9% 1.8%
+Red Oak Elementary Nash Public 72 0.0% 0.0% 5.6%
+Spring Hope Elementary Nash Public 78 0.0% 0.0% 5.1%
+Winstead Avenue Elementary Nash Public 178 0.0% 0.0% 2.2%
+Nash Total 1,025 0.1% 0.4% 3.6%
+Cape Fear Center for Inquiry New Hanover Charter 40 0.0% 7.5% 7.5%
+Coastal Preparatory Academy New Hanover Charter 88 0.0% 6.8% 2.3%
+Douglass Academy New Hanover Charter 36 0.0% 0.0% 0.0%
+Island Montessori Charter New Hanover Charter 24 0.0% 20.8% 0.0%
+Wilmington Preparatory Academy New Hanover Charter 18 0.0% 0.0% 5.6%
+Calvary Christian School New Hanover Private 7 0.0% 28.6% 0.0%
+Cape Fear Academy New Hanover Private 28 0.0% 3.6% 0.0%
+Eagle Point Christian Academy New Hanover Private 2 0.0% 0.0% 0.0%
+Friends School of Wilmington New Hanover Private 16 0.0% 0.0% 6.3%
+Myrtle Grove Christian School New Hanover Private 21 9.5% 4.8% 0.0%
+New Horizons Elementary School New Hanover Private 10 0.0% 0.0% 0.0%
+Peace Rose Montessori New Hanover Private 9 0.0% 55.6% 0.0%
+Providence Preparatory Academy New Hanover Private 16 0.0% 12.5% 0.0%
+PVUMC Wee Care Kindergarten New Hanover Private 12 0.0% 0.0% 0.0%
+St. Mark Catholic School New Hanover Private 31 0.0% 0.0% 0.0%
+St. Mary Catholic School New Hanover Private 16 0.0% 0.0% 12.5%
+Wilmington Christian Academy New Hanover Private 64 0.0% 3.1% 0.0%
+A H Snipes Academy of Arts/Des New Hanover Public 47 0.0% 0.0% 8.5%
+Bradley Creek Elementary New Hanover Public 68 1.5% 1.5% 0.0%
+Carolina Beach Elementary New Hanover Public 65 0.0% 0.0% 4.6%
+Castle Hayne Elementary New Hanover Public 88 0.0% 2.3% 0.0%
+College Park Elementary New Hanover Public 71 0.0% 0.0% 0.0%
+College Road Early Childhood Center New Hanover Public 122 0.0% 0.0% 4.1%
+Dr Hubert Eaton Sr Elem New Hanover Public 80 0.0% 1.3% 0.0%
+Dr John Codington Elem New Hanover Public 78 0.0% 1.3% 0.0%
+Edwin A Alderman Elementary School New Hanover Public 41 0.0% 0.0% 0.0%
+Edwin A Anderson Elementary New Hanover Public 93 0.0% 1.1% 3.2%
+Forest Hills Global Elementary New Hanover Public 76 0.0% 1.3% 1.3%
+Gregory School of Math, Science, and Technology New Hanover Public 87 0.0% 2.3% 1.1%
+Holly Tree Elementary New Hanover Public 74 1.4% 2.7% 5.4%
+John J Blair Elementary New Hanover Public 102 0.0% 2.9% 11.8%
+Lake Forest Academy New Hanover Public 1 0.0% 0.0% 0.0%
+Mary C Williams Elementary New Hanover Public 64 0.0% 0.0% 4.7%
+Murrayville Elementary New Hanover Public 95 0.0% 3.2% 0.0%
+Ogden Elementary New Hanover Public 119 0.0% 0.8% 0.8%
+Pine Valley Elementary New Hanover Public 103 0.0% 3.9% 0.0%
+R Freeman Sch of Engineering New Hanover Public 38 0.0% 0.0% 0.0%
+Sunset Park Elementary New Hanover Public 71 0.0% 0.0% 1.4%
+Walter L Parsley Elementary New Hanover Public 101 0.0% 1.0% 1.0%
+Winter Park Model Elementary New Hanover Public 63 0.0% 1.6% 0.0%
+Wrightsboro Elementary New Hanover Public 99 0.0% 1.0% 55.6%
+Wrightsville Beach Elem New Hanover Public 46 0.0% 2.2% 0.0%
+New Hanover Total 2,330 0.2% 2.3% 4.4%
+Northeast Academy Northampton Private 14 0.0% 0.0% 0.0%
+Central Elementary School Northampton Public 42 0.0% 0.0% 0.0%
+Gaston Elementary School Northampton Public 37 0.0% 0.0% 0.0%
+Willis Hare Elementary School Northampton Public 41 0.0% 0.0% 2.4%
+Northampton Total 134 0.0% 0.0% 0.7%
+Z.E.C.A. School of Arts and Technology Onslow Charter 18 0.0% 0.0% 0.0%
+Fellowship Christian Academy Onslow Private 3 0.0% 0.0% 0.0%
+Grace Baptist School Onslow Private 3 0.0% 33.3% 0.0%
+Grace Classical School Onslow Private 3 0.0% 0.0% 33.3%
+Infant of Prague Catholic School Onslow Private 18 5.6% 11.1% 0.0%
+Liberty Christian Academy Onslow Private 32 0.0% 3.1% 12.5%
+Living Water Christian School Onslow Private 29 0.0% 0.0% 0.0%
+Montessori Children's School Onslow Private 19 0.0% 15.8% 0.0%
+North Shore Academy Onslow Private 3 0.0% 0.0% 0.0%
+Onslow Christian Academy Onslow Private 3 0.0% 0.0% 0.0%
+shiloh institute of learning Onslow Private 8 0.0% 0.0% 0.0%
+St. Anne's Parish Day School Onslow Private 15 0.0% 0.0% 0.0%
+Bell Fork Elementary Onslow Public 111 0.0% 0.9% 0.0%
+Blue Creek Elementary Onslow Public 81 0.0% 1.2% 3.7%
+Carolina Forest Elementary Onslow Public 160 0.6% 0.6% 6.3%
+Clyde Erwin Elementary Onslow Public 78 0.0% 0.0% 1.3%
+Dixon Elementary Onslow Public 217 0.0% 0.9% 4.1%
+Hunters Creek Elementary Onslow Public 95 0.0% 2.1% 7.4%
+Jacksonville Commons Elem Onslow Public 107 0.0% 0.0% 0.9%
+Meadow View Elementary Onslow Public 98 0.0% 0.0% 36.7%
+Morton Elementary Onslow Public 107 0.0% 0.0% 1.9%
+Northwoods Elementary Onslow Public 80 0.0% 0.0% 8.8%
+Parkwood Elementary Onslow Public 88 0.0% 1.1% 6.8%
+Queens Creek Elementary Onslow Public 100 0.0% 2.0% 1.0%
+Richlands Primary Onslow Public 263 0.0% 0.4% 1.1%
+Sand Ridge Elementary Onslow Public 110 0.0% 0.9% 2.7%
+Silverdale Elementary Onslow Public 79 0.0% 0.0% 6.3%
+Southwest Elementary Onslow Public 169 0.0% 2.4% 4.1%
+Stateside Elementary Onslow Public 110 0.0% 0.0% 0.9%
+Summersill Elementary Onslow Public 101 0.0% 0.0% 0.0%
+Swansboro Elementary Onslow Public 98 0.0% 2.0% 7.1%
+Onslow Total 2,406 0.1% 1.0% 4.7%
+Eno River Academy Orange Charter 40 0.0% 0.0% 0.0%
+The Expedition School Orange Charter 41 0.0% 2.4% 4.9%
+Carolina Friends School - Chapel Hill Early School Orange Private 8 0.0% 0.0% 0.0%
+Carolina Friends School Campus Early School Orange Private 8 0.0% 0.0% 12.5%
+Emerson Waldorf School Orange Private 25 0.0% 28.0% 0.0%
+Montessori Day School of Chapel Hill Orange Private 12 0.0% 0.0% 8.3%
+Pinewoods Montessori School Orange Private 11 0.0% 9.1% 0.0%
+St. Thomas More Catholic School Orange Private 30 0.0% 0.0% 0.0%
+Cameron Park Elementary Orange Public 88 0.0% 1.1% 2.3%
+Carrboro Elementary School Orange Public 83 0.0% 3.6% 3.6%
+Central Elementary School Orange Public 42 0.0% 0.0% 4.8%
+Efland Cheeks Elementary Orange Public 71 0.0% 0.0% 1.4%
+Elizabeth Seawell Elementary School Orange Public 72 0.0% 0.0% 2.8%
+Estes Hills Elementary School Orange Public 61 0.0% 6.6% 3.3%
+Frank Porter Graham Dual Language Magnet Elementary School Orange Public 113 0.0% 2.7% 0.0%
+Grady Brown Elementary Orange Public 63 0.0% 0.0% 0.0%
+Mary Scroggs Elementary School Orange Public 56 0.0% 0.0% 1.8%
+McDougle Elementary School Orange Public 87 0.0% 0.0% 2.3%
+Mel and Zora Rashkis Elementary School Orange Public 60 0.0% 1.7% 5.0%
+Morris Grove Elementary School Orange Public 68 0.0% 2.9% 44.1%
+New Hope Elementary School Orange Public 96 0.0% 0.0% 2.1%
+Northeast Elementary School Orange Public 54 0.0% 1.9% 1.9%
+Pathways Elementary Orange Public 58 0.0% 5.2% 1.7%
+Orange Total 1,247 0.0% 2.2% 4.5%
+Arapahoe Charter School Pamlico Charter 41 0.0% 2.4% 2.4%
+Pamlico Christian Academy Pamlico Private 9 0.0% 0.0% 0.0%
+Pamlico County Primary School Pamlico Public 81 1.2% 0.0% 0.0%
+Pamlico Total 131 0.8% 0.8% 0.8%
+Albemarle School Pasquotank Private 19 0.0% 0.0% 21.1%
+New Life Academy Pasquotank Private 24 0.0% 4.2% 0.0%
+Victory Christian School Pasquotank Private 12 0.0% 25.0% 25.0%
+Central Elementary School Pasquotank Public 54 0.0% 0.0% 3.7%
+J C Sawyer Elementary Pasquotank Public 57 0.0% 1.8% 0.0%
+Northside Elementary School Pasquotank Public 82 0.0% 0.0% 3.7%
+P W Moore Elementary Pasquotank Public 55 0.0% 0.0% 0.0%
+Pasquotank Elementary Pasquotank Public 49 0.0% 0.0% 2.0%
+Sheep-Harney Elementary Pasquotank Public 56 0.0% 0.0% 0.0%
+Weeksville Elementary Pasquotank Public 33 0.0% 0.0% 0.0%
+Pasquotank Total 441 0.0% 1.1% 2.9%
+Penderlea Christian Academy Pender Private 2 0.0% 0.0% 0.0%
+Topsail Montessori Pender Private 2 0.0% 0.0% 50.0%
+Burgaw Elementary School Pender Public 89 0.0% 2.2% 5.6%
+Cape Fear Elementary School Pender Public 74 0.0% 0.0% 1.4%
+Malpass Corner Elementary School Pender Public 64 0.0% 0.0% 3.1%
+North Topsail Elementary School Pender Public 115 0.0% 0.0% 7.0%
+Penderlea Elementary School Pender Public 54 0.0% 0.0% 3.7%
+Rocky Point Elementary School Pender Public 61 0.0% 0.0% 11.5%
+South Topsail Elementary School Pender Public 82 0.0% 2.4% 0.0%
+Topsail Elementary School Pender Public 71 0.0% 1.4% 2.8%
+Pender Total 614 0.0% 0.8% 4.6%
+Perquimans Central Perquimans Public 111 0.0% 3.6% 3.6%
+Perquimans Total 111 0.0% 3.6% 3.6%
+Bethel Hill Charter Person Charter 69 0.0% 0.0% 0.0%
+Roxboro Christian Academy Person Private 7 0.0% 0.0% 0.0%
+Helena Elementary Person Public 96 0.0% 0.0% 2.1%
+North Elementary Person Public 39 0.0% 0.0% 5.1%
+North End Elementary Person Public 37 0.0% 0.0% 2.7%
+Oak Lane Elementary Person Public 44 0.0% 0.0% 0.0%
+South Elementary School Person Public 39 0.0% 0.0% 2.6%
+Stories Creek Elementary Person Public 75 0.0% 0.0% 2.7%
+Woodland Elementary Person Public 34 0.0% 0.0% 2.9%
+Person Total 440 0.0% 0.0% 2.0%
+Ignite Innovation Academy - Pitt Pitt Charter 35 0.0% 0.0% 0.0%
+Winterville Charter Academy Pitt Charter 89 0.0% 0.0% 0.0%
+Greenville Montessori School Pitt Private 15 0.0% 6.7% 0.0%
+Opendoor School Pitt Private 17 0.0% 5.9% 23.5%
+The Oakwood School Pitt Private 16 0.0% 0.0% 6.3%
+Trinity Christian School Pitt Private 18 0.0% 0.0% 5.6%
+Walton Academy Pitt Private 13 0.0% 7.7% 0.0%
+Ayden Elementary School Pitt Public 106 0.0% 0.0% 5.7%
+Belvoir Elementary School Pitt Public 56 0.0% 1.8% 3.6%
+Bethel Elementary Pitt Public 31 0.0% 0.0% 6.5%
+Chicod School Pitt Public 104 0.0% 0.0% 2.9%
+Creekside Elementary School Pitt Public 117 0.0% 0.9% 13.7%
+Eastern Elementary School Pitt Public 129 0.0% 0.0% 2.3%
+Elmhurst Elementary School Pitt Public 60 0.0% 0.0% 1.7%
+Falkland Elementary School Pitt Public 46 0.0% 0.0% 17.4%
+G.R. Whitfield School Pitt Public 37 0.0% 0.0% 0.0%
+Grifton School Pitt Public 43 0.0% 0.0% 2.3%
+H B Sugg Elementary School Pitt Public 134 0.0% 0.0% 4.5%
+Lakeforest Elementary School Pitt Public 131 0.0% 0.0% 6.1%
+Pactolus School Pitt Public 53 0.0% 0.0% 5.7%
+Ridgewood Elementary School Pitt Public 124 0.0% 0.0% 1.6%
+South Greenville Elementary School Pitt Public 63 0.0% 0.0% 19.0%
+Stokes School Pitt Public 37 0.0% 2.7% 0.0%
+W H Robinson Elementary School Pitt Public 88 0.0% 0.0% 2.3%
+Wahl Coates Elementary School Pitt Public 49 0.0% 0.0% 0.0%
+Wintergreen Primary School Pitt Public 266 0.0% 0.8% 2.3%
+Pitt Total 1,877 0.0% 0.4% 4.6%
+Polk Central Elementary School Polk Public 54 0.0% 1.9% 3.7%
+Saluda Elementary School Polk Public 26 3.8% 7.7% 0.0%
+Sunny View Elementary School Polk Public 16 0.0% 0.0% 0.0%
+Tryon Elementary School Polk Public 61 0.0% 6.6% 3.3%
+Polk Total 157 0.6% 4.5% 2.5%
+Bailey's Grove Baptist Schools Randolph Private 6 0.0% 16.7% 0.0%
+Faith Christian School Randolph Private 18 0.0% 0.0% 0.0%
+Hope Baptist Christian Academy Randolph Private 2 0.0% 0.0% 0.0%
+Level Cross Christian School Randolph Private 2 0.0% 0.0% 0.0%
+Mount Calvary Christian School Randolph Private 4 0.0% 0.0% 0.0%
+Neighbors Grove Christian Academy Randolph Private 5 0.0% 0.0% 0.0%
+Private religious - Fayetteville Street Christian School Randolph Private 26 0.0% 0.0% 3.8%
+Archdale Elementary School Randolph Public 62 0.0% 0.0% 3.2%
+Balfour Elementary School Randolph Public 83 0.0% 0.0% 7.2%
+Charles W McCrary Elementary Randolph Public 55 0.0% 1.8% 0.0%
+Coleridge Elementary School Randolph Public 52 0.0% 0.0% 1.9%
+Donna L Loflin Elementary School Randolph Public 44 0.0% 0.0% 4.5%
+Farmer Elementary School Randolph Public 54 0.0% 1.9% 5.6%
+Franklinville Elementary School Randolph Public 56 0.0% 0.0% 0.0%
+Grays Chapel Elementary School Randolph Public 91 0.0% 1.1% 34.1%
+Guy B Teachey Elementary School Randolph Public 95 1.1% 0.0% 0.0%
+Hopewell Elementary School Randolph Public 96 0.0% 0.0% 2.1%
+John R Lawrence Elementary Randolph Public 67 0.0% 0.0% 6.0%
+Level Cross Elementary Randolph Public 79 0.0% 1.3% 0.0%
+Liberty Elementary School Randolph Public 71 0.0% 1.4% 1.4%
+Lindley Park Elementary School Randolph Public 73 1.4% 0.0% 0.0%
+New Market Elementary School Randolph Public 71 0.0% 1.4% 1.4%
+Ramseur Elementary School Randolph Public 51 0.0% 0.0% 3.9%
+Randleman Elementary School Randolph Public 113 0.0% 0.0% 1.8%
+Seagrove Elementary School Randolph Public 72 0.0% 1.4% 0.0%
+Southmont Elementary School Randolph Public 105 0.0% 0.0% 1.9%
+Tabernacle Elementary School Randolph Public 53 0.0% 0.0% 1.9%
+Trindale Elementary School Randolph Public 72 0.0% 2.8% 1.4%
+Trinity Elementary School Randolph Public 53 0.0% 0.0% 0.0%
+Randolph Total 1,631 0.1% 0.6% 3.8%
+Hamlet Presbyterian Weekday School Richmond Private 6 0.0% 0.0% 0.0%
+Outreach Christian Academy Richmond Private 3 0.0% 0.0% 0.0%
+Second Baptist Christian Academy Richmond Private 15 0.0% 0.0% 0.0%
+Temple Christian School Richmond Private 9 0.0% 0.0% 0.0%
+East Rockingham Elementary School Richmond Public 89 0.0% 0.0% 2.2%
+Fairview Heights Elementary Richmond Public 69 0.0% 0.0% 0.0%
+L J Bell Elementary Richmond Public 87 0.0% 0.0% 0.0%
+Mineral Springs Elementary Richmond Public 52 0.0% 1.9% 0.0%
+Monroe Avenue Elementary Richmond Public 78 0.0% 0.0% 0.0%
+Washington Street Elementary School Richmond Public 75 0.0% 1.3% 0.0%
+West Rockingham Elementary Richmond Public 50 0.0% 0.0% 0.0%
+Richmond Total 533 0.0% 0.4% 0.4%
+Southeastern Academy Robeson Charter 20 0.0% 0.0% 0.0%
+Antioch Christian Academy Robeson Private 15 0.0% 0.0% 33.3%
+Mt. Zion Christian Academy Robeson Private 5 0.0% 0.0% 60.0%
+Deep Branch Elementary Robeson Public 59 0.0% 0.0% 0.0%
+East Robeson Primary Robeson Public 125 0.0% 0.0% 4.8%
+Green Grove Elementary Robeson Public 45 0.0% 0.0% 2.2%
+Janie C Hargrave Elem Robeson Public 42 0.0% 0.0% 4.8%
+Long Branch Elementary Robeson Public 75 0.0% 0.0% 4.0%
+Magnolia Elementary Robeson Public 58 0.0% 0.0% 6.9%
+Oxendine Elementary Robeson Public 41 0.0% 0.0% 2.4%
+Parkton Elementary Robeson Public 68 0.0% 0.0% 0.0%
+Pembroke Elementary Robeson Public 135 0.7% 0.0% 0.0%
+Peterson Elementary Robeson Public 93 0.0% 0.0% 4.3%
+Piney Grove Elementary Robeson Public 80 0.0% 0.0% 0.0%
+Prospect Elementary School Robeson Public 86 1.2% 0.0% 2.3%
+R B Dean Elementary Robeson Public 53 0.0% 0.0% 7.5%
+Rex-Rennert Elementary Robeson Public 54 0.0% 0.0% 5.6%
+Rosenwald Elementary Robeson Public 92 0.0% 0.0% 22.8%
+Rowland Norment Elementary Robeson Public 132 0.0% 0.8% 4.5%
+Saint Pauls Elementary Robeson Public 148 0.0% 0.0% 6.1%
+Southside/Ashpole Elem Robeson Public 43 0.0% 0.0% 2.3%
+Tanglewood Elementary Robeson Public 93 0.0% 0.0% 4.3%
+Union Chapel Elementary Robeson Public 86 0.0% 0.0% 9.3%
+Union Elementary School Robeson Public 56 0.0% 0.0% 1.8%
+W H Knuckles Robeson Public 24 0.0% 0.0% 12.5%
+West Lumberton Elementary Robeson Public 98 0.0% 0.0% 3.1%
+Robeson Total 1,826 0.1% 0.1% 5.1%
+Carolina Baptist Academy Rockingham Private 6 0.0% 0.0% 0.0%
+Community Baptist Schools Rockingham Private 19 0.0% 5.3% 5.3%
+The Benaja Christian Academy Rockingham Private 1 0.0% 0.0% 0.0%
+The Increase Learning Center, Inc. Rockingham Private 2 0.0% 0.0% 0.0%
+Bethany Elementary Rockingham Public 74 0.0% 1.4% 0.0%
+Central Elementary School Rockingham Public 64 0.0% 0.0% 1.6%
+Douglass Elementary Rockingham Public 59 0.0% 0.0% 1.7%
+Draper Elementary Rockingham Public 42 0.0% 2.4% 2.4%
+Huntsville Elementary Rockingham Public 67 0.0% 0.0% 1.5%
+John W Dillard Elementary Rockingham Public 22 0.0% 0.0% 18.2%
+Leaksville-Spray Elementary Rockingham Public 78 0.0% 0.0% 0.0%
+Lincoln Elementary Rockingham Public 63 0.0% 0.0% 6.3%
+Monroeton Elementary Rockingham Public 83 0.0% 0.0% 2.4%
+Moss Street Elementary Rockingham Public 75 0.0% 0.0% 5.3%
+New Vision Sch.of Math/Sci/Tec Rockingham Public 53 0.0% 0.0% 0.0%
+South End Elementary Rockingham Public 36 0.0% 0.0% 0.0%
+Stoneville Elementary Rockingham Public 58 0.0% 0.0% 0.0%
+Wentworth Elementary Rockingham Public 63 0.0% 1.6% 0.0%
+Williamsburg Elementary Rockingham Public 93 0.0% 0.0% 3.2%
+Rockingham Total 958 0.0% 0.4% 2.3%
+Grace Academy Rowan Private 12 8.3% 0.0% 0.0%
+North Hills Christian School Rowan Private 25 0.0% 4.0% 0.0%
+North Kannapolis Christian Academy Rowan Private 3 33.3% 0.0% 0.0%
+Rockwell Christian School Rowan Private 23 0.0% 4.3% 0.0%
+SACRED HEART CATHOLIC SCHOOL Rowan Private 9 0.0% 0.0% 0.0%
+Salisbury Academy Rowan Private 22 0.0% 9.1% 0.0%
+Yadkin Path Montessori Rowan Private 1 0.0% 100.0% 0.0%
+Bostian Elementary School Rowan Public 52 0.0% 1.9% 1.9%
+Carroll T Overton Elementary School Rowan Public 61 1.6% 0.0% 8.2%
+China Grove Elementary School Rowan Public 930 0.0% 0.0% 0.4%
+Cleveland Elementary School Rowan Public 42 0.0% 2.4% 7.1%
+Elizabeth Duncan Koontz Elementary School Rowan Public 89 0.0% 1.1% 6.7%
+Elizabeth Hanford Dole Elementary School Rowan Public 76 0.0% 0.0% 3.9%
+Enochville Elementary School Rowan Public 53 0.0% 0.0% 1.9%
+Ethan H Shive Elementary School Rowan Public 64 0.0% 0.0% 0.0%
+Faith Elementary School Rowan Public 50 0.0% 2.0% 32.0%
+Granite Quarry Elementary School Rowan Public 82 0.0% 2.4% 2.4%
+Isenberg Elementary School Rowan Public 52 0.0% 0.0% 1.9%
+J F Hurley Elementary School Rowan Public 82 0.0% 0.0% 4.9%
+Knollwood Elementary School Rowan Public 100 0.0% 0.0% 3.0%
+Landis Elementary School Rowan Public 76 0.0% 1.3% 3.9%
+Millbridge Elementary School Rowan Public 101 0.0% 2.0% 5.0%
+Morgan Elementary School Rowan Public 55 0.0% 0.0% 1.8%
+Mount Ulla Elementary School Rowan Public 53 1.9% 0.0% 0.0%
+North Rowan Elementary School Rowan Public 83 0.0% 1.2% 4.8%
+Rockwell Elementary School Rowan Public 99 0.0% 1.0% 5.1%
+Woodleaf Elementary School Rowan Public 50 0.0% 2.0% 2.0%
+Rowan Total 2,345 0.2% 0.7% 2.9%
+Lake Lure Classical Academy Rutherford Charter 24 0.0% 4.2% 8.3%
+Thomas Jefferson Classical ACademy: A Challenge Foundation A Rutherford Charter 109 0.0% 2.8% 0.0%
+Pine Ridge Mennonite Rutherford Private 5 0.0% 0.0% 0.0%
+The Master's Academy Rutherford Private 4 0.0% 0.0% 0.0%
+Trrinity Christian School Rutherford Private 8 0.0% 0.0% 0.0%
+Cliffside Elementary School Rutherford Public 37 0.0% 0.0% 5.4%
+Ellenboro Elementary School Rutherford Public 104 0.0% 1.0% 3.8%
+Forest City-Dunbar Elementary School Rutherford Public 78 0.0% 0.0% 5.1%
+Forrest W. Hunt Elementary School Rutherford Public 61 0.0% 0.0% 0.0%
+Harris Elementary School Rutherford Public 78 0.0% 0.0% 1.3%
+Mount Vernon Rutherford Public 57 0.0% 0.0% 5.3%
+Pinnacle Elementary School Rutherford Public 50 0.0% 4.0% 2.0%
+Rutherfordton Elementary School Rutherford Public 46 0.0% 4.3% 0.0%
+Spindale Elementary School Rutherford Public 62 0.0% 1.6% 3.2%
+Sunshine Elementary School Rutherford Public 40 0.0% 2.5% 0.0%
+Rutherford Total 763 0.0% 1.4% 2.5%
+Harrells Christian Academy Sampson Private 17 0.0% 0.0% 0.0%
+Mintz Christian Academy Sampson Private 11 0.0% 0.0% 0.0%
+New Life Christian Academy Sampson Private 2 0.0% 0.0% 0.0%
+The Point Christian Academy Sampson Private 6 0.0% 0.0% 0.0%
+Clement Elementary Sampson Public 59 0.0% 0.0% 3.4%
+Hargrove Elementary Sampson Public 56 0.0% 0.0% 5.4%
+Hobbton Elementary Sampson Public 86 0.0% 0.0% 3.5%
+Langdon C Kerr Elementary Sampson Public 268 0.0% 0.0% 4.5%
+Midway Elementary Sampson Public 85 0.0% 0.0% 5.9%
+Plain View Elementary Sampson Public 68 0.0% 0.0% 8.8%
+Roseboro Elementary School Sampson Public 74 0.0% 0.0% 13.5%
+Salemburg Elementary Sampson Public 85 0.0% 0.0% 8.2%
+Union Elementary School Sampson Public 129 0.0% 0.0% 8.5%
+Sampson Total 946 0.0% 0.0% 6.2%
+Christ the Cornerstone Academy Scotland Private 13 0.0% 0.0% 7.7%
+Scotland Christian Academy Scotland Private 11 0.0% 0.0% 0.0%
+Covington Street Elementary Scotland Public 36 0.0% 0.0% 11.1%
+I. Ellis Johnson Elementary Scotland Public 62 0.0% 0.0% 1.6%
+Laurel Hill Elementary Scotland Public 62 0.0% 0.0% 0.0%
+North Laurinburg Elementary Scotland Public 45 0.0% 0.0% 2.2%
+South Scotland Elementary Scotland Public 56 0.0% 0.0% 5.4%
+Sycamore Lane Elementary Scotland Public 95 0.0% 0.0% 9.5%
+Wagram Elementary Scotland Public 79 0.0% 0.0% 2.5%
+Scotland Total 459 0.0% 0.0% 4.6%
+Carolina Christian School Stanly Private 20 0.0% 0.0% 0.0%
+Christ the King Christian Academy Stanly Private 7 0.0% 14.3% 0.0%
+Park Ridge Christian Stanly Private 24 0.0% 0.0% 0.0%
+Tillery Christian Academy Stanly Private 3 0.0% 0.0% 0.0%
+Aquadale Elementary School Stanly Public 49 0.0% 2.0% 0.0%
+Badin Elementary School Stanly Public 72 0.0% 0.0% 2.8%
+Central Elementary Stanly Public 85 0.0% 1.2% 9.4%
+East Albemarle Elementary School Stanly Public 53 0.0% 0.0% 1.9%
+Endy Elementary School Stanly Public 53 0.0% 0.0% 5.7%
+Locust Elementary School Stanly Public 53 0.0% 0.0% 1.9%
+Millingport Elementary School Stanly Public 33 0.0% 0.0% 0.0%
+Norwood Elementary School Stanly Public 66 0.0% 0.0% 1.5%
+Oakboro Elementary School Stanly Public 54 0.0% 0.0% 0.0%
+Richfield Elementary School Stanly Public 51 0.0% 0.0% 0.0%
+Stanfield Elementary School Stanly Public 46 0.0% 0.0% 2.2%
+Stanly Total 669 0.0% 0.4% 2.5%
+Calvary Christian School Stokes Private 17 0.0% 11.8% 11.8%
+Germanton Elementary Stokes Public 25 0.0% 0.0% 0.0%
+King Elementary Stokes Public 76 0.0% 0.0% 0.0%
+Lawsonville Elementary Stokes Public 21 0.0% 0.0% 4.8%
+London Elementary Stokes Public 44 0.0% 0.0% 0.0%
+Mount Olive Elementary Stokes Public 42 0.0% 0.0% 0.0%
+Nancy Reynolds Elementary Stokes Public 17 0.0% 0.0% 5.9%
+Pine Hall Elementary Stokes Public 17 0.0% 0.0% 0.0%
+Pinnacle Elementary School Stokes Public 25 0.0% 0.0% 0.0%
+Poplar Springs Elementary School Stokes Public 75 0.0% 2.7% 4.0%
+Sandy Ridge Elementary School Stokes Public 32 0.0% 0.0% 3.1%
+Walnut Cove Elementary Stokes Public 40 0.0% 0.0% 0.0%
+Stokes Total 431 0.0% 0.9% 1.9%
+Millennium Charter Academy Surry Charter 79 0.0% 0.0% 0.0%
+Salem Christian Academy Surry Private 5 0.0% 0.0% 0.0%
+Bruce H Tharrington Elementary Surry Public 110 0.0% 0.0% 0.0%
+Cedar Ridge Elementary School Surry Public 58 0.0% 0.0% 1.7%
+Copeland Elementary School Surry Public 37 0.0% 0.0% 2.7%
+Dobson Elementary School Surry Public 28 0.0% 0.0% 0.0%
+Elkin Elementary School Surry Public 90 0.0% 1.1% 1.1%
+Flat Rock Elementary School Surry Public 42 0.0% 0.0% 0.0%
+Franklin Elementary School Surry Public 73 0.0% 0.0% 2.7%
+Mountain Park Elementary Surry Public 30 0.0% 0.0% 0.0%
+Pilot Mountain Elementary School Surry Public 50 0.0% 0.0% 2.0%
+Rockford Elementary School Surry Public 57 1.8% 0.0% 0.0%
+Shoals Elementary School Surry Public 47 0.0% 0.0% 0.0%
+Westfield Elementary School Surry Public 24 0.0% 4.2% 0.0%
+White Plains Elementary School Surry Public 47 0.0% 0.0% 0.0%
+Surry Total 777 0.1% 0.3% 0.8%
+Mountain Discovery Charter School Swain Charter 20 0.0% 0.0% 0.0%
+New Kituwah Academy Swain Private 15 0.0% 0.0% 0.0%
+Cherokee Elementary School Swain Public 95 0.0% 1.1% 2.1%
+Swain County East Elementary Swain Public 64 0.0% 0.0% 6.3%
+Swain County West Elementary Swain Public 73 0.0% 0.0% 1.4%
+Swain Total 267 0.0% 0.4% 2.6%
+Brevard Academy: A Challenge Foundation Academy Transylvania Charter 52 0.0% 0.0% 0.0%
+Bethany Christian School Transylvania Private 11 0.0% 0.0% 0.0%
+Mountain Sun Community School Transylvania Private 12 0.0% 50.0% 8.3%
+Brevard Elementary Transylvania Public 75 0.0% 5.3% 6.7%
+Pisgah Forest Elementary Transylvania Public 65 0.0% 1.5% 1.5%
+Rosman Elementary Transylvania Public 45 2.2% 2.2% 2.2%
+T C Henderson Elementary Transylvania Public 18 0.0% 5.6% 5.6%
+Transylvania Total 278 0.4% 4.7% 3.2%
+Tyrrell Elementary Tyrrell Public 36 0.0% 0.0% 0.0%
+Tyrrell Total 36 0.0% 0.0% 0.0%
+Union Academy Charter School Union Charter 155 0.6% 3.9% 1.9%
+Union Day School Union Charter 100 0.0% 4.0% 0.0%
+Abundant Life Christian Academy Union Private 7 0.0% 0.0% 0.0%
+Grace Academy Union Private 10 0.0% 10.0% 0.0%
+Marvin Academy Union Private 2 0.0% 0.0% 50.0%
+Metrolina Christian Academy Union Private 61 1.6% 9.8% 0.0%
+Private religious Union Private 10 0.0% 40.0% 0.0%
+Tabernacle Christian School Union Private 18 0.0% 0.0% 0.0%
+Weddington Christian Academy Union Private 17 0.0% 5.9% 0.0%
+Antioch Elementary Union Public 92 0.0% 1.1% 0.0%
+Benton Heights Elementary School of the Arts Union Public 116 0.0% 0.9% 7.8%
+East Elementary Union Public 54 1.9% 0.0% 9.3%
+Fairview Elementary School Union Public 80 0.0% 5.0% 0.0%
+Hemby Bridge Elementary School Union Public 75 0.0% 0.0% 5.3%
+Indian Trail Elementary School Union Public 98 0.0% 5.1% 3.1%
+Kensington Elementary School Union Public 96 1.0% 0.0% 2.1%
+Marshville Elementary School Union Public 70 1.4% 1.4% 4.3%
+Marvin Elementary School Union Public 71 0.0% 2.8% 2.8%
+New Salem Elementary School Union Public 51 0.0% 0.0% 0.0%
+New Town Elementary Union Public 111 0.0% 0.9% 1.8%
+Poplin Elementary School Union Public 115 0.9% 3.5% 2.6%
+Porter Ridge Elementary School Union Public 59 0.0% 1.7% 3.4%
+Prospect Elementary Union Public 68 0.0% 2.9% 2.9%
+Rea View Elementary Union Public 68 0.0% 0.0% 1.5%
+Rock Rest Elementary School Union Public 104 0.0% 0.0% 4.8%
+Rocky River Elementary Union Public 101 0.0% 0.0% 7.9%
+Sandy Ridge Elementary School Union Public 55 0.0% 1.8% 3.6%
+Sardis Elementary School Union Public 64 1.6% 4.7% 9.4%
+Shiloh Elementary School Union Public 71 0.0% 4.2% 1.4%
+Stallings Elementary School Union Public 83 0.0% 0.0% 1.2%
+Sun Valley Elementary School Union Public 89 0.0% 2.2% 4.5%
+Union Elementary School Union Public 67 0.0% 0.0% 3.0%
+Unionville Elementary School Union Public 105 0.0% 1.0% 1.0%
+Walter Bickett Elementary School Union Public 94 0.0% 0.0% 31.9%
+Waxhaw Elementary School Union Public 83 0.0% 1.2% 7.2%
+Weddington Elementary School Union Public 135 0.7% 2.2% 0.0%
+Wesley Chapel Elementary School Union Public 63 0.0% 1.6% 1.6%
+Western Union Elementary School Union Public 99 0.0% 5.1% 2.0%
+Wingate Elementary School Union Public 95 0.0% 1.1% 5.3%
+Union Total 2,912 0.3% 2.2% 4.0%
+Henderson Collegiate Vance Charter 110 0.0% 0.0% 9.1%
+Vance Charter School Vance Charter 60 0.0% 0.0% 0.0%
+Crossroads Christian Schoo Vance Private 12 0.0% 8.3% 0.0%
+Kerr-Vance Academy Vance Private 12 0.0% 0.0% 0.0%
+Victory Christian School Vance Private 2 0.0% 0.0% 0.0%
+Aycock Elementary School Vance Public 61 0.0% 0.0% 3.3%
+Carver Elementary School Vance Public 37 0.0% 0.0% 5.4%
+Clarke Elementary School Vance Public 73 0.0% 0.0% 9.6%
+Dabney Elementary School Vance Public 92 0.0% 0.0% 1.1%
+E M Rollins Elementary School Vance Public 63 0.0% 0.0% 3.2%
+E O Young Jr Elementary School Vance Public 32 0.0% 0.0% 3.1%
+L B Yancey Elementary School Vance Public 38 0.0% 0.0% 13.2%
+New Hope Elementary School Vance Public 27 0.0% 0.0% 0.0%
+Pinkston Street Elementary School Vance Public 44 0.0% 0.0% 4.5%
+Zeb Vance Elementary School Vance Public 51 0.0% 0.0% 3.9%
+Vance Total 714 0.0% 0.1% 4.8%
+Cardinal Charter Academy Wake Charter 113 0.0% 1.8% 7.1%
+Casa Esperanza Montessori Charter School Wake Charter 70 0.0% 1.4% 0.0%
+East Wake Academy Wake Charter 80 0.0% 0.0% 0.0%
+Endeavor Charter Wake Charter 57 0.0% 3.5% 0.0%
+Envision Science Academy Wake Charter 76 0.0% 0.0% 2.6%
+Franklin Academy Wake Charter 119 0.0% 1.7% 0.0%
+Hope Charter Leadership Academy Wake Charter 20 0.0% 0.0% 0.0%
+PAVE Southeast Raleigh Charter School Wake Charter 87 0.0% 0.0% 10.3%
+Peak Charter Academy Wake Charter 92 0.0% 0.0% 0.0%
+PreEminent Charter School Wake Charter 77 0.0% 1.3% 28.6%
+Quest Academy Wake Charter 16 0.0% 0.0% 0.0%
+Sterling Montessori Academy Wake Charter 74 0.0% 0.0% 0.0%
+The Exploris School Wake Charter 28 0.0% 3.6% 0.0%
+Triangle Math and Science Academy Wake Charter 75 0.0% 1.3% 0.0%
+Al-Iman School Wake Private 28 0.0% 3.6% 7.1%
+Cary Christian School Wake Private 51 0.0% 13.7% 5.9%
+Cathedral School Wake Private 24 0.0% 0.0% 0.0%
+Commission Leadership Academy Wake Private 17 0.0% 5.9% 64.7%
+Follow the Child Montessori School Wake Private 18 0.0% 0.0% 0.0%
+Friendship Christian School Wake Private 14 0.0% 21.4% 0.0%
+Heartwood Montessori School Wake Private 18 0.0% 11.1% 0.0%
+Heritage Christian School Wake Private 11 0.0% 0.0% 9.1%
+Hilltop Christian School Wake Private 30 0.0% 6.7% 0.0%
+International Montessori School Wake Private 11 0.0% 0.0% 9.1%
+Learn with the Best School, Inc. Wake Private 3 0.0% 0.0% 33.3%
+Lucy Daniels School Wake Private 6 0.0% 0.0% 0.0%
+Neuse Christian Academy Wake Private 18 0.0% 11.1% 16.7%
+North Raleigh Christian Academy Wake Private 75 0.0% 1.3% 0.0%
+Oak City Academy Wake Private 12 0.0% 8.3% 0.0%
+Our Lady Of Lourdes Wake Private 37 2.7% 2.7% 0.0%
+Peace Montessori Wake Private 4 0.0% 0.0% 0.0%
+Primrose School at Holly Grove Wake Private 23 0.0% 0.0% 0.0%
+Raleigh Christian Academy Wake Private 24 0.0% 0.0% 33.3%
+Ravenscroft.org Wake Private 54 0.0% 3.7% 1.9%
+Renaissance Montessori School Wake Private 6 0.0% 16.7% 0.0%
+Resurrection Lutheran School Wake Private 13 0.0% 15.4% 0.0%
+St David's School Wake Private 31 3.2% 6.5% 0.0%
+St Michael Catholic School Wake Private 44 0.0% 0.0% 0.0%
+St. Catherine of Siena Catholic School Wake Private 15 0.0% 0.0% 0.0%
+St. Mary Magdalene Catholic School Wake Private 36 0.0% 0.0% 0.0%
+St. Raphael Catholic School Wake Private 27 0.0% 0.0% 0.0%
+St. Timothy's School Wake Private 51 0.0% 2.0% 0.0%
+Thales Academy - Knightdale Wake Private 48 0.0% 0.0% 2.1%
+Thales Academy - Wake Forest Wake Private 106 0.0% 3.8% 21.7%
+Thales Academy Apex Wake Private 94 0.0% 2.1% 19.1%
+Thales Academy Raleigh Wake Private 64 0.0% 1.6% 0.0%
+The Franciscan School Wake Private 63 0.0% 1.6% 0.0%
+The Montessori School of Raleigh Wake Private 41 2.4% 7.3% 0.0%
+The New School Montessori Wake Private 18 0.0% 5.6% 22.2%
+The Raleigh School Wake Private 44 2.3% 0.0% 6.8%
+Wake Christian Academy Wake Private 57 3.5% 1.8% 0.0%
+Wake Forest Montessori Wake Private 3 0.0% 0.0% 33.3%
+Word of God Christian Academy Wake Private 23 0.0% 0.0% 17.4%
+Abbotts Creek Elementary School Wake Public 133 0.0% 0.0% 0.0%
+Adams Elementary Wake Public 107 0.0% 0.0% 4.7%
+Alston Ridge Elementary School Wake Public 168 0.0% 0.0% 0.0%
+Apex Elementary Wake Public 113 0.0% 1.8% 2.7%
+Aversboro Elementary Wake Public 78 0.0% 2.6% 2.6%
+Baileywick Road Elementary Wake Public 73 0.0% 0.0% 6.8%
+Ballentine Elementary Wake Public 106 0.0% 1.9% 0.0%
+Banks Road Elementary Wake Public 98 0.0% 2.0% 0.0%
+Barwell Road Elementary Wake Public 117 0.0% 0.0% 6.0%
+Baucom Elementary Wake Public 92 0.0% 1.1% 1.1%
+Beaverdam Elementary Wake Public 105 0.0% 1.0% 0.0%
+Brassfield Road Elementary Wake Public 120 0.0% 2.5% 5.8%
+Brentwood Elementary Wake Public 68 0.0% 1.5% 2.9%
+Briarcliff Elementary Wake Public 90 0.0% 0.0% 3.3%
+Brier Creek Elementary Wake Public 120 0.0% 1.7% 0.0%
+Brooks Elementary Wake Public 93 0.0% 0.0% 5.4%
+Bugg Elementary Wake Public 48 0.0% 0.0% 2.1%
+Carpenter Elementary Wake Public 129 0.0% 0.8% 0.0%
+Carver Elementary Wake Public 54 0.0% 1.9% 1.9%
+Cary Elementary Wake Public 77 0.0% 2.6% 2.6%
+Cedar Fork Elementary Wake Public 161 0.0% 0.6% 1.9%
+Conn Elementary Wake Public 71 1.4% 0.0% 2.8%
+Creech Road Elementary Wake Public 95 0.0% 0.0% 0.0%
+Davis Drive Elementary Wake Public 104 0.0% 2.9% 0.0%
+Dillard Drive Elementary Wake Public 126 0.0% 0.8% 5.6%
+Douglas Elementary Wake Public 139 0.0% 2.9% 3.6%
+Durant Road Elementary Wake Public 158 1.3% 0.6% 6.3%
+East Garner Elementary Wake Public 87 0.0% 3.4% 10.3%
+Farmington Woods Elementary Wake Public 120 0.0% 0.0% 4.2%
+Forest Pines Drive Elementary Wake Public 83 0.0% 1.2% 0.0%
+Forestville Road Elementary Wake Public 87 0.0% 0.0% 0.0%
+Fox Road Elementary Wake Public 62 0.0% 0.0% 21.0%
+Fuquay-Varina Elementary Wake Public 117 0.0% 0.0% 5.1%
+Green Elementary Wake Public 141 0.0% 0.7% 24.8%
+Green Hope Elementary Wake Public 25 0.0% 0.0% 0.0%
+Harris Creek Elementary Wake Public 164 0.0% 1.2% 8.5%
+Herbert Akins Road Elementary Wake Public 158 0.0% 1.3% 1.9%
+Heritage Elementary Wake Public 103 0.0% 0.0% 6.8%
+Highcroft Elementary Wake Public 137 0.7% 0.0% 0.7%
+Hilburn Drive Academy Wake Public 89 0.0% 2.2% 0.0%
+Holly Grove Elementary Wake Public 179 0.0% 2.2% 4.5%
+Holly Ridge Elementary Wake Public 104 0.0% 1.0% 1.9%
+Holly Springs Elementary Wake Public 134 0.0% 4.5% 8.2%
+Hortons Creek Elementary Wake Public 157 1.3% 0.0% 26.1%
+Hunter Elementary Wake Public 122 0.0% 0.0% 1.6%
+Jeffreys Grove Elementary Wake Public 95 0.0% 0.0% 0.0%
+Jones Dairy Elementary Wake Public 91 0.0% 2.2% 0.0%
+Joyner Elementary Wake Public 112 0.9% 0.0% 1.8%
+Kingswood Elementary Wake Public 58 0.0% 1.7% 0.0%
+Knightdale Elementary Wake Public 91 0.0% 0.0% 2.2%
+Lacy Elementary Wake Public 100 0.0% 1.0% 5.0%
+Lake Myra Elementary Wake Public 113 0.0% 0.0% 34.5%
+Laurel Park Elementary Wake Public 152 0.0% 0.0% 0.0%
+Lead Mine Elementary Wake Public 67 0.0% 0.0% 4.5%
+Leesville Road Elementary Wake Public 95 0.0% 1.1% 5.3%
+Lincoln Heights Elementary Wake Public 61 0.0% 1.6% 23.0%
+Lockhart Elementary Wake Public 68 0.0% 0.0% 1.5%
+Lynn Road Elementary Wake Public 95 0.0% 1.1% 16.8%
+Middle Creek Elementary Wake Public 135 0.0% 1.5% 17.0%
+Millbrook Elementary Wake Public 81 0.0% 1.2% 0.0%
+Mills Park Elementary Wake Public 122 0.0% 1.6% 6.6%
+Morrisville Elementary Wake Public 132 0.0% 1.5% 0.0%
+North Forest Pines Elementary Wake Public 112 0.0% 0.0% 3.6%
+North Ridge Elementary Wake Public 108 0.0% 0.0% 2.8%
+Northwoods Elementary Wake Public 103 0.0% 0.0% 3.9%
+Oak Grove Elementary Wake Public 125 0.0% 0.8% 0.8%
+Oak View Elementary School Wake Public 126 0.0% 1.6% 0.0%
+Olds Elementary Wake Public 36 0.0% 0.0% 0.0%
+Olive Chapel Elementary Wake Public 149 0.0% 4.0% 0.0%
+Partnership Elementary Wake Public 57 1.8% 0.0% 50.9%
+Penny Road Elementary Wake Public 102 0.0% 1.0% 0.0%
+Pine Springs Preparatory Academy Wake Public 108 0.0% 7.4% 17.6%
+Pleasant Grove Elementary Wake Public 85 0.0% 0.0% 0.0%
+Pleasant Union Elementary Wake Public 95 0.0% 0.0% 1.1%
+Poe Elementary Wake Public 71 0.0% 0.0% 1.4%
+Powell Elementary Wake Public 46 0.0% 0.0% 2.2%
+Rand Road Elementary Wake Public 93 0.0% 1.1% 1.1%
+Reedy Creek Elementary Wake Public 106 0.0% 0.0% 0.9%
+Richland Creek Elementary School Wake Public 63 0.0% 0.0% 0.0%
+River Bend Elementary Wake Public 117 0.0% 2.6% 26.5%
+Rogers Lane Elementary Wake Public 161 0.6% 0.0% 1.2%
+Rolesville Elementary Wake Public 95 0.0% 2.1% 3.2%
+Root Elementary Wake Public 72 0.0% 0.0% 0.0%
+Salem Elementary Wake Public 117 0.0% 0.0% 1.7%
+Sanford Creek Elementary Wake Public 112 0.0% 0.0% 1.8%
+Scotts Ridge Elementary Wake Public 116 0.9% 1.7% 0.9%
+Smith Elementary Wake Public 68 0.0% 0.0% 2.9%
+Stough Elementary Wake Public 75 0.0% 0.0% 0.0%
+Swift Creek Elementary Wake Public 60 0.0% 1.7% 11.7%
+Sycamore Creek Elementary Wake Public 168 0.0% 0.6% 0.0%
+Timber Drive Elementary Wake Public 77 0.0% 0.0% 5.2%
+Turner Creek Elementary Wake Public 111 0.0% 0.9% 1.8%
+Underwood Elementary Wake Public 67 0.0% 0.0% 0.0%
+Vance Elementary Wake Public 93 0.0% 0.0% 14.0%
+Vandora Springs Elementary Wake Public 68 0.0% 1.5% 33.8%
+Wake Forest Elementary Wake Public 57 0.0% 1.8% 1.8%
+Wakefield Elementary Wake Public 88 0.0% 0.0% 17.0%
+Wakelon Elementary Wake Public 77 0.0% 0.0% 6.5%
+Walnut Creek Elementary School Wake Public 97 0.0% 1.0% 29.9%
+Washington Elementary Wake Public 104 0.0% 0.0% 7.7%
+Weatherstone Elementary Wake Public 140 1.4% 1.4% 5.0%
+Wendell Elementary Wake Public 123 0.0% 2.4% 3.3%
+West Lake Elementary Wake Public 110 0.0% 0.0% 0.9%
+White Oak Elementary School Wake Public 55 5.5% 0.0% 1.8%
+Wilburn Elementary Wake Public 106 0.0% 0.0% 4.7%
+Wildwood Forest Elementary Wake Public 124 0.0% 0.8% 1.6%
+Wiley Elementary Wake Public 68 0.0% 0.0% 0.0%
+Willow Springs Elementary Wake Public 199 0.0% 3.0% 0.0%
+Yates Mill Elementary Wake Public 87 0.0% 0.0% 0.0%
+York Elementary Wake Public 76 0.0% 0.0% 0.0%
+Zebulon Elementary Wake Public 73 0.0% 0.0% 2.7%
+Wake Total 13,572 0.2% 1.2% 5.2%
+Haliwa-Saponi Tribal School Warren Charter 8 0.0% 0.0% 0.0%
+Norlina Christian School Warren Private 4 0.0% 0.0% 0.0%
+Mariam Boyd Elementary Warren Public 47 0.0% 0.0% 0.0%
+Northside K-8 Warren Public 40 0.0% 0.0% 0.0%
+South Warren Elementary Warren Public 18 0.0% 0.0% 0.0%
+Vaughan Elementary Warren Public 21 0.0% 0.0% 0.0%
+Warren Total 138 0.0% 0.0% 0.0%
+Creswell Elementary Washington Public 30 0.0% 0.0% 0.0%
+Pines Elementary Washington Public 79 0.0% 0.0% 0.0%
+Washington Total 109 0.0% 0.0% 0.0%
+Two Rivers Community School Watauga Charter 17 0.0% 23.5% 0.0%
+Grace Academy Watauga Private 13 0.0% 30.8% 7.7%
+Mountain Pathways School Watauga Private 7 0.0% 0.0% 0.0%
+Bethel Elementary Watauga Public 11 0.0% 0.0% 0.0%
+Blowing Rock Elementary Watauga Public 26 0.0% 0.0% 0.0%
+Cove Creek Elementary Watauga Public 27 0.0% 3.7% 0.0%
+Green Valley Elementary Watauga Public 32 0.0% 6.3% 9.4%
+Hardin Park Elementary Watauga Public 98 0.0% 5.1% 0.0%
+Mabel Elementary Watauga Public 18 0.0% 0.0% 0.0%
+Parkway Elementary Watauga Public 63 0.0% 0.0% 0.0%
+Valle Crucis Elementary Watauga Public 49 0.0% 2.0% 12.2%
+Watauga Total 361 0.0% 4.7% 2.8%
+Dillard Academy Charter School Wayne Charter 39 0.0% 0.0% 5.1%
+Faith Christian Academy Wayne Private 25 0.0% 0.0% 12.0%
+Pathway Christian Academy Wayne Private 3 0.0% 0.0% 0.0%
+Saint Mary Catholic School Wayne Private 23 0.0% 0.0% 0.0%
+The Children's House of Goldsboro Wayne Private 6 0.0% 33.3% 0.0%
+Wayne Christian School Wayne Private 31 0.0% 3.2% 3.2%
+Wayne Country Day School Wayne Private 16 0.0% 6.3% 0.0%
+Wayne Montessori School Wayne Private 9 0.0% 0.0% 0.0%
+Brogden Primary School Wayne Public 164 0.0% 0.6% 1.2%
+Carver Elementary School Wayne Public 136 0.0% 0.0% 0.0%
+Eastern Wayne Elementary School Wayne Public 123 0.0% 0.8% 1.6%
+Edgewood Community Developmental School Wayne Public 15 0.0% 0.0% 0.0%
+Fremont STARS Elementary Wayne Public 28 0.0% 0.0% 0.0%
+Grantham Elementary Wayne Public 97 0.0% 0.0% 35.1%
+Meadow Lane Elementary School Wayne Public 117 0.0% 0.9% 1.7%
+North Drive Elementary School Wayne Public 229 0.4% 0.0% 0.0%
+Northeast Elementary Wayne Public 120 0.0% 0.8% 0.0%
+Northwest Elementary School Wayne Public 124 0.0% 0.0% 7.3%
+Rosewood Elementary School Wayne Public 94 0.0% 0.0% 0.0%
+Spring Creek Elementary School Wayne Public 146 0.0% 0.7% 2.7%
+Tommy's Road Elementary School Wayne Public 108 0.0% 0.0% 0.0%
+Wayne Total 1,653 0.1% 0.5% 3.6%
+Bridges Academy Wilkes Charter 20 0.0% 0.0% 0.0%
+Harvest Time Christian Academy Wilkes Private 4 0.0% 0.0% 0.0%
+Millers Creek Christian School Wilkes Private 13 0.0% 7.7% 0.0%
+Boomer-Ferguson Elementary Wilkes Public 29 0.0% 0.0% 0.0%
+C B Eller Elementary Wilkes Public 36 0.0% 0.0% 0.0%
+C C Wright Elementary Wilkes Public 58 0.0% 1.7% 1.7%
+Millers Creek Elementary Wilkes Public 117 0.0% 0.0% 1.7%
+Moravian Falls Elementary Wilkes Public 40 0.0% 2.5% 0.0%
+Mount Pleasant Elementary Wilkes Public 38 0.0% 2.6% 5.3%
+Mountain View Elementary Wilkes Public 85 0.0% 0.0% 1.2%
+Mulberry Elementary Wilkes Public 75 0.0% 1.3% 2.7%
+North Wilkesboro Elementary Wilkes Public 51 0.0% 2.0% 2.0%
+Roaring River Elementary Wilkes Public 21 0.0% 0.0% 4.8%
+Ronda-Clingman Elementary Wilkes Public 43 0.0% 0.0% 0.0%
+Traphill Elementary Wilkes Public 29 0.0% 0.0% 0.0%
+Wilkesboro Elementary Wilkes Public 65 0.0% 0.0% 1.5%
+Wilkes Total 724 0.0% 0.8% 1.5%
+Sallie B Howard School for the Arts and Education Wilson Charter 123 0.0% 0.0% 2.4%
+Wilson Preparatory Academy Wilson Charter 67 0.0% 1.5% 0.0%
+Building Blocks Montessori Wilson Private 2 0.0% 0.0% 0.0%
+Building Blocks Montessori School Wilson Private 2 0.0% 0.0% 0.0%
+Community Christian School Wilson Private 8 0.0% 0.0% 0.0%
+Great Accomplishments Academy for Autism and ADHD Wilson Private 2 0.0% 0.0% 0.0%
+Greenfield School Wilson Private 15 0.0% 0.0% 33.3%
+Wilson Christian Academy Wilson Private 41 0.0% 0.0% 0.0%
+B O Barnes Elementary Wilson Public 67 0.0% 0.0% 0.0%
+Elm City Elementary Wilson Public 65 0.0% 0.0% 3.1%
+Gardners Elementary Wilson Public 36 0.0% 0.0% 5.6%
+Jones Elementary Wilson Public 80 0.0% 0.0% 10.0%
+Lee Woodard Elementary Wilson Public 28 0.0% 0.0% 3.6%
+Lucama Elementary Wilson Public 65 0.0% 0.0% 0.0%
+Margaret Hearne Elementary Wilson Public 69 0.0% 0.0% 1.4%
+New Hope Elementary Wilson Public 71 0.0% 0.0% 0.0%
+Rock Ridge Elementary Wilson Public 87 0.0% 0.0% 0.0%
+Stantonsburg Elementary Wilson Public 36 0.0% 0.0% 0.0%
+Vick Elementary Wilson Public 45 0.0% 0.0% 20.0%
+Vinson-Bynum Elementary Wilson Public 63 0.0% 0.0% 3.2%
+Wells Elementary Wilson Public 52 0.0% 0.0% 3.8%
+Winstead Elementary Wilson Public 48 0.0% 0.0% 4.2%
+Wilson Total 1,072 0.0% 0.1% 3.5%
+Boonville Elementary Yadkin Public 53 0.0% 0.0% 7.5%
+Courtney Elementary Yadkin Public 35 0.0% 2.9% 0.0%
+East Bend Elementary Yadkin Public 40 0.0% 0.0% 22.5%
+Fall Creek Elementary Yadkin Public 41 0.0% 2.4% 0.0%
+Forbush Elementary Yadkin Public 28 0.0% 0.0% 3.6%
+Jonesville Elementary Yadkin Public 37 0.0% 0.0% 0.0%
+West Yadkin Elementary Yadkin Public 77 0.0% 0.0% 0.0%
+Yadkin Success Academy Yadkin Public 1 0.0% 0.0% 0.0%
+Yadkinville Elementary Yadkin Public 81 0.0% 0.0% 0.0%
+Yadkin Total 393 0.0% 0.5% 3.6%
+Genesis Academy Inc. Yancey Private 2 0.0% 0.0% 50.0%
+Yancey County Christian School Yancey Private 3 0.0% 0.0% 0.0%
+Bald Creek Elementary Yancey Public 31 0.0% 0.0% 0.0%
+Bee Log Elementary Yancey Public 10 0.0% 10.0% 0.0%
+Burnsville Elementary Yancey Public 58 0.0% 0.0% 0.0%
+Clearmont Elementary Yancey Public 21 0.0% 0.0% 4.8%
+Micaville Elementary Yancey Public 35 0.0% 0.0% 20.0%
+South Toe Elementary Yancey Public 16 0.0% 0.0% 12.5%
+Yancey Total 176 0.0% 0.6% 6.3%
+Statewide Total 120,792 0.1% 1.2% 4.6%
