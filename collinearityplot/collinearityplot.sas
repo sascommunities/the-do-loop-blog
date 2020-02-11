@@ -74,8 +74,8 @@ value CollinFmt
   0.5 -<  1.0  = "PropHigh"
   1.0 -<  20   = "CondLow"
    20 -<  30   = "CondMed"
-   30 -<  40   = "CondHigh"
-  100 -  1E9   = "CondExtreme";
+   30 -< 100   = "CondHigh"
+   other       = "CondExtreme";
 run;
 
 /* Convert from wide to long for graphing:
