@@ -1,7 +1,7 @@
 /* SAS program to accompany the article 
    "Cubic interpolation in SAS"
    by Rick Wicklin, published 06MAY2020 on The DO Loop blog:
-   https://blogs.sas.com/content/iml/2020/05/06/cubic-interpolation-sas.html
+   https://blogs.sas.com/content/iml/2020/05/11/cubic-interpolation-sas.html
 
    This program shows how to perform cubic interpolation in SAS
    by using PROC IML.
