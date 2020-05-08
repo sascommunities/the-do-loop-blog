@@ -226,3 +226,82 @@ G = (GM  || CIGM) //
     (GCV || CIGCV);
 print G[r={"GM" "GSD" "GCV"} c={"Estimate" "Lower" "Upper"} L="Confidence Intervals"];
 QUIT;
+
+/***********************************************************/
+/***********************************************************/
+/* Define SAS/IML function that computes geometric 
+   mean, stdDev, CV, and CIs in one easy call:
+   call GeoStats(x, <alpha=00.05>)), where all(x > 0)
+   Run the following program. Then load the module to use it.
+/***********************************************************/
+/***********************************************************/
+proc iml;
+start GeoStats(x, alpha=0.05);
+if any(x<=0) then stop "ERROR: The data must contains only positive values";
+
+/* To estimate the geometric mean and geometric StdDev, compute
+   arithmetic estimates of log(X), then EXP transform the results. */
+n = nrow(x);                 /* no missing values (b/c missing < 0) */
+z = log(x);                  /* log-transformed data */
+m = mean(z);                 /* arithmetic mean of log(X) */
+s = std(z);                  /* arithmetic std dev of log(X) */
+GM = exp(m);                 /* same answer as GEOMEAN function */
+GSD = exp(s);                /* geometric std dev */
+GCV = sqrt(exp(s**2) - 1);   /* geometric CV */
+
+/* Note that some researchers use the following formula */
+y = log(x/GM)##2;
+GSD2 = exp( sqrt(mean(y)) );
+/* The difference between the two estimates is whether the 
+   denominator for StdDev uses Bessel's correction: n vs (n-1) */
+GSD3 = exp( sqrt(mean(y)*n/(n-1)) );
+
+/* compute CI for mean */
+tCrit = quantile("T", 1-alpha/2, n-1 );  /* sample mean is t distributed */
+SEM = s / sqrt(n);
+CImean = m + {-1  1} * tCrit*SEM;        /* mean +/- t_crit * SEM */
+CIGM= exp(CImean);                       /* CI for GM = EXP the endpoints for CI mean */
+
+/* compute CI for StdDev */
+p = (1 - alpha/2) || (alpha/2);
+chi2Crit = quantile("chisquare", p, n-1 ); /* variance is chi-sq distributed */
+numer = (n-1)*s**2;
+CIVar = numer/chi2Crit;                  /* CI for variance */
+CISD = sqrt( CIVar );                    /* CI for Std Dev */
+CIGSD = exp(CISD);                       /* CI for GSD = EXP endpoints for CI Std Dev */
+CIGCV = sqrt(exp(CIVar) - 1);            /* CI for GCV */
+
+/* put geometric stats together */
+G = (GM  || CIGM) // 
+    (GSD || CIGSD) // 
+    (GCV || CIGCV);
+RETURN( G );
+finish;
+store module=GeoStats;
+QUIT;
+
+
+/* Test the function */
+data Have;
+input x @@;
+datalines;
+24.8 47.5 38.6 12.9 68.9  7.5 17.9 46.2 21.2 53.5
+17.8 25.3  8.0 13.7 14.0 25.0 16.8 23.9 14.4 24.5 
+41.5 65.9 76.0  5.2 10.9 33.2 63.2 26.8 19.7 29.2
+36.4 12.9 59.9 21.5  7.0  4.3 32.5 38.6 46.3  9.0
+47.8 13.5  7.9 13.9 42.8  4.1 14.2 20.9  8.7 37.8
+27.4 10.8 18.9 61.7 37.3 58.1 26.3 18.6 50.0  7.8
+26.5  9.0 22.6 34.9 12.5  8.8 19.6 24.4 12.4  4.3
+21.0  7.2 37.1 58.5 10.0 18.8 21.0  6.6 35.7 28.7
+23.0 52.1 23.8 19.3 10.9 30.9 34.7 11.5  7.3  4.3
+137.4 2.8 14.7 30.1 11.7 45.0 11.0 20.4 25.5 15.0 
+;
+
+proc iml;
+load module=GeoStats;
+use Have; read all var "x"; close;  /* read in positive data */
+
+G = geoStats(x);
+print G[c={"Estimate" "Lower" "Upper"} L="Confidence Intervals"
+        r={"GeoMean" "GeoSD" "GeoCV"} ];
+QUIT;
