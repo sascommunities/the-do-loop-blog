@@ -162,12 +162,20 @@ read all var _NUM_ into COV[c=varNames];
 close;
 *print COV[r=varNames c=varNames];
 
-use Cov where (_TYPE_ = "MEAN" & Species=" ");
-read all var _NUM_ into grandmean;
+/* compute the weighted mean of the centers of groups */
+use Cov where (_TYPE_ = "MEAN" & Species^=" ");
+read all var _NUM_ into groupMean;
 close;
+use Cov where (_TYPE_ = "N" & Species^=" ");
+read all var _NUM_ into Ns;
+close;
+NN = Ns[,1];
+mean = (NN` * groupMean)[+,] / sum(NN);
 
-mean = grandmean[,1:2];
-C = Cov[1:2, 1:2];  /* sepal length and width */
+/* draw ellipse for first two vars: sepal length and width */
+mean = mean[,1:2];
+C = Cov[1:2, 1:2];  
+
 /* The N is supposed to be the number of observations in the group.
    The pooled covariance is for all obs ....
    but maybe we need to subtract off k-1 for DF?
