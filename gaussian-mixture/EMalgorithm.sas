@@ -12,7 +12,7 @@
 
 /* initial exploration of the data */
 title "Iris Data and Real Clusters";
-title "And 95% Prediction Ellipse, assuming MVN";
+title2 "And 95% Prediction Ellipse, assuming MVN";
 proc sgplot data=Sashelp.Iris;
    ellipse x=PetalWidth y=SepalWidth / group=Species outline fill transparency=0.6;
    scatter x=PetalWidth y=SepalWidth / group=Species  transparency=0.2
