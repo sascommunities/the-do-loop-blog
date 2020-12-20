@@ -7,7 +7,7 @@
  
    "Create a response variable that has a specified R-square value"
    by Rick Wicklin, published 21DEC2020 on The DO Loop blog:
-   https://blogs.sas.com/content/iml/2020/12/20/response-specified-r-square.html
+   https://blogs.sas.com/content/iml/2020/12/21/response-specified-r-square.html
 
    Given a vector, x, and a correlation, rho, find y such that
    corr(x,y) = rho.
