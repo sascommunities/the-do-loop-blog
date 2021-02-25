@@ -53,10 +53,13 @@ proc sgplot data=WindChillUS;
    yaxis grid values=(-80 to 40 by 5) valueshint;
 run;
 
-/* use white text on a dark background and dark text on a light background */
+title "Wind Chill Chart (US Units)";
+footnote J=L "Source NOAA: https://www.weather.gov/safety/cold-wind-chill-chart";
+
+/* use threshold to decide between white text and dark text */
 data WindChillUS2;
 set WindChillUS;
-textColor = (WCT > -22);  /* use to color text */
+textColor = (WCT > -19.5);  /* use to color text */
 run;
 
 ods graphics / width=640px height=360px;
@@ -65,6 +68,7 @@ proc sgplot data=WindChillUS2;
    format WCT 3.0;
    heatmapparm x=T y=V colorresponse=WCT / name="w"
       colormodel=(DarkPurple Purple DarkBlue DarkCyan LightGray LightYellow LightOrange);
+   /* trick: white text on a dark background and dark text on a light background */
    text x=T y=V text=WCT / colorresponse=textColor colormodel=(white black) textattrs=(weight=bold);
    gradlegend "w";
    xaxis values=(-40 to 40 by 5) valueshint; 
@@ -90,11 +94,10 @@ do TC = 6 to -39 by -3;
    end;
 end;
 
-
-/* use white text on a dark background and dark text on a light background */
+/* use threshold to decide between white text and dark text */
 data WindChillSI2;
 set WindChillSI;
-textColor = (WCT > -30.5);  /* use to color text */
+textColor = (WCT > -29.5);  /* use to color text */
 run;
 
 ods graphics / width=640px height=480px;
@@ -103,6 +106,7 @@ proc sgplot data=WindChillSI2;
    format WCT 3.0;
    heatmapparm x=TC y=VK colorresponse=WCT / name="w"
       colormodel=(DarkPurple Purple DarkBlue DarkCyan LightGray LightYellow LightOrange);
+   /* trick: white text on a dark background and dark text on a light background */
    text x=TC y=VK text=WCT / colorresponse=textColor colormodel=(white black) textattrs=(weight=bold);
    gradlegend "w";
    xaxis values=(-39 to 6 by 3) valueshint; 
