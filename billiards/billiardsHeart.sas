@@ -1,7 +1,7 @@
 /* SAS program to accompany the article 
    "Billiards on a heart-shaped table"
    by Rick Wicklin, published 09FEB2022 on The DO Loop blog:
-   https://blogs.sas.com/content/iml/2022/02/05/billiards-heart-table.html
+   https://blogs.sas.com/content/iml/2022/02/09/billiards-heart-table.html
 
    This program builds on the program in 
    https://blogs.sas.com/content/iml/2022/02/07/billiards-elliptical-table.html
