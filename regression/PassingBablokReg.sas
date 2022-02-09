@@ -4,7 +4,7 @@
    https://blogs.sas.com/content/iml/2022/02/14/passing-bablok-regression-sas.html
 
    This program shows how to perform Passing-Bablok regression in SAS.
-   The program uss the SAS/IML language to implement the method in
+   The program uses the SAS/IML language to implement the method in
 
    Passing and Bablok (1983) "A New Biometrical Procedure for Testing the 
    Equality of Measurements from Two Different Analytical Methods"
