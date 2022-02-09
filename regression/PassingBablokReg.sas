@@ -57,7 +57,7 @@ start PassingBablok(_x, _y, alpha=0.05, DEBUG=0);
       "The occurrence of any of these special cases has a probability 
       of zero (experimental data should exhibit these cases very rarely)."
 
-      Passing and Bablock do not specify how to handle, but one way is
+      Passing and Bablok do not specify how to handle, but one way is
       to keep these values within the set of valid slopes. Use large 
       positive or negative numbers for +infty and -infty, respectively.
    */
