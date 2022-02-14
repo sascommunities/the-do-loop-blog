@@ -211,7 +211,7 @@ run;
 %let YVar = m2;           /* name of Y variable (Method 2) */
 
 data &DSName;
-label x="Method 1" y="Method 2";
+label m1="Method 1" m2="Method 2";
 input m1 m2 @@;
 datalines;
 10.1 10.1  10.5 10.6  12.8 13.1   8.7  8.7  10.8 11.5 
