@@ -11,7 +11,7 @@ start ML_PlotCDF(L, _p=);
 	  p = colvec(_p);
       call sort(p);
    end;
-   x = ML_Quantile(p, L);
+   x = ML_Quantile(L, p);
    call series(x, p) grid={x y} label={'x' 'Cumulative Probability'};
 finish;
 
@@ -23,8 +23,8 @@ start ML_PlotPDF(L, _p=);
 	  p = colvec(_p);
       call sort(p);
    end;
-   x = ML_Quantile(p, L);
-   f = ML_PDF(p, L);
+   x = ML_Quantile(L, p);
+   f = ML_PDF(L, p);
    call series(x, f) grid={x y} label={'x' 'Density'};
 finish;
 
@@ -36,7 +36,7 @@ start ML_PlotECDF(L, _p=);
 	  p = colvec(_p);
       call sort(p);
    end;
-   q = ML_Quantile(p, L);
+   q = ML_Quantile(L, p);
    x = L$'x';
    ECDF = L$'cdf';
    create Temp var {"x" "ECDF" "q" "p"}; append; close;
