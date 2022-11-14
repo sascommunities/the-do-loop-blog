@@ -232,9 +232,9 @@ finish;
    x = {14,18,22.8,24.6,26.1,31,38,41};
    L = ML_CreateFromData(x);   
    p = {0.01, 0.1, 0.25, 0.5, 0.75, 0.90, 0.99};
-   Q = ML_Quantile(p, L);
+   Q = ML_Quantile(L, p);
 */
-start ML_Quantile(p, L);
+start ML_Quantile(L, p);
    type = ML_BoundType(L);
    if type='B' then
       M = Metalog_B_Quantile(p, L$'a', L$'bounds');
@@ -254,11 +254,11 @@ finish;
    x = {14,18,22.8,24.6,26.1,31,38,41};
    L = ML_CreateFromData(x);   
    p = {0.01, 0.1, 0.25, 0.5, 0.75, 0.90, 0.99};
-   PDF = ML_PDF(p, L);
-   Q = ML_Quantile(p, L);   * get quantiles for reference;
+   PDF = ML_PDF(L, p);
+   Q = ML_Quantile(L, p);   * get quantiles for reference;
    print p Q PDF;
 */
-start ML_PDF(p, L);
+start ML_PDF(L, p);
    type = ML_BoundType(L);
    if type='B' then
       f = Metalog_B_PDF(p, L$'a', L$'bounds');
@@ -272,7 +272,7 @@ start ML_PDF(p, L);
 finish;
 
 /* Generate n random variates from the metalog distribution */
-start ML_Rand(n, L);
+start ML_Rand(L, n);
    type = ML_BoundType(L);
    if type='B' then
       X = Metalog_B_Rand(n, L$'a', L$'bounds');
