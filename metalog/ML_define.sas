@@ -172,12 +172,7 @@ start ML_BoundType(L);
    end;
    else if type(L)='N' then bounds=L;
    else return( ' ' );
-   Lbound = (bounds[1]^=.);
-   Ubound = (bounds[2]^=.);
-   if  Lbound &  Ubound then return( 'B' );
-   if ^Lbound &  Ubound then return( 'SU' );
-   if  Lbound & ^Ubound then return( 'SL' );
-   return( 'U' );
+   return( Metalog_BoundType(bounds) );
 finish;
 
 /* Return the parameter estimates for the ML model.
