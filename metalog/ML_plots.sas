@@ -8,7 +8,7 @@ start ML_PlotCDF(L, _p=);
    if IsSkipped(_p) then 
       p = {0.0001 0.0005 0.001} || do(0.01, 0.99, 0.01) || {0.999 0.9995 0.9999};
    else do;
-	  p = colvec(_p);
+      p = colvec(_p);
       call sort(p);
    end;
    x = ML_Quantile(L, p);
@@ -20,7 +20,7 @@ start ML_PlotPDF(L, _p=);
    if IsSkipped(_p) then 
       p = {0.0001 0.0005 0.001} || do(0.01, 0.99, 0.01) || {0.999 0.9995 0.9999};
    else do;
-	  p = colvec(_p);
+      p = colvec(_p);
       call sort(p);
    end;
    x = ML_Quantile(L, p);
@@ -33,7 +33,7 @@ start ML_PlotECDF(L, _p=);
    if IsSkipped(_p) then 
       p = {0.0001 0.0005 0.001} || do(0.01, 0.99, 0.01) || {0.999 0.9995 0.9999};
    else do;
-	  p = colvec(_p);
+      p = colvec(_p);
       call sort(p);
    end;
    q = ML_Quantile(L, p);
@@ -43,8 +43,8 @@ start ML_PlotECDF(L, _p=);
    order=L$'order';
    submit order;
    proc sgplot data=Temp;
-   	scatter x=x y=ECDF / markerattrs=(color=gray symbol=Circle) legendlabel="Data";
-   	series x=q y=p / legendlabel="Metalog_&order";
+      scatter x=x y=ECDF / markerattrs=(color=gray symbol=Circle) legendlabel="Data";
+      series x=q y=p / legendlabel="Metalog_&order";
       yaxis grid label="Cumulative Probability";
       xaxis grid label="x";
       keylegend / location=inside across=1 opaque;
