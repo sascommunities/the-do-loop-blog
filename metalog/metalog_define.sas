@@ -41,6 +41,13 @@ store module=(PrintToLog);
     STOP;
   end;
 %mend;
+/* Example syntax: %WarnReturn("My warning", return(.)) */
+%macro WarnReturn(msg, RetStmt);
+  do;
+    run PrintToLog(&msg,1);
+    &RetStmt;
+  end;
+%mend;
 
 /* Test whether a specified order is valid */
 start Metalog_Order(_order);
@@ -52,6 +59,20 @@ start Metalog_Order(_order);
    if order > 32 then 
       %StopOnError("The order of the metalog model must be less than or equal to 32.");
    return( order );
+finish;
+
+
+/* return type of model based on the bounds:
+   'U' = unbounded; 'B' = bounded
+   'SU' = semi-bounded with upper bound; 'SL' = semi-bounded with lower bound
+*/ 
+start Metalog_BoundType(bounds);
+   Lbound = (bounds[1]^=.);
+   Ubound = (bounds[2]^=.);
+   if  Lbound &  Ubound then return( 'B' );
+   if ^Lbound &  Ubound then return( 'SU' );
+   if  Lbound & ^Ubound then return( 'SL' );
+   return( 'U' );
 finish;
 
 /******************************/
@@ -97,11 +118,17 @@ finish;
 start Metalog_Design(_y, k) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_Design";
    y = colvec(_y);
-   if any(y^=. & (y <= 0 | y>=1)) then 
-      %StopOnError("(Metalog_Design) The input values must be probabilities in (0, 1).");
+   free missIdx;
    if k<2 then
       %StopOnError("(Metalog_Design) The order of the metalog model must be greater than or equal to 2");
+   if any(y <= 0 | y>=1) then do;
+      *run PrintToLog("(Metalog_Design) The input values must be probabilities in (0, 1).", 1);
+      missIdx = loc(y <= 0 | y>=1);
+      if ncol(missIdx)>0 then 
+         y[missIdx] = .;
+   end;
    M = j(nrow(y), k, 1);
+   if ncol(missIdx)>0 then M[missIdx,1] = .;
    Ly = quantile('Logistic', y);  /* = LOGIT(y) = log(y/(1-y)) */
    M[,2] = Ly;
    if k=2 then return( M );
@@ -283,15 +310,14 @@ start Metalog_ParamEst(_x, _y, k) global(_debug);
    x = colvec(_x); y = colvec(_y);
    if nrow(x)^=nrow(y) then 
       %StopOnError("(Metalog_ParamEst) Invalid data. The X and Y vectors must be the same size.");
-   idx = loc(x^=. & y^=.);
+   idx = loc(x^=. & y>0 & y<1);
    if ncol(idx)<3 then 
-      %StopOnError("(Metalog_ParamEst) Invalid data. At least three nonmissing values are required.");
+      %WarnReturn("(Metalog_ParamEst) The input values must be probabilities in (0, 1).", 
+                  return(j(k,1,.)));
    if ncol(idx) < nrow(x) then do;
-      x = x[idx]; y = y[idx];      /* all pairs are now nonmissing */
+      x = x[idx]; y = y[idx];      /* all pairs are now valid */
    end;
-   if any(y <= 0 | y>=1) then 
-      %StopOnError("(Metalog_ParamEst) The input values must be probabilities in (0, 1).");
-
+ 
    M = Metalog_Design(y, k);
    /* Solve LS system a = GINV(M`*M)*(M`*x). Test whether M`*M is full rank */
    call appcort(a, numLinDep, M`*M, M`*x); /* find LS soln (uses QR) */
@@ -359,7 +385,14 @@ start Metalog_Quantile(_p, _a, CheckFeas=0) global(_debug);
          %StopOnError("(Metalog_Quantile) Invalid coefficients. The model is not a valid distribution.");
    end;
    M = Metalog_Design(p, k);
-   Q = M*a;
+   /* M could contains rows of missing values if p contains invalid elements. */
+   if all(M ^= .) then
+      return(M*a);
+   /* handle rows of missing values */
+   Q = j(nrow(p), 1, .);
+   nonMissIdx = loc(M[,1] ^= .);
+   if ncol(NonMissIdx)=0 then return(Q);
+   Q[nonMissIdx] = M[nonMissIdx,]*a;
    return( Q );
 finish;
 
@@ -609,6 +642,7 @@ finish;
 %let Metalog_modules =
 Metalog_ValidateData
 Metalog_Order
+Metalog_BoundType
 Metalog_Design
 Metalog_IsFeasible
 Metalog_ECDF
