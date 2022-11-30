@@ -260,7 +260,7 @@ finish;
 start Metalog_SL_ECDF(_x, bL) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_SL_ECDF";
    if any(_x <= bL) then
-      %StopOnError("(Metalog_SL_ECDF) All X values must be less than the bL parameter.");
+      %StopOnError("(Metalog_SL_ECDF) All X values must be greater than the bL parameter.");
    z = log(_x - bL);
    cdf = Metalog_ECDF(z);
    return( cdf );
@@ -270,7 +270,7 @@ finish;
 start Metalog_SU_ECDF(_x, bU) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_SU_ECDF";
    if any(_x >= bU) then
-      %StopOnError("(Metalog_SU_ECDF) All X values must be greater than the bU parameter.");
+      %StopOnError("(Metalog_SU_ECDF) All X values must be less than the bU parameter.");
    z = -log(bU -_x);
    cdf = Metalog_ECDF(z);
    return( cdf );
@@ -281,7 +281,7 @@ start Metalog_B_ECDF(_x, B) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_B_ECDF";
    bL = B[1]; bU = B[2];
    if any(_x <= bL | _x>= bU) then
-      %StopOnError("(Metalog_B_ECDF) All X values must be in the interval (bL, bU).");
+      %StopOnError("(Metalog_B_ECDF) All X values must be in the open interval (bL, bU).");
    z = log( (_x - bL)/(bU - _x) );
    cdf = Metalog_ECDF(z);
    return( cdf );
@@ -331,7 +331,7 @@ start Metalog_SL_ParamEst(_x, _y, order, _bL) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_SL_ParamEst";
    bL = _bL[1];
    if any(_x <= bL) then
-      %StopOnError("(Metalog_SL_ParamEst) All X values must be less than the bL parameter.");
+      %StopOnError("(Metalog_SL_ParamEst) All X values must be greater than the bL parameter.");
    z = log(_x - bL);
    a = Metalog_ParamEst( z, _y, order );
    return( a );
@@ -343,7 +343,7 @@ start Metalog_SU_ParamEst(_x, _y, order, _bU) global(_debug);
    if nrow(_bU)*ncol(_bU) > 1 then bU = _bU[2];
    else bU = _bU;
    if any(_x >= bU) then
-      %StopOnError("(Metalog_SU_ECDF) All X values must be greater than the bU parameter.");
+      %StopOnError("(Metalog_SU_ECDF) All X values must be less than the bU parameter.");
    z = -log(bU-_x);
    a = Metalog_ParamEst( z, _y, order );
    return( a );
@@ -354,7 +354,7 @@ start Metalog_B_ParamEst(_x, _y, order, B) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_B_ParamEst";
    bL = B[1]; bU = B[2];
    if any(_x <= bL | _x>= bU) then
-      %StopOnError("(Metalog_B_ParamEst) All X values must be in the interval (bL, bU).");
+      %StopOnError("(Metalog_B_ParamEst) All X values must be in the open interval (bL, bU).");
    z = log( (_x - bL)/(bU - _x) );
    a = Metalog_ParamEst( z, _y, order );
    return( a );
