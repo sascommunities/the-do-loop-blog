@@ -49,6 +49,23 @@ store module=(PrintToLog);
   end;
 %mend;
 
+/* accurate computation of logit(y) for column vector y
+   LOGIT(y) = log(y/(1-y)) = QUANTILE('Logistic',y) */
+start Metalog_Logit(y);
+   if any(y>0.9999) then do; /* use SQUANTILE for extreme right probabilities */
+      logit = j(nrow(y),1,.);
+      idx = loc(y>0.9);
+      if ncol(idx)>0 then
+         logit[idx] = squantile('Logistic', 1-y[idx]);
+      idx = loc(y<=0.9);
+      if ncol(idx)>0 then
+         logit[idx] = quantile('Logistic', y[idx]);
+   end;
+   else
+      logit = quantile('Logistic', y);
+   return( logit );
+finish;
+
 /* Test whether a specified order is valid */
 start Metalog_Order(_order);
    if type(_order) ^= 'N' then 
@@ -129,7 +146,7 @@ start Metalog_Design(_y, k) global(_debug);
    end;
    M = j(nrow(y), k, 1);
    if ncol(missIdx)>0 then M[missIdx,1] = .;
-   Ly = quantile('Logistic', y);  /* = LOGIT(y) = log(y/(1-y)) */
+   Ly = Metalog_Logit(y);  /* = LOGIT(y) = log(y/(1-y)) */
    M[,2] = Ly;
    if k=2 then return( M );
    shift = y - 0.5;
@@ -257,22 +274,44 @@ start Metalog_ECDF(_x, Method="VW") global(_debug);
 finish;
 
 /* Metalog_SL_ECDF is Metalog_ECDF( log(x-bL) ) */
-start Metalog_SL_ECDF(_x, bL) global(_debug);
+start Metalog_SL_ECDF(_x, _bL) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_SL_ECDF";
-   if any(_x <= bL) then
-      %StopOnError("(Metalog_SL_ECDF) All X values must be greater than the bL parameter.");
-   z = log(_x - bL);
-   cdf = Metalog_ECDF(z);
+   bL = _bL[1];
+   x = colvec(_x);
+   /* CDF is 0 for all quantiles less than bL */
+   if any(x <= bL) then do;
+      cdf = j(nrow(x),1,0);
+      idx = loc(x > bL);
+      if ncol(idx)=0 then 
+         return(j(nrow(x),1,0));
+      z = log(x[idx] - bL);
+      cdf[idx] = Metalog_ECDF(z);
+   end;
+   else do;
+      z = log(x - bL);
+      cdf = Metalog_ECDF(z);
+   end;
    return( cdf );
 finish;
 
 /* Metalog_SU_ECDF is Metalog_ECDF( -log(bU-x) ) */
-start Metalog_SU_ECDF(_x, bU) global(_debug);
+start Metalog_SU_ECDF(_x, _bU) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_SU_ECDF";
-   if any(_x >= bU) then
-      %StopOnError("(Metalog_SU_ECDF) All X values must be less than the bU parameter.");
-   z = -log(bU -_x);
-   cdf = Metalog_ECDF(z);
+   bU = _bU[1];
+   x = colvec(_x);
+   /* CDF is 1 for all quantiles greater than bU */
+   if any(x >= bU) then do;
+      cdf = j(nrow(x),1,1);
+      idx = loc(x < bU);
+      if ncol(idx)=0 then 
+         return(j(nrow(x),1,1));
+      z = -log(bU - x[idx]);
+      cdf[idx] = Metalog_ECDF(z);
+   end;
+   else do;
+      z = -log(bU - x);
+      cdf = Metalog_ECDF(z);
+   end;
    return( cdf );
 finish;
 
@@ -280,10 +319,23 @@ finish;
 start Metalog_B_ECDF(_x, B) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_B_ECDF";
    bL = B[1]; bU = B[2];
-   if any(_x <= bL | _x>= bU) then
-      %StopOnError("(Metalog_B_ECDF) All X values must be in the open interval (bL, bU).");
-   z = log( (_x - bL)/(bU - _x) );
-   cdf = Metalog_ECDF(z);
+   x = colvec(_x);
+   /* adjust CDF for quantiles outside of [bL,bU] */
+   if any(x <= bL | x>= bU) then do;
+      cdf = j(nrow(x),1,0);
+      idx = loc(x >= bU);
+      if ncol(idx)>0 then 
+         cdf[idx] = 1;
+      idx = loc(x > bL & x < bU);
+      if ncol(idx)>0 then do;
+         z = log( (x[idx] - bL)/(bU - x[idx]) );
+         cdf[idx] = Metalog_ECDF(z);
+      end;
+   end;
+   else do;
+      z = log( (x - bL)/(bU - x) );
+      cdf = Metalog_ECDF(z);
+   end;
    return( cdf );
 finish;
 /************************/
@@ -312,7 +364,7 @@ start Metalog_ParamEst(_x, _y, k) global(_debug);
       %StopOnError("(Metalog_ParamEst) Invalid data. The X and Y vectors must be the same size.");
    idx = loc(x^=. & y>0 & y<1);
    if ncol(idx)<3 then 
-      %WarnReturn("(Metalog_ParamEst) The input values must be probabilities in (0, 1).", 
+      %WarnReturn("(Metalog_ParamEst) You must specify at least three valid probabilities.", 
                   return(j(k,1,.)));
    if ncol(idx) < nrow(x) then do;
       x = x[idx]; y = y[idx];      /* all pairs are now valid */
@@ -330,10 +382,18 @@ finish;
 start Metalog_SL_ParamEst(_x, _y, order, _bL) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_SL_ParamEst";
    bL = _bL[1];
-   if any(_x <= bL) then
-      %StopOnError("(Metalog_SL_ParamEst) All X values must be greater than the bL parameter.");
-   z = log(_x - bL);
-   a = Metalog_ParamEst( z, _y, order );
+   x = colvec(_x);
+   y = colvec(_y);
+   if any(x <= bL) then do;
+      run PrintToLog("(Metalog_SL_ParamEst) Excluding values less than or equal to the lower bound.",0);
+      idx = loc(x > bL);
+      if ncol(idx)=0 then 
+         return(j(order,1,.));
+      x = x[idx];
+      y = y[idx];
+   end;
+   z = log(x - bL);
+   a = Metalog_ParamEst( z, y, order );
    return( a );
 finish;
 
@@ -342,10 +402,18 @@ start Metalog_SU_ParamEst(_x, _y, order, _bU) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_SU_ParamEst";
    if nrow(_bU)*ncol(_bU) > 1 then bU = _bU[2];
    else bU = _bU;
-   if any(_x >= bU) then
-      %StopOnError("(Metalog_SU_ECDF) All X values must be less than the bU parameter.");
-   z = -log(bU-_x);
-   a = Metalog_ParamEst( z, _y, order );
+   x = colvec(_x);
+   y = colvec(_y);
+   if any(x >= bU) then do;
+      run PrintToLog("(Metalog_SU_ParamEst) Excluding values greater than or equal to the upper bound.",0);
+      idx = loc(x < bU);
+      if ncol(idx)=0 then 
+         return(j(order,1,.));
+      x = x[idx];
+      y = y[idx];
+   end;
+   z = -log(bU-x);
+   a = Metalog_ParamEst( z, y, order );
    return( a );
 finish;
 
@@ -353,10 +421,18 @@ finish;
 start Metalog_B_ParamEst(_x, _y, order, B) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_B_ParamEst";
    bL = B[1]; bU = B[2];
-   if any(_x <= bL | _x>= bU) then
-      %StopOnError("(Metalog_B_ParamEst) All X values must be in the open interval (bL, bU).");
-   z = log( (_x - bL)/(bU - _x) );
-   a = Metalog_ParamEst( z, _y, order );
+   x = colvec(_x);
+   y = colvec(_y);
+   if any(x <= bL | x>= bU) then do;
+      run PrintToLog("(Metalog_B_ParamEst) Excluding values that are not strictly inside the bounding interval.",0);
+      idx = loc(x > bL & x < bU);
+      if ncol(idx)=0 then 
+         return(j(order,1,.));
+      x = x[idx];
+      y = y[idx];
+   end;
+   z = log( (x - bL)/(bU - x) );
+   a = Metalog_ParamEst( z, y, order );
    return( a );
 finish;
 
@@ -385,7 +461,7 @@ start Metalog_Quantile(_p, _a, CheckFeas=0) global(_debug);
          %StopOnError("(Metalog_Quantile) Invalid coefficients. The model is not a valid distribution.");
    end;
    M = Metalog_Design(p, k);
-   /* M could contains rows of missing values if p contains invalid elements. */
+   /* M could contain rows of missing values if p contains invalid elements. */
    if all(M ^= .) then
       return(M*a);
    /* handle rows of missing values */
@@ -397,30 +473,69 @@ start Metalog_Quantile(_p, _a, CheckFeas=0) global(_debug);
 finish;
 
 /* quantile for SL is bL + exp(M) */
-start Metalog_SL_Quantile(_p, _a, _bL) global(_debug);
+start Metalog_SL_Quantile(_p, a, _bL) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_SL_Quantile";
    bL = _bL[1];
-   Mq = Metalog_Quantile(_p, _a);
-   Mlog = bL + exp(Mq); 
+   p = colvec(_p);
+   cutoff = 1E-14;
+   if any(p <= cutoff) then do;   /* for p=0 */
+      Mlog = j(nrow(p),1,bL);
+      idx = loc(p > cutoff);
+      if ncol(idx)>0 then do;
+         Mq = Metalog_Quantile(p[idx], a);
+         Mlog[idx] = bL + exp(Mq); 
+      end;
+   end;
+   else do;
+      Mq = Metalog_Quantile(p, a);
+      Mlog = bL + exp(Mq); 
+   end;
    return( Mlog );
 finish;
 
 /* quantile for SL is bU - exp(-M) */
-start Metalog_SU_Quantile(_p, _a, _bU) global(_debug);
+start Metalog_SU_Quantile(_p, a, _bU) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_SU_Quantile";
    if nrow(_bU)*ncol(_bU) > 1 then bU = _bU[2];
    else bU = _bU;
-   Mq = Metalog_Quantile(_p, _a);
-   Mnlog = bU - exp(-Mq); 
+   p = colvec(_p);
+   cutoff = 1 - 1E-14;
+   if any(p >= cutoff) then do;   /* for p=1 */
+      Mnlog = j(nrow(p),1,bU);
+      idx = loc(p < cutoff);
+      if ncol(idx)>0 then do;
+         Mq = Metalog_Quantile(p[idx], a);
+         Mnlog[idx] = bU - exp(-Mq); 
+      end;
+   end;
+   else do;
+      Mq = Metalog_Quantile(_p, a);
+      Mnlog = bU - exp(-Mq); 
+   end;
    return( Mnlog );
 finish;
 
 /* quantile for SB is (bL + bU*exp(M)) / (1 + exp(M)) */
-start Metalog_B_Quantile(_p, _a, B) global(_debug);
+start Metalog_B_Quantile(_p, a, B) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_B_Quantile";
    bL = B[1]; bU = B[2];
-   Mq = Metalog_Quantile(_p, _a);
-   Mlogit = (bL + bU*exp(Mq)) / (1 + exp(Mq)); 
+   p = colvec(_p);
+   eps = 1E-14;
+   if any(p <= eps | p >= 1-eps) then do;   /* for p=0 or p=1 */
+      Mlogit = j(nrow(p),1,bL);
+      idx = loc(p >= 1-eps);
+      if ncol(idx)>0 then 
+         Mlogit[idx] = bU;
+      idx = loc(p > eps & p < 1-eps);
+      if ncol(idx)>0 then do;
+         Mq = Metalog_Quantile(p[idx], a);
+         Mlogit[idx] = (bL + bU*exp(Mq)) / (1 + exp(Mq)); 
+      end;
+   end;
+   else do;
+      Mq = Metalog_Quantile(_p, a);
+      Mlogit = (bL + bU*exp(Mq)) / (1 + exp(Mq)); 
+   end;
    return( Mlogit );
 finish;
 
@@ -453,7 +568,7 @@ start Metalog_PDF(_y, _a, CheckFeas=0) global(_debug);
    y1my = y#(1-y);         /* y1my is short for y(1 MINUS y) */
    m = a[2] / y1my;
    if k>2 then do;
-      Ly = quantile('Logistic', y);  /* = LOGIT(y) = log(y/(1-y)) */
+      Ly = Metalog_Logit(y);  /* = LOGIT(y) = log(y/(1-y)) */
       shift = y - 0.5;
       m = m + a[3]*(shift/y1my + Ly);
    end;
@@ -488,35 +603,81 @@ finish;
 
 
 /* Metalog_SL_PDF = m # exp( -M ) where m is PDF and M is quantile */
-start Metalog_SL_PDF(_p, _a, _bL) global(_debug);
+start Metalog_SL_PDF(_p, a, _bL) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_SL_PDF";
    bL = _bL[1];
-   Mq = Metalog_Quantile(_p, _a);
-   m = Metalog_PDF(_p, _a);
-   mPDFlog = m # exp( -Mq );
+   cutoff = 1E-14;
+   if any(_p <= cutoff | _p >= 1-cutoff) then do;   /* for p=0 */
+      MPDFlog = j(nrow(_p)*ncol(_p),1,.);
+      idx = loc(_p <= cutoff);
+      if ncol(idx)>0 then 
+      	 MPDFlog[idx] = 0;
+      idx = loc(_p > cutoff & _p < 1-cutoff);
+      if ncol(idx)>0 then do;
+          p = _p[idx];
+          Mq = Metalog_Quantile(p, a);
+          m = Metalog_PDF(p, a);
+          mPDFlog[idx] = m # exp( -Mq );
+      end;
+   end;
+   else do;
+      Mq = Metalog_Quantile(_p, a);
+      m = Metalog_PDF(_p, a);
+      mPDFlog = m # exp( -Mq );
+   end;
    return( mPDFlog );
 finish;
 
 /* Metalog_SU_PDF = m # exp( M ) where m is PDF and M is quantile */
-start Metalog_SU_PDF(_p, _a, _bU) global(_debug);
+start Metalog_SU_PDF(_p, a, _bU) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_SU_PDF";
    if nrow(_bU)*ncol(_bU) > 1 then bU = _bU[2];
    else bU = _bU;
-   Mq = Metalog_Quantile(_p, _a);
-   m = Metalog_PDF(_p, _a);
-   mPDFlog = m # exp(Mq);
+   cutoff = 1 - 1E-14;
+   if any(_p >= cutoff | _p >= 1-cutoff) then do;   /* for p=1 */
+      MPDFlog = j(nrow(_p)*ncol(_p),1,.);
+      idx = loc(_p >= 1-cutoff);
+      if ncol(idx)>0 then 
+      	 MPDFlog[idx] = 0;
+      idx = loc(_p > cutoff & _p < 1-cutoff);
+      if ncol(idx)>0 then do;
+         p = _p[idx];
+         Mq = Metalog_Quantile(p, a);
+         m = Metalog_PDF(p, a);
+         mPDFlog[idx] = m # exp(Mq);
+      end;
+   end;
+   else do;
+      Mq = Metalog_Quantile(_p, a);
+      m = Metalog_PDF(_p, a);
+      mPDFlog = m # exp(Mq);
+   end;
    return( mPDFlog );
 finish;
 
 /* Metalog_B_PDF = m # L( M ) where m is PDF and M is quantile 
    and L(M) = (1 + eM)##2 / ((bU-bL)*eM) where eM = exp(M) */
-start Metalog_B_PDF(_p, _a, B) global(_debug);
+start Metalog_B_PDF(_p, a, B) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_B_PDF";
    bL = B[1]; bU = B[2];
-   Mq = Metalog_Quantile(_p, _a);
-   m = Metalog_PDF(_p, _a);
-   eM = exp(Mq);
-   mlogit = m # (1 + eM)##2 / ((bU-bL)*eM);
+   eps = 1E-14;
+   if any(_p <= eps | _p >= 1-eps) then do;   /* for p=0 or p=1 */
+      mlogit = j(nrow(_p)*ncol(_p), 1, 0);
+      idx = loc(_p > eps & _p < 1-eps);
+      if ncol(idx)>0 then do;
+         p = _p[idx];
+         Mq = Metalog_Quantile(p, a);
+         m = Metalog_PDF(p, a);
+         eM = exp(Mq);
+         mlogit[idx] = m # (1 + eM)##2 / ((bU-bL)*eM);
+      end;
+   end;
+   else do;
+      Mq = Metalog_Quantile(_p, a);
+      m = Metalog_PDF(_p, a);
+      eM = exp(Mq);
+      mlogit = m # (1 + eM)##2 / ((bU-bL)*eM);
+   end;
    return( mlogit );
 finish;
 
@@ -543,27 +704,27 @@ start Metalog_Rand(n, _a) global(_debug);
    return( x );
 finish;
 
-start Metalog_SL_Rand(n, _a, _bL) global(_debug);
+start Metalog_SL_Rand(n, a, _bL) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_SL_Rand";
    bL = _bL[1];
    u = randfun(n, "uniform");
-   x = Metalog_SL_Quantile(u, _a, bL);
+   x = Metalog_SL_Quantile(u, a, bL);
    return( x );
 finish;
 
-start Metalog_SU_Rand(n, _a, _bU) global(_debug);
+start Metalog_SU_Rand(n, a, _bU) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_SU_Rand";
    if nrow(_bU)*ncol(_bU) > 1 then bU = _bU[2];
    else bU = _bU;
    u = randfun(n, "uniform");
-   x = Metalog_SU_Quantile(u, _a, bU);
+   x = Metalog_SU_Quantile(u, a, bU);
    return( x );
 finish;
 
-start Metalog_B_Rand(n, _a, B) global(_debug);
+start Metalog_B_Rand(n, a, B) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_B_Rand";
    u = randfun(n, "uniform");
-   x = Metalog_B_Quantile(u, _a, B);
+   x = Metalog_B_Quantile(u, a, B);
    return( x );
 finish;
 
@@ -641,6 +802,7 @@ finish;
 
 %let Metalog_modules =
 Metalog_ValidateData
+Metalog_Logit
 Metalog_Order
 Metalog_BoundType
 Metalog_Design
