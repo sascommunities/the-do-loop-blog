@@ -633,8 +633,8 @@ start Metalog_SU_PDF(_p, a, _bU) global(_debug);
    if type(_debug)='N' then if _debug>0 then print "In Metalog_SU_PDF";
    if nrow(_bU)*ncol(_bU) > 1 then bU = _bU[2];
    else bU = _bU;
-   cutoff = 1 - 1E-14;
-   if any(_p >= cutoff | _p >= 1-cutoff) then do;   /* for p=1 */
+   cutoff = 1E-14;
+   if any(_p <= cutoff | _p >= 1-cutoff) then do;   /* for p=1 */
       MPDFlog = j(nrow(_p)*ncol(_p),1,.);
       idx = loc(_p >= 1-cutoff);
       if ncol(idx)>0 then 
