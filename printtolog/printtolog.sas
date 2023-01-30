@@ -31,3 +31,4 @@ finish;
 store module=(PrintToLog);
 %end;
 %mend;
+%DefinePrintToLog;
