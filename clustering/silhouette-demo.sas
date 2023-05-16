@@ -106,7 +106,7 @@ QUIT;
          call symputx( "Silh", round(_mean/_N_, 0.001));
    run;
    proc sort data=_temp; by &ClusName  descending &SilhVarName; run;
-   data &OutName / view=&OutName; set _temp; _ObsNum=_N_; label ObsNum="Observation"; run;
+   data &OutName / view=&OutName; set _temp; _ObsNum=_N_; label _ObsNum="Observation"; run;
 %mend;
 
 /* The SilhouetteScatter macro:
