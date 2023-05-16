@@ -33,10 +33,8 @@ finish;
    returns the average distance between p and the points in Z.
 */
 start AvgDistOther(Y, Z);
-   n = nrow(Y);
    D = distance(Y,Z);        /* D[i,j] is distance from Y[i,] to Z[j,] */
-   AvgDist = D[ ,:];         /* average of the D[i,j] */
-   return AvgDist;
+   return( D[ ,:] );         /* average of the D[i,j] */
 finish;
 
 /* Silhouette: The main computational routine.
@@ -87,11 +85,17 @@ QUIT;
    the amount of code in the blog post */
 /***************************************************/
 
-/* This macro
-   1. Merges the original data and the silhouette statitics
+/* The SilhouetteMergeSort macro
+   1. Merges the original data and the silhouette statistics
    2. Computes the overall average silhouette measure and stores it in &SILH macro variable
    3. Sorts data by cluster and (descending) by silhouette value
    4. Adds an _ObsNum variable for ease of plotting the silhouette values as a bar chart
+
+   Args: DSname      = Original data
+         SilhDSName  = Output from PROC IML, containing silhouette values
+         ClusName    = Name of indicator variable for cluster membership
+         SilhVarName = Name of variable that contains silhouette values
+         OutName     = Name of merged data set
 */
 %macro SilhouetteMergeSort(DSname, SilhDSName, ClusName, SilhVarName, OutName);
    %GLOBAL Silh;
@@ -105,13 +109,19 @@ QUIT;
    data &OutName / view=&OutName; set _temp; _ObsNum=_N_; label ObsNum="Observation"; run;
 %mend;
 
-/* To run this macro, you must first run the SilhouetteMergeSort macro!
-   This macro creates a scatter plots of two variables in the cluster data
-   and colorcodes the markers by the silhouette statistic.
+/* The SilhouetteScatter macro:
+   To run this macro, you must first run the SilhouetteMergeSort macro!
+   This macro creates a scatter plot of two variables in the cluster data
+   and colors the markers by the silhouette statistic.
    The marker shapes indicate the cluster.
 
-   Note: The macro hardcodes a spectral colorramp and uses only three shapes.
+   Note: The macro hardcodes a spectral color ramp and uses only three shapes.
    Feel free to modify these attributes.
+
+   Args: OutName     = Name of merged data set
+         xVarName, yVarName = Names of X and Y variables for scatter plot
+         ClusName    = Name of indicator variable for cluster membership
+         SilhVarName = Name of variable that contains silhouette values
 */
 %macro SilhouetteScatter(OutName, xVarName, yVarName, ClusName, SilhVarName);
    %let Spectral7 = (CX3288BD CX99D594 CXE6F598 CXFFFFBF CXFEE08B CXFC8D59 CXD53E4F );
@@ -129,9 +139,14 @@ QUIT;
 %mend;
 
 
-/* To run this macro, you must first run the SilhouetteMergeSort macro!
-   This macro creates a silhoutte plot, which is a panel of bar charts
-   of the sillouette values.
+/* The SilhouettePlot macro:
+   To run this macro, you must first run the SilhouetteMergeSort macro!
+   This macro creates a silhouette plot, which is a panel of bar charts
+   of the silhouette values.
+
+   Args: OutName     = Name of merged data set
+         ClusName    = Name of indicator variable for cluster membership
+         SilhVarName = Name of variable that contains silhouette values
 */
 %macro SilhouettePlot(OutName, ClusName, SilhVarName);
    proc sgpanel data=&OutName;
@@ -142,20 +157,26 @@ QUIT;
    run;
 %mend;
 
-/* To run this macro, you must first run the SilhouetteMergeSort macro!
-   This macro creates a silhoutte plot as a panel of histograms.
+/* The SilhouetteHistogram macro:
+   To run this macro, you must first run the SilhouetteMergeSort macro!
+   This macro creates a silhouette plot as a panel of histograms.
+
+   Args: OutName     = Name of merged data set
+         ClusName    = Name of indicator variable for cluster membership
+         SilhVarName = Name of variable that contains silhouette values
+         SilhRef (optional) = Value of X variable at which to place a vertical reference line
+                              This is often the overall silhouette value for the data set.
 */
-%macro SilhouetteHistogram(OutName, ClusName, SilhVarName, SilhRef=.);
+%macro SilhouetteHistogram(OutName, ClusName, SilhVarName, SilhRef=);
    proc sgpanel data=&OutName;
       panelby &ClusName / layout=rowlattice onepanel spacing=0 rowheaderpos=right uniscale=column;
       histogram &SilhVarName;
-      refline &SilhRef / axis=x;
+      %if %length(&SilhRef) %then %do;
+          refline &SilhRef / axis=x;
+      %end;
       rowaxis grid; 
    run;
 %mend;
-
-
-
 
 /* SAS program to accompany the article 
    "What is the silhouette statistic in cluster analysis?"
@@ -260,6 +281,23 @@ run;
 /***************************************************************/
 /* 2. Create scatter and silhouette plots for the example data */
 /***************************************************************/
+data Have;
+input ID $ x y;
+datalines;
+A  0  0
+A  0  1
+A  1  0
+A -1  0
+A  0 -1
+B 12 -1
+B  6  0
+B 12  1
+C  1 11
+C -1 11
+C -1  9
+C  1  9
+;
+
 /* k-means cluster analysis */
 proc fastclus data=Have maxclusters=3 out=ClusOut noprint;
   var x y;
@@ -268,15 +306,14 @@ run;
 /* compute vector of silhouette statistics */
 proc iml;
 load module=(Silhouette);
-
 varNames = {'x' 'y'};
 use ClusOut;
    read all var varNames into X;
    read all var "Cluster" into ClusterID;
 close;
-
 silhouette = Silhouette(X, ClusterID);
-print silhouette;
+
+print ClusterID X[c=varNames L=""] silhouette;
 m = mean(silhouette);
 print m[L="Silhouette Measure"];
 
@@ -375,7 +412,7 @@ proc means data=_All Min Q1 Median Q3 Max;
 run;
 
 /* silhouette plot (histogram) */
-ods graphics / PUSH attrpriority=none width=480px height=480px;
+ods graphics / PUSH width=480px height=480px;
 title "Distribution of Silhouette Values by Cluster";
 %SilhouetteHistogram(_All, Cluster, Silhouette, SilhRef=&Silh);
 ods graphics / pop;
