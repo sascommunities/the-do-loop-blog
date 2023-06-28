@@ -6,7 +6,7 @@
    This program shows how to compute the geometric median for N points
    in k-dimensional space. The article discusses two methods:
 
-   1. In SAS Viya (LTS 2023.03), PROC OPTMODEL supports computing 
+   1. In SAS Viya LTS 2022.09, PROC OPTMODEL supports computing 
       geometric medians 
       https://go.documentation.sas.com/doc/en/sasstudiocdc/v_037/pgmsascdc/casmopt/casmopt_conicsolver_examples02.htm
    2. In SAS IML, you can implement the Ostresh (1978) variation of the 
@@ -21,7 +21,7 @@
 /******** GEOMETRIC MEDIAN OF N-D POINTS ************************/
 
 /******** PROC OPTMODEL *****************************************/
-/* In SAS Viya LTS 2023.03, PROC OPTMODEL supports computing 
+/* In SAS Viya LTS 2022.09, PROC OPTMODEL supports computing 
    geometric medians 
    https://go.documentation.sas.com/doc/en/sasstudiocdc/v_037/pgmsascdc/casmopt/casmopt_conicsolver_examples02.htm
 */
