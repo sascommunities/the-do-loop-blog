@@ -34,7 +34,7 @@ proc optmodel;
    minimize f = sum{i in 1..&n}d[i];    * minimize the sum of distances;
 
    * define the sample points ;
-   num samples{1..&n, 1..&k} = [0 0, 2 0, 1 1, 1 3, 0 2, 3 2, 6 3 ];
+   num samples{1..&n, 1..&k} = [0 0, 2 0, 1 1, 1 3, 0 2, 3 2, 5 3 ];
    * calculate each distance ;
    con distance{i in 1..&n}: soc(d[i], (x-samples[i,1]) (y-samples[i,2]));
    expand;
