@@ -28,7 +28,7 @@ SYNTAX:
 This version has been slightly modified and reformatted by 
 Rick Wicklin 19JUL2023.
 See 
-blogs.sas.com/content/iml/2023/07/24/exact-p-values-signed-rank.html
+https://blogs.sas.com/content/iml/2023/07/24/exact-signed-rank-pratt.html
 1. Make test and alternative parameters optional
 2. Use %UPCASE to make parameters insensitive to case
 3. Explain why the test statistic in this macro is different from PROC UNIVARIATE
