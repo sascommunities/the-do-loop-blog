@@ -6,7 +6,7 @@ GMS Med Inform Biom Epidemiol. 6(1)
 Freely available from: http://www.egms.de/en/journals/mibe/2010-6/mibe000104.shtml
 
 SYNTAX:
-%signedrank(data, label_diff, test, alternative, round=4);
+%signedrank(data, var_diff, test, alternative, round=4);
 
 *data: data set 
 *var_diff: name of variable (difference) to evaluate 
