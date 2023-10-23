@@ -1,3 +1,7 @@
+/* first, download the functions from GitHub and STORE them 
+https://github.com/sascommunities/the-do-loop-blog/blob/master/birthday-problem/genbirthday.sas
+Run that file or %INCLUDE it before running the following statements, which LOAD the functions. 
+*/
 
 proc iml;
 load module=(expm1 CDFBirthday PDFBirthday QuantileBirthday RandBirthday);
