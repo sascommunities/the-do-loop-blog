@@ -69,41 +69,9 @@ data data;
    rank_sign=rank_diff*sign(obs_diff);
 run;
 
+%let ERRCODE = 0;
+
 proc iml;
-use data;
-*Wilcoxons signed rank test;
-if upcase(&test)='SIGNED' then do;
-   read all var {rank_sign} into d;     *signed ranks;
-end;
-*Pratts modification of Wilcoxons signed rank test;
-if upcase(&test)='PRATT' then do;
-   read all var {rank_sign} into d;
-   *signed ranks;
-   d=(abs(d)+&diff0)#sign(d);
-   *assigning ranks according to Pratts modification;
-end;
-*test based on original data;
-if upcase(&test)='ORIGINAL' then do;
-   read all var {obs_diff} into d;
-   *rounding;
-   d=round((10**&round)*d);
-end;
-close data;
-
-/* Note by Rick Wicklin 20JUL2023: 
-   For &test='signed', the following test statistic 
-   is different from the statistic by PROC UNIVARIATE.
-   Let S be the statistic used by the UNIVARIATE procedure.
-   Then S = Tplus - nt(nt+1)/4, where Tplus is the sum of the ranks where x>0
-   and nt is the number of values that are not 0.
-   The %signedrank macro reports Tplus, not S.
-   As discussed in Wicklin (2023) "On the computation of the Wilcoxon 
-   signed rank statistic," S and Tplus are equivalent test statistics. See
-   https://blogs.sas.com/content/iml/2023/07/19/wilcoxon-signed-rank.html
-*/
-*computation of the statistic;
-tstat=sum(d#(d>=0));
-
 /* shift-algorithm */
 start shift(d);
    n=NROW(d);
@@ -153,6 +121,56 @@ start shift(d);
    return (dist);
 finish;
 
+*Validate parameters;
+upTest = upcase(&test);
+upAlt = upcase(&alternative);
+testValid = element(upTest, {SIGNED PRATT ORIGINAL});
+altValid = element(upAlt, {ALL GREATER LESS TWO});
+
+if ^testValid then do;
+   call symputx("ERRCODE",1);
+   ABORT;
+end;
+else if ^altValid then do;
+   call symputx("ERRCODE",2);
+   ABORT;
+end;
+else do;
+* Validation over. Do the main computation;
+
+use data;
+*Wilcoxons signed rank test;
+if upcase(&test)='SIGNED' then do;
+   read all var {rank_sign} into d;     *signed ranks;
+end;
+*Pratts modification of Wilcoxons signed rank test;
+else if upcase(&test)='PRATT' then do;
+   read all var {rank_sign} into d;
+   *signed ranks;
+   d=(abs(d)+&diff0)#sign(d);
+   *assigning ranks according to Pratts modification;
+end;
+*test based on original data;
+else if upcase(&test)='ORIGINAL' then do;
+   read all var {obs_diff} into d;
+   *rounding;
+   d=round((10**&round)*d);
+end;
+close data;
+
+/* Note by Rick Wicklin 20JUL2023: 
+   For &test='signed', the following test statistic 
+   is different from the statistic by PROC UNIVARIATE.
+   Let S be the statistic used by the UNIVARIATE procedure.
+   Then S = Tplus - nt(nt+1)/4, where Tplus is the sum of the ranks where x>0
+   and nt is the number of values that are not 0.
+   The %signedrank macro reports Tplus, not S.
+   As discussed in Wicklin (2023) "On the computation of the Wilcoxon 
+   signed rank statistic," S and Tplus are equivalent test statistics. See
+   https://blogs.sas.com/content/iml/2023/07/19/wilcoxon-signed-rank.html
+*/
+*computation of the statistic;
+tstat=sum(d#(d>=0));
 dist=shift(d);
 
 *computation of p-values;
@@ -173,6 +191,10 @@ else if upcase(&test)='ORIGINAL' then do;
    tstatOUT=tstat/(10**&round);
    ew=sum(abs(d))/2;
 end;
+else do;
+   tstatOUT=tstat/(10**&round);
+   ew=sum(abs(d))/2;
+end;
 
 if (tstat<ew) then do;
    d=-1*d;
@@ -186,26 +208,34 @@ if upcase(&alternative)='ALL' then do;
    label={'n' 'n_nonzero' 'statistic' 'pvalue_gr' 'pvalue_less' 'pvalue_two'};
    out=&n_all || &n_all-&diff0 || tstatOUT || pvalue_gr || pvalue_less || pvalue_two;
 end;
-
-if UPCASE(&alternative)='GREATER' then do;
+else if UPCASE(&alternative)='GREATER' then do;
    label={'n' 'n_nonzero' 'statistic' 'pvalue_gr'};
    out=&n_all || &n_all-&diff0 || tstatOUT || pvalue_gr;
 end;
-
-if upcase(&alternative)='LESS' then do;
+else if upcase(&alternative)='LESS' then do;
    label={'n' 'n_nonzero' 'statistic' 'pvalue_less'};
    out=&n_all|| &n_all-&diff0 || tstatOUT || pvalue_less;
 end;
-
-if upcase(&alternative)='TWO' then do;
+else if upcase(&alternative)='TWO' then do;
    label={'n' 'n_nonzero' 'statistic' 'pvalue_two'};
    out=&n_all|| &n_all-&diff0 || tstatOUT || pvalue_two;
 end;
 
 create output from out [colname=label];
 append from out;
+
+end; *end of code to run if all params are valid;
 QUIT;
 
+*abort if invalid parameter;
+%IF &ERRCODE=1 %THEN %DO;
+   %put ERROR: Invalid TEST parameter (&test) passed to SIGNEDRANK macro;
+   %RETURN;
+%END;
+%ELSE %IF &ERRCODE=2 %THEN %DO;
+   %put ERROR: Invalid ALTERNATIVE parameter (&alternative) passed to SIGNEDRANK macro;
+   %RETURN;
+%END;
 
 data output;
    set output;
