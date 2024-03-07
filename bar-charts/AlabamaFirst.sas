@@ -122,7 +122,6 @@ proc sort data=StatePop out=State2;
 run;
 
 ods graphics / push width=480px height=640px;
-title "State Populations (2020)";
 title2 "States Ordered by Population Size";
 proc sgplot data=State2;
    hbar StateName / response=PopChange2020;
