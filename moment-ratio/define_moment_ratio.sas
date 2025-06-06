@@ -153,3 +153,27 @@ run;
 data Anno;
   set Beta Boundary LogNormal GammaCurve MRPoints;
 run;
+
+/* Main macro: Plot the moment-ratio diagram for a given data set and a
+   given annotation data set. By default, the (skew, kurt) scatter plot
+   is fully opaque, but you can set the transparency in the macro call. */
+%macro PlotMRDiagram(DS, annoDS, Transparency=0);
+/* given a data set that contains variables KURT and SKEW, this macro
+   adds the FULLKURT variable and labels for the three variables */
+data &ds;
+   set &ds;
+   FullKurt = Kurt+3;
+   label Kurt="Excess Kurtosis"
+      FullKurt="Full Kurtosis"
+      Skew="Skewness";
+run;
+
+proc sgplot data=&DS sganno=&annoDS noautolegend;
+   scatter x=Skew y=Kurt /     transparency=&Transparency;
+   scatter x=Skew y=FullKurt / y2axis transparency=1;  /* invisible */
+   refline 0 / axis=x transparency=0.2;
+   xaxis grid values=(-2.5 to 2.5 by 0.5);
+   yaxis  reverse grid values=(-2 to 10);
+   y2axis reverse grid values=( 1 to 13);
+run;
+%mend PlotMRDiagram;
