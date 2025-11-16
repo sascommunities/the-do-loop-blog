@@ -1,6 +1,11 @@
-/* A set of SAS IML functions that generate quasirandom points 
-   in d dimensions by using Halton sequences. See
+/* SAS program to accompany the article 
+   "Quasi-Monte Carlo integration in SAS"
+   by Rick Wicklin, published 17NOV2025 on The DO Loop blog:
    https://blogs.sas.com/content/iml/2025/11/17/quasi-monte-carlo.html
+   
+   A set of SAS IML functions that generate quasirandom points 
+   in d dimensions by using Halton sequences. It includes functions 
+   that convert numbers from arbitrary bases to and from base 10.
 */
 proc iml;
 /* Compute LOG_b(x) for a vector of x values and for an integer base, b > 0.
