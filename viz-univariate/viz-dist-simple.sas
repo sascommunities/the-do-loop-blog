@@ -84,7 +84,7 @@ run;
    This is useful for using the SCATTER and HEATMAP statements, 
    which require two variables.
 */
-data OneCategory;
+data OneCategory / view=OneCategory;
 set &DSName(keep=&varName);
 _ID = 1;
 run;
