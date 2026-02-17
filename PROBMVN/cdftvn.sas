@@ -74,7 +74,13 @@ start tvnIntegrand(theta)
    return (term1 * term2);
 finish;
 
-/* Helper function to compute the integral for a specific rho component */
+/* Helper function to compute the integral for a specific rho component.
+   NOTE: If you call the QUAD subroutine on [c,d] and c > d,
+   IML silently sorts the limits of integration. For TVN, the limits are always specified as 
+   [0, arsin(rho)], and the arcsine function can be negative. The fix is to add a negative sign 
+   to the result if c > d. See
+   https://blogs.sas.com/content/iml/2014/08/04/reversing-the-limits-of-integration.html
+*/
 start tvnComputeTerm(b, rho_vec, tol)
       GLOBAL(g_b, g_rho_vec);
    
@@ -95,7 +101,7 @@ start tvnComputeTerm(b, rho_vec, tol)
          
          if ^any(missing(g_b)) then do;
             call quad(val, "tvnIntegrand", loLimit || hiLimit) eps=(tol/3);
-            p_term[i] = val;
+            p_term[i] = choose(loLimit<=hiLimit, val, -val);
          end;
       end;
    end;

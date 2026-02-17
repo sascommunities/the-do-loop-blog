@@ -1,6 +1,11 @@
-
- 
-/* this program runs in SAS 9.4 or in SAS Viya */
+/* This file contins te following tests for validation of parameters used for computing the CDF:
+   1. Test Sigma for symmetry
+   2. Test Sigma for positive definiteness
+   3. Test whether Sigma is a correlation matrix (versus a covariance)
+   4. Test dimensions of arguments to cdftvn
+   5. If the problem is specified on a covariance scale, test that the problem is correctly 
+      converted to the correlation scale.
+*/
 proc iml;
 load module=_all_;
 
