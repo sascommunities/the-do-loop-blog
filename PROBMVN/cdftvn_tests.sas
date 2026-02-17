@@ -2,7 +2,16 @@
 /* ---------------------------------------------------------- */
 /* ------------------ Test Cases for cdftvn ----------------- */
 /* ---------------------------------------------------------- */
-
+/* The tests in this file are as follows:
+   1. Uncorrelated Case: Sigma=I(3) should yield the product of univariate CDFs.
+   2. Left-tail Orthant Probability: For b=0, the formula involves arcsin of correlations.
+   3. Rank-1 Correlation Matrix: R = D + v*v' has a known integral formula.
+   4. Genz and Bretz (2009) Numerical Example on p 4-5, Eqn 1.5: A specific case with a known solution.
+   5. Partial Independence: If X1 is independent of (X2, X3), then CDF factorizes.
+   6. Highly Correlated Case: Test stability with rho close to 1 using rank-1 as benchmark.
+   7. Bug case: Need to manually switch the sign of the integral from CALL QUAD when integrating on [c,d] and c > d.
+   8. Iterate all possible signs of a 3x3 correlation matrix.
+   */
 proc iml;
 load module=_all_;
 
@@ -132,3 +141,60 @@ if maxDiff > EPSILON then
    print "--- ERROR in Test 6 ---", maxDiff prob correct;
 else 
    print "--- Test 6 passes ---";
+
+/* Test 7: 
+   A. Sigma has negative correlations
+   B. Largest magnitude is R[1,3]
+   C. Use a noncentral MVN distribution */
+mu ={ 0.8  0    1.65};
+Sigma={14.3 -1.2 -4.4, 
+       -1.2  5.2 -1.4, 
+       -4.4 -1.4  9.1};
+b  ={1.75  0.1 -1};
+prob = cdftvn(b, Sigma, mu);
+
+start MonteCarloEstimate(N, b, Sigma, mu={0 0 0});
+   X = randnormal(N, mu, Sigma);
+   inRegion = (X[,1] < b[1] & X[,2] < b[2] & X[,3] < b[3]);
+   MC_Est = mean(inRegion);
+   return MC_Est;
+finish;
+
+call randseed(1);
+correct = MonteCarloEstimate(1E6, b, Sigma, mu={0 0 0}); /* Monte Carlo estimate = 0.022556 */
+maxDiff = max(abs(prob-correct));
+if maxDiff > 1E-3 then 
+   print "--- ERROR in Test 7 ---", maxDiff prob correct;
+else 
+   print "--- Test 7 passes ---";
+
+/* Test 8: Iterate over all combinations of signs for a correlation matrix.
+   Largest magnitude is R[1,3]
+*/
+R0 = { 1    0.2  0.4, 
+       0.2  1    0.1, 
+       0.4  0.1  1   };
+b  = {-1  0.05 -2};
+/* there are 8 possible combinations for the signs of the 3 corr coefficients */
+signs = { 1  1  1    1  1  1   1  1 1, 
+          1 -1  1   -1  1  1   1  1 1, 
+          1  1 -1    1  1  1  -1  1 1, 
+          1  1  1    1  1 -1   1 -1 1, 
+          1 -1 -1   -1  1  1  -1  1 1, 
+          1 -1  1   -1  1 -1   1 -1 1, 
+          1  1 -1    1  1 -1  -1 -1 1, 
+          1 -1 -1   -1  1 -1  -1 -1 1 };
+do i = 1 to nrow(signs);
+   S = shape(signs[i,], 3, 3);
+   R = R0 # S;
+   prob = cdftvn(b, R);
+   correct = MonteCarloEstimate(5E5, b, R);
+   maxDiff = max(abs(prob-correct));
+   if maxDiff > 1E-3 then 
+      print "--- ERROR in Test 8 ---", maxDiff prob correct;
+   else do;
+      msg = cat("--- Test 8.",char(i,1)," passes ---");
+      print (msg);
+end;
+
+print "--- DONE ---";
