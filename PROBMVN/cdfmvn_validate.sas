@@ -87,5 +87,15 @@ start IsValidParmsTVN(b, Sigma, mu);
    return( 1 );
 finish;
 
+start IsValidParmsMVN(b, Sigma, mu);
+   isValid = IsValidParmsCDF(b, Sigma, mu);
+   if ^isValid then return( 0 );
+   if ncol(b)<2 | ncol(b) > 32 then do;
+      run ErrorToLog( "cdfmvn supports problems between 2 and 32 dimensions.");
+      return( 0 );
+   end;
+   return( 1 );
+finish;
+
 store module=(IsSym IsSPD IsCorr IsValidParmsCDF IsValidParmsTVN);
 QUIT;
