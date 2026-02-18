@@ -161,7 +161,7 @@ start MonteCarloEstimate(N, b, Sigma, mu={0 0 0});
 finish;
 
 call randseed(1);
-correct = MonteCarloEstimate(1E6, b, Sigma, mu={0 0 0}); /* Monte Carlo estimate = 0.022556 */
+correct = MonteCarloEstimate(1E6, b, Sigma, mu); /* Monte Carlo estimate = 0.022556 */
 maxDiff = max(abs(prob-correct));
 if maxDiff > 1E-3 then 
    print "--- ERROR in Test 7 ---", maxDiff prob correct;
@@ -194,7 +194,8 @@ do i = 1 to nrow(signs);
       print "--- ERROR in Test 8 ---", maxDiff prob correct;
    else do;
       msg = cat("--- Test 8.",char(i,1)," passes ---");
-      print (msg);
+      print msg[L=""];
+   end;
 end;
 
 print "--- DONE ---";
