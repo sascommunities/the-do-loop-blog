@@ -97,5 +97,5 @@ start IsValidParmsMVN(b, Sigma, mu);
    return( 1 );
 finish;
 
-store module=(IsSym IsSPD IsCorr IsValidParmsCDF IsValidParmsTVN);
+store module=(IsSym IsSPD IsCorr IsValidParmsCDF IsValidParmsTVN IsValidParmsMVN);
 QUIT;
