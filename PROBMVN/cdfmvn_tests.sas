@@ -24,7 +24,7 @@ test_name = "Test 1: 4-D Identity Matrix";
 R = I(4);
 b = {0 -1 -2 3};
 correct = cdf("Normal", 0) * cdf("Normal", -1) * cdf("Normal", -2) * cdf("Normal", 3);
-prob = cdfmvn(b, R);
+prob = cdfmvn_mod(b, R);
 run check_test(test_name, prob, correct);
 
 /* 2. 5-D Identity Matrix */
@@ -32,7 +32,7 @@ test_name = "Test 2: 5-D Identity Matrix";
 R = I(5);
 b = {1 1 1 1 1};
 correct = cdf("Normal", 1)**5;
-prob = cdfmvn(b, R);
+prob = cdfmvn_mod(b, R);
 run check_test(test_name, prob, correct);
 
 /* 3. 5-D Rank-1 Update (Equicorrelated) 
@@ -44,7 +44,7 @@ v = j(5,1, sqrt(0.5));
 R = 0.5*I(5) + v*v`;
 b = {0 0 0 0 0};
 correct = 1/6;
-prob = cdfmvn(b, R);
+prob = cdfmvn_mod(b, R);
 run check_test(test_name, prob, correct);
 
 /* 4. 5-D Min Matrix */
@@ -56,7 +56,7 @@ Sigma = {1 1 1 1 1,
          1 2 3 4 5};
 b = 0:4;
 correct = 0.4597946;
-prob = cdfmvn(b, Sigma);
+prob = cdfmvn_mod(b, Sigma);
 run check_test(test_name, prob, correct);
 
 /* 5. 8-D Min Matrix */
@@ -71,7 +71,7 @@ Sigma = {1 1 1 1 1 1 1 1,
          1 2 3 4 5 6 7 8};
 b = 0:7;
 correct = 0.4590496;
-prob = cdfmvn(b, Sigma);
+prob = cdfmvn_mod(b, Sigma);
 run check_test(test_name, prob, correct);
 
 /* 6. A kxk equicorrelated matrix with rho=0.5 and b=0.
@@ -84,7 +84,7 @@ do i=1 to nrow(kk);
    R = 0.5*I(k) + v*v`;
    b = j(1,k,0);
    correct = 1/(k+1);
-   prob = cdfmvn(b, R);
+   prob = cdfmvn_mod(b, R);
    /* for large matrices, reduce the desired precision */
    test_name = cat("Test 6: Equicorrelated (rho=0.5), dim=",strip(char(k,2)));
    run check_test(test_name, prob, correct, 0.01);
@@ -100,7 +100,7 @@ k = 8;
 R = j(k,k,1);
 b = 1:k;
 correct = cdf("Normal", min(b));
-prob = cdfmvn(b, R);
+prob = cdfmvn_mod(b, R);
 run check_test(test_name, prob, correct);
 
 
@@ -120,7 +120,7 @@ p1 = probbnrm(0.5, 0.8, 0.5);   /* Bivariate Block 1 */
 p2 = cdf("Normal", 0.4);       /* Univariate Block 2 */
 p3 = probbnrm(1.0, -0.2, -0.3); /* Bivariate Block 3 */
 correct = p1 * p2 * p3;
-prob = cdfmvn(b, R);
+prob = cdfmvn_mod(b, R);
 run check_test(test_name, prob, correct);
 
 /* 9. 3-D Negative correlation matrix and orthant probability */
@@ -134,7 +134,7 @@ b = {0 0 0};
 */
 rho_ij = R[{2 3 6}];
 correct = 1/8 + 1/(4*constant("pi")) * sum(arsin( rho_ij ));
-prob = cdfmvn(b, R);
+prob = cdfmvn_mod(b, R);
 run check_test(test_name, prob, correct);
 
 /* 10. 4-D example from Bretz */
@@ -145,7 +145,7 @@ R={1          0.7071068    0          0,
    0          0            0.3333333  1};
 b={1 1 1 1};
 correct = 0.583122;
-prob = cdfmvn(b, R);
+prob = cdfmvn_mod(b, R);
 run check_test(test_name, prob, correct);
 
 
@@ -154,7 +154,7 @@ Sigma = diag({1, 4, 9, 16});
 mu    = {10 20 30 40};
 b     = mu + rowvec(sqrt(vecdiag(Sigma)));  /* Evaluates at z=1 for all */
 correct = cdf("Normal", 1)**4;
-prob    = cdfmvn(b, Sigma, mu);
+prob    = cdfmvn_mod(b, Sigma, mu);
 run check_test(test_name, prob, correct);
 
 
@@ -167,7 +167,7 @@ mu    = {-5  5  0 10};
 b     = mu + rowvec(sqrt(vecdiag(Sigma)));
 /* Block 1 rho: 1/2 = 0.5. Block 2 rho: -1.5/3 = -0.5 */
 correct = probbnrm(1, 1, 0.5) * probbnrm(1, 1, -0.5);
-prob    = cdfmvn(b, Sigma, mu);
+prob    = cdfmvn_mod(b, Sigma, mu);
 run check_test(test_name, prob, correct);
 
 
@@ -181,7 +181,7 @@ mu    = {1  2  3  4  5};
 b     = mu + rowvec(sqrt(vecdiag(Sigma)));
 /* Block 1 rho: 0.5. Block 2: Univariate. Block 3 rho: 4/5 = 0.8 */
 correct = probbnrm(1, 1, 0.5) * cdf("Normal", 1) * probbnrm(1, 1, 0.8);
-prob    = cdfmvn(b, Sigma, mu);
+prob    = cdfmvn_mod(b, Sigma, mu);
 run check_test(test_name, prob, correct);
 
 
@@ -196,7 +196,7 @@ mu    = {10  20  30  40  50  60};
 b     = mu + rowvec(sqrt(vecdiag(Sigma)));
 /* Block 1 rho: 0.8. Blocks 2/3: Univariate. Block 4 rho: -0.5 */
 correct = probbnrm(1, 1, 0.8) * cdf("Normal", 1)**2 * probbnrm(1, 1, -0.5);
-prob    = cdfmvn(b, Sigma, mu);
+prob    = cdfmvn_mod(b, Sigma, mu);
 call check_test(test_name, prob, correct);
  
 
@@ -215,7 +215,7 @@ do i=1 to nrow(kk);
    nRep = 3;
    t0 = time();
    do rep=1 to nRep;
-      prob = cdfmvn(b, R);
+      prob = cdfmvn_mod(b, R);
    end;
    elapsed_time[i] = (time() - t0) / nRep;
 end;
