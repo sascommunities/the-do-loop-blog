@@ -147,7 +147,7 @@ finish;
    by Sigma = D*R*D. Then the transformation x = Dy reduces the general MVN probability to
    Phi_k(b; Sigma) = Phi_k(D^{−1}(b); R)
 */
-start cdfmvn(b, Sigma, mu=repeat(0,1,ncol(Sigma)), eps=1e-4);
+start cdfmvn_mod(b, Sigma, mu=repeat(0,1,ncol(Sigma)), eps=1e-4);
    IsValid = IsValidParmsMVN(b, Sigma, mu);    /* LOAD this module from cdfmvn_validate.sas */
    if ^IsValid then
       return(.);
@@ -158,5 +158,14 @@ start cdfmvn(b, Sigma, mu=repeat(0,1,ncol(Sigma)), eps=1e-4);
     return prob;
 finish;
 
-store module=(cdfmvn_LR qmc_eval cdfmvn);
+store module=(cdfmvn_LR qmc_eval cdfmvn_mod);
+
+%macro DefineMVN;
+%if %sysevalf(&sysver = 9.4) %then %do;
+   start cdfmvn(b, Sigma, mu=repeat(0,1,ncol(Sigma)), eps=1e-4);
+      return cdfmvn_mod(b, Sigma, mu, eps);
+   finish;
+   store module=(cdfmvn);   
+%mend;
+
 QUIT;
