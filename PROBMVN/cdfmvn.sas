@@ -166,6 +166,7 @@ store module=(cdfmvn_LR qmc_eval cdfmvn_mod);
       return cdfmvn_mod(b, Sigma, mu, eps);
    finish;
    store module=(cdfmvn);   
+%end;
 %mend;
 
 QUIT;
