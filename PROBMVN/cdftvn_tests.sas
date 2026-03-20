@@ -11,7 +11,8 @@
    6. Highly Correlated Case: Test stability with rho close to 1 using rank-1 as benchmark.
    7. Bug case: Need to manually switch the sign of the integral from CALL QUAD when integrating on [c,d] and c > d.
    8. Iterate all possible signs of a 3x3 correlation matrix.
-   */
+*/
+options ps=32000;
 proc iml;
 load module=_all_;
 
@@ -25,7 +26,7 @@ Sigma = I(3);
 prob = cdftvn(b, Sigma);
 correct = cdf("Normal", b[,1]) # cdf("Normal", b[,2]) # cdf("Normal", b[,3]);
 maxDiff = max(abs(prob-correct));
-if maxDiff > EPSILON then 
+if any(prob=.) | maxDiff > EPSILON then 
    print "--- ERROR in Test 1 ---", maxDiff prob correct;
 else
    print "--- Test 1 passes ---";
@@ -41,7 +42,7 @@ rho = Sigma[{2 3 6}];
 pi = constant('pi');
 correct = 1/8+ 1/(4*pi) *sum(arsin(rho));
 maxDiff = max(abs(prob-correct));
-if maxDiff > EPSILON then 
+if any(prob=.) | maxDiff > EPSILON then 
    print "--- ERROR in Test 2 ---", maxDiff prob correct;
 else
    print "--- Test 2 passes ---";
@@ -78,7 +79,7 @@ g_lambda = v; g_b = colvec(b);
 call quad(correct, "Rank1Integrand", {0 1});
 prob = cdftvn(b, Sigma);
 maxDiff = max(abs(prob-correct));
-if maxDiff > EPSILON then 
+if any(prob=.) | maxDiff > EPSILON then 
    print "--- ERROR in Test 3 ---", maxDiff prob correct;
 else 
    print "--- Test 3 passes ---";
@@ -101,7 +102,7 @@ Sigma[2,3] = 11/15;    Sigma[3,2] = Sigma[2,3];
 prob = cdftvn(b, Sigma);
 correct = 0.827984897456834;
 maxDiff = max(abs(prob-correct));
-if maxDiff > EPSILON then 
+if any(prob=.) | maxDiff > EPSILON then 
    print "--- ERROR in Test 4 ---", maxDiff prob correct;
 else 
    print "--- Test 4 passes ---";
@@ -118,7 +119,7 @@ prob = cdftvn(b, Sigma);
 /* Correct value via independence property */
 correct = cdf("Normal", 0.5) * probbnrm(1.0, 1.5, 0.5);
 maxDiff = max(abs(prob-correct));
-if maxDiff > EPSILON then 
+if any(prob=.) | maxDiff > EPSILON then 
    print "--- ERROR in Test 5 ---", maxDiff prob correct;
 else 
    print "--- Test 5 passes ---";
@@ -137,7 +138,7 @@ call quad(correct, "Rank1Integrand", {0 1});
 prob = cdftvn(b, Sigma);
 /* Quadrature near rho=1 is more challenging; check for reasonable precision */
 maxDiff = max(abs(prob-correct));
-if maxDiff > EPSILON then 
+if any(prob=.) | maxDiff > EPSILON then 
    print "--- ERROR in Test 6 ---", maxDiff prob correct;
 else 
    print "--- Test 6 passes ---";
@@ -163,7 +164,7 @@ finish;
 call randseed(1);
 correct = MonteCarloEstimate(1E6, b, Sigma, mu); /* Monte Carlo estimate = 0.022556 */
 maxDiff = max(abs(prob-correct));
-if maxDiff > 1E-3 then 
+if any(prob=.) | maxDiff > 1E-3 then 
    print "--- ERROR in Test 7 ---", maxDiff prob correct;
 else 
    print "--- Test 7 passes ---";
@@ -190,7 +191,7 @@ do i = 1 to nrow(signs);
    prob = cdftvn(b, R);
    correct = MonteCarloEstimate(5E5, b, R);
    maxDiff = max(abs(prob-correct));
-   if maxDiff > 1E-3 then 
+   if any(prob=.) | maxDiff > 1E-3 then 
       print "--- ERROR in Test 8 ---", maxDiff prob correct;
    else do;
       msg = cat("--- Test 8.",char(i,1)," passes ---");
