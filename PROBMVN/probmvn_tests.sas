@@ -31,23 +31,6 @@ load module=_all_;
    nl = 100;
 
    /* --- TEST SUITE --- */
-/* TEMP: helper module to call mvn_dist with fewer parameters. Eventually this will 
-   be the main module that users call.  */
-start probmvn_mod(L, U, R);
-   /* eventually we won't to pass these parameters because they are 
-      derivable from other parameters. We can create them inside other functions,
-      if needed. */
-   n = ncol(R);
-   infin = GetInfinityFlag(L, U);
-   maxpts = 2000*n*n*n; 
-   /* Eventually, we will make abstol a constant inside mvn_dist. 
-      We will also releps because we only want to use abs errors */
-   abseps = .0001; 
-   releps = 0; 
-   run mvn_dist(n, L, U, infin, R, maxpts, abseps, releps,
-                error, value, nevals, inform );
-   return(value);
-finish;
 
 
 /* Helper module to format test results */

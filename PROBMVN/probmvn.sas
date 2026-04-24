@@ -20,18 +20,9 @@
    semi-definite covariance matrices until dimension 100. 
    Original Author : ALAN GENZ and FRANK BRETZ 
    Date : 21.06.00 - start version 
-   Input : N : dimension of the problem (scalar) 
-           LOWER : lower integration limits (N-rowvector) 
+   Input : LOWER : lower integration limits (N-rowvector) 
            UPPER : upper integration limits (N-rowvector) 
-           INFIN : limit flags (N-rowvector): 
-                   if INFIN(I) < 0, Ith limit is (-infinity, infinity) 
-                   if INFIN(I) = 0, Ith limit is (-infinity, UPPER(I)] 
-                   if INFIN(I) = 1, Ith limit is [ LOWER(I), infinity) 
-                   if INFIN(I) = 2, Ith limit is [ LOWER(I), UPPER(I)] 
            COVAR : positive semi-definie covariance matrix (N*N-matrix)  
-           MAXPTS: maximum nuber of function values (scalar) 
-           ABSEPS: absolute error tolerance (scalar) 
-           RELEPS: relative error tolerance (scalar) 
 
    Output : ERROR : estimated absolute error, with 99% confidence level 
             VALUE : estimated integral value 
@@ -50,44 +41,76 @@
    The statements at the end of the program 
    N = 5; 
    LOWER = J(1,N,-2); UPPER = J(1,N,2); 
-   INFIN = J(1,N,2); 
    COVAR = I(5);
-   MAXPTS = 300; *2000*N*N*N; 
-   ABSEPS = .0001; 
-   RELEPS = 0; 
-   RUN MVN_DIST( N, LOWER, UPPER, INFIN, COVAR, MAXPTS, ABSEPS, RELEPS, ERROR, VALUE, NEVALS, INFORM ); 
+   RUN MVN_DIST( LOWER, UPPER, COVAR, ERROR, VALUE, NEVALS, INFORM ); 
    PRINT ERROR VALUE NEVALS INFORM; 
 
    lead to the following output: 
    ERROR     VALUE     NEVALS INFORM 
    0.0000756 0.9030463 27040  0 
 */
+options ps=32000;
+/* load the PROBBVN_MOD function for rectangular bivariate normal probabilities */
+%include "probbvn.sas";
+
+/* Define the PROBMVN_MOD function for rectangular bivariate normal probabilities.
+   Let X~MVN(mu, Sigma) be a multivariate normal random vector, where
+   Sigma is an nxn covariance matrix and mu is a 1xn row vector.
+   Then 
+   prob = PROBMVN_MOD(L, U, Sigma<, mu>) 
+   returns the probability that X falls within the rectangular region defined by L and U:
+   P(L1 < X1 < U1 & ... & Ln < Xn < Un) 
+   where a missing element for L means -Infinity and a missing element for U means +Infinity. */
 
 proc iml;
-   /* LOAD THE PROBBVN_MOD function for rectangular bivariate normal probabilities */
-   %include "probbvn_mod.sas";
+/* probmvn_mod: Main routine for rectangular multivariate normal probabilities. 
+   L and U are 1xn row vectors of lower and upper limits, respectively. 
+   Sigma is an nxn covariance matrix. mu is an optional 1xn mean vector. 
+   The function standardizes the limits and covariance matrix
+   then calls PROBMVN_STD, which computes the probability for the 
+   standardized problem X~MVN(0,R). 
+   The function uses missing values in L and U to indicate infinity. 
+   .M indicates negative infinity.
+   .I indicates positive infinity.
+*/
+start probmvn_mod(L, U, Sigma, mu=j(1,ncol(Sigma),0));
+   R = cov2corr(Sigma);
+   D = rowvec(sqrt(vecdiag(Sigma)));
+   L_std = (L - mu)/ D;
+   U_std = (U - mu)/ D;
+   return probmvn_std(L_std, U_std, R);
+finish;
 
-   /* Global constants for the Richtmyer generators and lattice rules */
-   nl = 100;
+/* Define some constants and call mvn_dist for the standardized problem X~MVN(0,R). */
+start probmvn_std(L, U, R);
+   run mvn_dist(L, U, R,
+                error, value, nevals, inform );
+   return(value);
+finish;
 
-   /* FUNCTION: mvn_dist
-   High-level driver. 
-   1. Initializes evaluation counters.
-   2. Calls 'mvndnt' to sort variables and compute Cholesky decomposition.
-   3. If dimension > 2 after handling infinities, calls the integration routine 'dkbvrc'.
-   */
-   start mvn_dist( n, lower, upper, infin, covar, maxpts, abseps, releps, error, value, nevals, inform );
-      nevals = 0;
-      /* Phase 1: Setup, Pivoting, and Cholesky Factorization */
-      run mvndnt( n, covar, lower, upper, infin, infis, value, error, inform );
+/* FUNCTION: mvn_dist
+High-level driver. 
+1. Initializes evaluation counters.
+2. Calls 'mvndnt' to sort variables and compute Cholesky decomposition.
+3. If dimension > 2 after handling infinities, calls the integration routine 'dkbvrc'.
+*/
+start mvn_dist( lower, upper, covar, error, value, nevals, inform );
+   n = ncol(covar);
+   maxpts = 2000*n**3;
+   if n < 10 then abseps = 1E-4;
+   else abseps = 1E-3;
+   /* Phase 1: Setup, Pivoting, and Cholesky Factorization */
+   run mvndnt( n, covar, lower, upper, infis, value, error, inform );
 
-      if ( inform = 0 ) then do;
-         /* If effective dimension > 2, perform numerical integration.
-            1D and 2D cases are handled analytically inside mvndnt. */
-         if ( n-infis > 2 ) then
-            run dkbvrc( n-infis-1, 0, maxpts, abseps, releps, error, value, nevals, inform );
-      end;
-   finish mvn_dist;
+   releps = 0;
+   nevals = 0;
+   if ( inform = 0 ) then do;
+      /* If effective dimension > 2, perform numerical integration.
+         1D and 2D cases are handled analytically inside mvndnt. */
+      if ( n-infis > 2 ) then
+         run dkbvrc( n-infis-1, 0, maxpts, abseps, releps, error, value, nevals, inform );
+   end;
+finish mvn_dist;
 
 
    /* FUNCTION: mvn_dfn
@@ -97,7 +120,8 @@ proc iml;
    2. Computes the integration limits (ai, bi) for the current dimension conditional on previous dimensions.
    3. Accumulates the probability mass (ei - di).
    */
-   start mvn_dfn( n, w ) global( covars, done, eone, infi, a, b, y );
+   start mvn_dfn( n, w ) 
+          global( covars, done, eone, infi, a, b, y );
       value = 1;
       infa = 0;
       infb = 0;
@@ -188,7 +212,9 @@ proc iml;
    3. Handles N=1 and N=2 cases analytically (Exact solutions).
    4. Handles Independent cases (Diagonal matrix).
    */
-   start mvndnt( n, covar, lower, upper, infin, infis, value, error, inform ) global( covars, done, eone, infi, a, b, nl );
+   start mvndnt( n, covar, lower, upper, infis, value, error, inform ) 
+         global( covars, done, eone, infi, a, b, nl );
+      infin = GetInfinityFlag(lower, upper);
       inform = 0;
 
       if ( n > nl | n < 1 ) then
@@ -222,12 +248,21 @@ proc iml;
                   if ( abs( covars[2,2] ) > 0 ) then do;
                      d = sqrt( 1 + covars[2,1]**2 );
 
+                     lower2 = j(1, 2, .);
+                     upper2 = j(1, 2, .);
+
+                     if ( infi[1] ^= 0 ) then
+                        lower2[1] = a[1];
+
+                     if ( infi[1] ^= 1 ) then
+                        upper2[1] = b[1];
+
                      if ( infi[2] ^= 0 ) then
-                        a[2] = a[2]/d;
+                        lower2[2] = a[2]/d;
 
                      if ( infi[2] ^= 1 ) then
-                        b[2] = b[2]/d;
-                     value = probbvn( a, b, infi, covars[2,1]/d );
+                        upper2[2] = b[2]/d;
+                     value = probbvn_std( lower2, upper2, covars[2,1]/d );
                   end;
                   else do;
                      /* If independent (Cov[2,1]=0), compute product of marginals */
@@ -721,26 +756,9 @@ proc iml;
       return Flag;
    finish;
    
-   /* FUNCTION: probbvn
-   Helper for Bivariate Normal Probabilities.
-   Translates infinite bounds flags (0,1,2) into calls to the 
-   standard PROBBNRM function.
-   */
-   start probbvn( lower, upper, infin, correl );
-      if ( infin[1] = 2 & infin[2] = 2 ) then
-         bvn = probbnrm ( lower[1], lower[2], correl ) - probbnrm ( upper[1], lower[2], correl ) - probbnrm ( lower[1], upper[2], correl ) + probbnrm ( upper[1], upper[2], correl );
-      else if ( infin[1] = 2 & infin[2] = 1 ) then bvn = probbnrm ( -lower[1], -lower[2], correl ) - probbnrm ( -upper[1], -lower[2], correl );
-      else if ( infin[1] = 1 & infin[2] = 2 ) then bvn = probbnrm ( -lower[1], -lower[2], correl ) - probbnrm ( -lower[1], -upper[2], correl );
-      else if ( infin[1] = 2 & infin[2] = 0 ) then bvn = probbnrm ( upper[1], upper[2], correl ) - probbnrm ( lower[1], upper[2], correl );
-      else if ( infin[1] = 0 & infin[2] = 2 ) then bvn = probbnrm ( upper[1], upper[2], correl ) - probbnrm ( upper[1], lower[2], correl );
-      else if ( infin[1] = 1 & infin[2] = 0 ) then bvn = probbnrm ( -lower[1], upper[2], -correl );
-      else if ( infin[1] = 0 & infin[2] = 1 ) then bvn = probbnrm ( upper[1], -lower[2], -correl );
-      else if ( infin[1] = 1 & infin[2] = 1 ) then bvn = probbnrm ( -lower[1], -lower[2], correl );
-      else if ( infin[1] = 0 & infin[2] = 0 ) then bvn = probbnrm ( upper[1], upper[2], correl );
-      return ( bvn );
-   finish probbvn;
-
 store module=(
+probmvn_mod
+probmvn_std
 mvn_dist
 mvn_dfn
 mvndnt
@@ -751,7 +769,6 @@ dkbvrc
 dksmrc
 dkrcht
 GetInfinityFlag
-probbvn
 );
 
 
@@ -809,19 +826,7 @@ testName = "Test 0: 5-D Identity Matrix; [a,b]=[-2,2] in all coordinates";
    lower = j(1,n,-2);
    upper = j(1,n, 2);
 
-   /*********************/
-   /* eventually we won't to pass these parameters because they are derivable
-      from other parameters. We can create them inside other functions, if needed:
-      n, Infin, maxpts */
-   infin = GetInfinityFlag(lower, upper);
-   maxpts = 2000*n*n*n; 
-   /* Eventually, we will make abstol a constant inside mvn_dist. 
-      We will also releps because we only want to use abs errors */
-   abseps = .0001; 
-   releps = 0; 
-   /*********************/
-
-   run mvn_dist(n, lower, upper, infin, R, maxpts, abseps, releps,
+   run mvn_dist(lower, upper, R,
                 error, value, nevals, inform );
    correct = prod(cdf("Normal", upper) - cdf("Normal", lower));
    run check_test(testName, value, correct);
