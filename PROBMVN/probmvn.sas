@@ -95,13 +95,13 @@ High-level driver.
 3. If dimension > 2 after handling infinities, calls the integration routine 'dkbvrc'.
 */
 start mvn_dist( lower, upper, covar, error, value, nevals, inform );
+   /* Phase 1: Setup, Pivoting, and Cholesky Factorization */
+   run mvndnt( lower, upper, covar, infis, value, error, inform );
+
    n = ncol(covar);
    maxpts = 2000*n**3;
    if n < 10 then abseps = 1E-4;
    else abseps = 1E-3;
-   /* Phase 1: Setup, Pivoting, and Cholesky Factorization */
-   run mvndnt( n, covar, lower, upper, infis, value, error, inform );
-
    releps = 0;
    nevals = 0;
    if ( inform = 0 ) then do;
@@ -169,7 +169,7 @@ finish mvn_dist;
                di = 0;
                ei = 1;
                /* Determine if bounds are finite or infinite (-Inf, +Inf) */
-               j = 2*infa+infb-1;
+               j = 2*infa+infb-1;  /* encode a local version of GetInfinityFlag. See mvnlms */
 
                if ( j >= 0 ) then do;
                   if ( j ^= 0 ) then
@@ -212,11 +212,17 @@ finish mvn_dist;
    3. Handles N=1 and N=2 cases analytically (Exact solutions).
    4. Handles Independent cases (Diagonal matrix).
    */
-   start mvndnt( n, covar, lower, upper, infis, value, error, inform ) 
-         global( covars, done, eone, infi, a, b, nl );
+   start mvndnt( lower, upper, covar, infis, value, error, inform ) 
+         global( covars, done, eone, infi, a, b, nn, hisum, olds );
+      n = ncol(covar);
       infin = GetInfinityFlag(lower, upper);
       inform = 0;
-
+      /* Reset quasi-random sequence state for each top-level probability call. */
+      nn = j(1, 51, 0);
+      hisum = .;
+      olds = 0;
+      /* Global constant for the Richtmyer generators and lattice rules */
+      nl = 100;
       if ( n > nl | n < 1 ) then
          inform = 2;
       else do i = 1 to n;
@@ -227,7 +233,7 @@ finish mvn_dist;
 
       /* Perform Cholesky Decomposition with Variable Reordering */
       if ( inform = 0 ) then
-         run covsrt( n, lower, upper, covar, infin, infis, inform );
+         run covsrt( lower, upper, covar, infin, infis, inform );
 
       if ( inform = 0 ) then do;
          /* CASE: 0 Dimensions active (all (-inf, inf)) */
@@ -248,21 +254,12 @@ finish mvn_dist;
                   if ( abs( covars[2,2] ) > 0 ) then do;
                      d = sqrt( 1 + covars[2,1]**2 );
 
-                     lower2 = j(1, 2, .);
-                     upper2 = j(1, 2, .);
-
-                     if ( infi[1] ^= 0 ) then
-                        lower2[1] = a[1];
-
-                     if ( infi[1] ^= 1 ) then
-                        upper2[1] = b[1];
-
                      if ( infi[2] ^= 0 ) then
-                        lower2[2] = a[2]/d;
+                        a[2] = a[2]/d;
 
                      if ( infi[2] ^= 1 ) then
-                        upper2[2] = b[2]/d;
-                     value = probbvn_std( lower2, upper2, covars[2,1]/d );
+                        b[2] = b[2]/d;
+                     value = probbvn( a, b, infi, covars[2,1]/d );
                   end;
                   else do;
                      /* If independent (Cov[2,1]=0), compute product of marginals */
@@ -310,9 +307,15 @@ finish mvn_dist;
 
 
    /* FUNCTION: mvnlms
-   Converts integration limits (a, b) and infinity flag (infin) 
-   into CDF probabilities (lower, upper).
-   Handles cases where limits are -Infinity or +Infinity.
+   Convert one-dimensional normal limits on the z-scale into
+   probability-scale limits for the Genz transformation.
+   Given scalar bounds a and b and an infinity flag, return
+   lower = Phi(a) and upper = Phi(b), with lower=0 for -Infinity
+   and upper=1 for +Infinity. The routine is used to form the
+   interval mass upper-lower for pivoting, initialization, and
+   low-dimensional special cases. The original name "mvnlms" is
+   retained from the source code; the meaning of "lms" is not clear.
+   It might be short for "limits."
    */
    start mvnlms( a, b, infin, lower, upper );
       lower = 0;
@@ -336,15 +339,16 @@ finish mvn_dist;
    It reorders variables so that the outermost integration variables 
    have the smallest expected integration intervals.
    */
-   start covsrt( n, lower, upper, covar, infin, infis, inform ) global( eps, sqtwpi, covars, done, eone, infi, a, b, y );
+   start covsrt( lower, upper, covar, infin, infis, inform ) global( eps, covars, done, eone, infi, a, b, y );
+      n = ncol(covar);
       y = j( 1, n, . );
       infi = infin;
       a = j( 1, n, 0 );
       b = j( 1, n, 0 );
+      sqtwpi = sqrt( 2*constant("PI") );
       covars = covar;
       /* Count effectively infinite dimensions */
       infis = n - sum( sign( sign( infi ) + 1 ) );
-
       /* Initialize working limits a/b from input lower/upper */
       do i = 1 to n;
          if ( infi[i] >= 0 ) then do;
@@ -453,9 +457,9 @@ finish mvn_dist;
                         b[i] = b[i]/covars[i,j];
 
                         if ( covars[i,j] < 0 ) then do;
-                           aa = a[i];
+                           tmp = a[i];
                            a[i] = b[i];
-                           b[i] = aa;
+                           b[i] = tmp;
 
                            if ( infi[i] ^= 2 ) then
                               infi[i] = 1 - infi[i];
@@ -468,15 +472,15 @@ finish mvn_dist;
                            if( covars[l,j+1] > 0 ) then do;
                               do k = i-1 to l by -1;
                                  /* Large block swapping logic for singularity handling */
-                                 aa = covars[k,1:k];
+                                 tmp = covars[k,1:k];
                                  covars[k,1:k] = covars[k+1,1:k];
-                                 covars[k+1,1:k] = aa;
-                                 aa = a[k];
+                                 covars[k+1,1:k] = tmp;
+                                 tmp = a[k];
                                  a[k] = a[k+1];
-                                 a[k+1] = aa;
-                                 aa = b[k];
+                                 a[k+1] = tmp;
+                                 tmp = b[k];
                                  b[k] = b[k+1];
-                                 b[k+1] = aa;
+                                 b[k+1] = tmp;
                                  m = infi[k];
                                  infi[k] = infi[k+1];
                                  infi[k+1] = m;
@@ -514,41 +518,33 @@ finish mvn_dist;
    */
    start rcswp( p, q, a, b, infin, n, c );
       /* Swap Limits */
-      aa = a[p];
-      a[p] = a[q];
-      a[q] = aa;
-      aa = b[p];
-      b[p] = b[q];
-      b[q] = aa;
-      i = infin[p];
-      infin[p] = infin[q];
-      infin[q] = i;
+      tmp = a[p];   a[p] = a[q];         a[q] = tmp;
+      tmp = b[p];   b[p] = b[q];         b[q] = tmp;
+      i = infin[p]; infin[p] = infin[q]; infin[q] = i;
 
       /* Swap Diagonal Elements */
-      aa = c[p,p];
-      c[p,p] = c[q,q];
-      c[q,q] = aa;
+      tmp = c[p,p]; c[p,p] = c[q,q];     c[q,q] = tmp;
 
       /* Swap Columns to the left of p */
       if (p>1) then do;
-         aa = c[q,1:p-1];
+         tmp = c[q,1:p-1];
          c[q,1:p-1] = c[p,1:p-1];
-         c[p,1:p-1] = aa;
+         c[p,1:p-1] = tmp;
       end;
 
       /* Swap Elements between p and q (the rectangular block) */
       do i = p+1 to q-1;
-         aa = c[i,p];
+         tmp = c[i,p];
          c[i,p] = c[q,i];
-         c[q,i] = aa;
+         c[q,i] = tmp;
       end;
 
       /* RECOVERED SECTION: Swap columns below q 
          This maintains the lower triangular structure. */
       if (q<n) then do;
-         aa = c[q+1:n,p];
+         tmp = c[q+1:n,p];
          c[q+1:n,p] = c[q+1:n,q];
-         c[q+1:n,q] = aa;
+         c[q+1:n,q] = tmp;
       end;
    finish rcswp;
 
@@ -700,7 +696,17 @@ finish mvn_dist;
    Generates quasi-random numbers using square roots of primes.
    Used for dimensions exceeding the optimal lattice rule coefficients.
    */
-   start dkrcht( s, quasi ) global( nn, psqt, hisum, olds, mxdim, mxhsum, bb );
+   start dkrcht( s, quasi ) global( nn, hisum, olds );
+      /* Local read-only constants for quasi-random generation */
+      mxdim = 80;        /* max number of dimensions supported */
+      mxhsum = 50;       /* max depth of digit expansion */
+      bb = 2;            /* base for Richtmyer counter */
+      primes = {2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71
+       73 79 83 89 97 101 103 107 109 113 127 131 137 139 149 151 157 163 167 173
+       179 181 191 193 197 199 211 223 227 229 233 239 241 251 257 263 269 271 277 281
+       283 293 307 311 313 317 331 337 347 349 353 359 367 373 379 383 389 397 401 409};
+      psqt = sqrt(primes);
+      
       if ( s ^= olds | s < 1 ) then do;
          olds = s;
          nn[1] = 0;
@@ -756,6 +762,25 @@ finish mvn_dist;
       return Flag;
    finish;
    
+   /* FUNCTION: probbvn
+   Helper for Bivariate Normal Probabilities.
+   Translates infinite bounds flags (0,1,2) into calls to the 
+   standard PROBBNRM function.
+   */
+   start probbvn( lower, upper, infin, correl );
+      if ( infin[1] = 2 & infin[2] = 2 ) then
+         bvn = probbnrm ( lower[1], lower[2], correl ) - probbnrm ( upper[1], lower[2], correl ) - probbnrm ( lower[1], upper[2], correl ) + probbnrm ( upper[1], upper[2], correl );
+      else if ( infin[1] = 2 & infin[2] = 1 ) then bvn = probbnrm ( -lower[1], -lower[2], correl ) - probbnrm ( -upper[1], -lower[2], correl );
+      else if ( infin[1] = 1 & infin[2] = 2 ) then bvn = probbnrm ( -lower[1], -lower[2], correl ) - probbnrm ( -lower[1], -upper[2], correl );
+      else if ( infin[1] = 2 & infin[2] = 0 ) then bvn = probbnrm ( upper[1], upper[2], correl ) - probbnrm ( lower[1], upper[2], correl );
+      else if ( infin[1] = 0 & infin[2] = 2 ) then bvn = probbnrm ( upper[1], upper[2], correl ) - probbnrm ( upper[1], lower[2], correl );
+      else if ( infin[1] = 1 & infin[2] = 0 ) then bvn = probbnrm ( -lower[1], upper[2], -correl );
+      else if ( infin[1] = 0 & infin[2] = 1 ) then bvn = probbnrm ( upper[1], -lower[2], -correl );
+      else if ( infin[1] = 1 & infin[2] = 1 ) then bvn = probbnrm ( -lower[1], -lower[2], correl );
+      else if ( infin[1] = 0 & infin[2] = 0 ) then bvn = probbnrm ( upper[1], upper[2], correl );
+      return ( bvn );
+   finish probbvn;
+
 store module=(
 probmvn_mod
 probmvn_std
@@ -769,6 +794,7 @@ dkbvrc
 dksmrc
 dkrcht
 GetInfinityFlag
+probbvn
 );
 
 
@@ -781,29 +807,41 @@ GetInfinityFlag
    /*********************/
    /*
    Read-Only Constants: 
-   eps, sqtwpi, nl, plim, klim, minsmp, p, c, psqt, mxdim, mxhsum, bb.
-
-   Read/Write State Variables: 
-   hisum, olds, nn, covars, done, eone, infi, a, b, y.
-   You must reset all state variables in mvndnt so that you can call mvn_dist multiple times.
+   eps, nl, plim, klim, minsmp, p, c.
+   Global State Variables: nn, hisum, olds (managed by dkrcht).
    */
-   hisum = .;
-   olds = 0;
-   mxdim = 80;
-   mxhsum = 50;
-   bb = 2;
-   psqt={1.414213562373 1.732050807569 2.236067977500 2.645751311065 3.316624790355 3.605551275464 4.123105625618 4.358898943541 4.795831523313 5.385164807135 5.567764362830 6.082762530298 6.403124237433 6.557438524302 6.855654600401 7.280109889281 7.681145747869 7.810249675907 8.185352771872 8.426149773176 8.544003745318 8.888194417316 9.110433579144 9.433981132057 9.848857801796 10.04987562112 10.14889156509 10.34408043279 10.44030650891 10.63014581273 11.26942766958 11.44552314226 11.70469991072 11.78982612255 12.20655561573 12.28820572744 12.52996408614 12.76714533480 12.92284798332 13.15294643797 13.37908816026 13.45362404707 13.82027496109 13.89244398945 14.03566884762 14.10673597967 14.52583904633 14.93318452307 15.06651917332 15.13274595042 15.26433752247 15.45962483374 15.52417469626 15.84297951775 16.03121954188 16.21727474023 16.40121946686 16.46207763315 16.64331697709 16.76305461424 16.82260384126 17.11724276862 17.52141546794 17.63519208855 17.69180601295 17.80449381476 18.19340539866 18.35755975069 18.62793601020 18.68154169227 18.78829422806 18.94729532150 19.15724406067 19.31320791583 19.46792233393 19.57038579078 19.72308292332 19.92485884517 20.02498439450 20.22374841616};
-   eps = 1e-10;
-   sqtwpi = 2.506628274631000502415765284811045253;
-   plim = 25;
-   klim = 20;
-   minsmp = 8;
+   eps = 1e-10;          /* numerical tolerance in pivot/singularity checks */
+   plim = 25;            /* number of prime lattice rules in table p */
+   klim = 20;            /* max Korobov-lattice dimensions tracked in vk */
+   minsmp = 8;           /* minimum number of random shifts per stage */
+   /* Tabulated Korobov lattice primes (p) and generator coefficients (c). */
    p = { 31 47 73 113 173 263 397 593 907 1361 2053 3079 4621 6947 10427 15641 23473 35221 52837 79259 118891 178349 267523 401287 601942};
-   c = { 12 9 9 13 12 12 12 12 12 12 12 12 3 3 3 12 7 7 12, 13 11 17 10 15 15 15 15 15 15 22 15 15 6 6 6 15 15 9 , 27 28 10 11 11 20 11 11 28 13 13 28 13 13 13 14 14 14 14 , 35 27 27 36 22 29 29 20 45 5 5 5 21 21 21 21 21 21 21 , 64 66 28 28 44 44 55 67 10 10 10 10 10 10 38 38 10 10 10 , 111 42 54 118 20 31 31 72 17 94 14 14 11 14 14 14 94 10 10 , 163 154 83 43 82 92 150 59 76 76 47 11 11 100 131 116 116 116 116 , 246 189 242 102 250 250 102 250 280 118 196 118 191 215 121 121 49 49 49 , 347 402 322 418 215 220 339 339 339 337 218 315 315 315 315 167 167 167 167 , 505 220 601 644 612 160 206 206 206 422 134 518 134 134 518 652 382 206 158 , 794 325 960 528 247 247 338 366 847 753 753 236 334 334 461 711 652 381 381 , 1189 888 259 1082 725 811 636 965 497 497 1490 1490 392 1291 508 508 1291 1291 508 , 1763 1018 1500 432 1332 2203 126 2240 1719 1284 878 1983 266 266 266 266 747 747 127 , 2872 3233 1534 2941 2910 393 1796 919 446 919 919 1117 103 103 103 103 103 103 103 , 4309 3758 4034 1963 730 642 1502 2246 3834 1511 1102 1102 1522 1522 3427 3427 3928 915 915 , 6610 6977 1686 3819 2314 5647 3953 3614 5115 423 423 5408 7426 423 423 487 6227 2660 6227 , 9861 3647 4073 2535 3430 9865 2830 9328 4320 5913 10365 8272 3706 6186 7806 7806 7806 8610 2563 , 10327 7582 7124 8214 9600 10271 10193 10800 9086 2365 4409 13812 5661 9344 9344 10362 9344 9344 8585 , 19540 19926 11582 11113 24585 8726 17218 419 4918 4918 4918 15701 17710 4037 4037 15808 11401 19398 25950 , 34566 9579 12654 26856 37873 38806 29501 17271 3663 10763 18955 1298 26560 17132 17132 4753 4753 8713 18624 , 31929 49367 10982 3527 27066 13226 56010 18911 40574 20767 20767 9686 47603 47603 11736 11736 41601 12888 32948 , 40701 69087 77576 64590 39397 33179 10858 38935 43129 35468 35468 2196 61518 61518 27945 70975 70975 86478 86478 , 103650 125480 59978 46875 77172 83021 126904 14541 56299 43636 11655 52680 88549 29804 101894 113675 48040 113675 34987 , 165843 90647 59925 189541 67647 74795 68365 167485 143918 74912 167289 75517 8148 172106 126159 35867 35867 35867 121694 , 130365 236711 110235 125699 56483 93735 234469 60549 1291 93937 245291 196061 258647 162489 176631 204895 73353 172319 28881};
+   c = { 12 9 9 13 12 12 12 12 12 12 12 12 3 3 3 12 7 7 12, 
+         13 11 17 10 15 15 15 15 15 15 22 15 15 6 6 6 15 15 9, 
+         27 28 10 11 11 20 11 11 28 13 13 28 13 13 13 14 14 14 14, 
+         35 27 27 36 22 29 29 20 45 5 5 5 21 21 21 21 21 21 21, 
+         64 66 28 28 44 44 55 67 10 10 10 10 10 10 38 38 10 10 10, 
+         111 42 54 118 20 31 31 72 17 94 14 14 11 14 14 14 94 10 10, 
+         163 154 83 43 82 92 150 59 76 76 47 11 11 100 131 116 116 116 116, 
+         246 189 242 102 250 250 102 250 280 118 196 118 191 215 121 121 49 49 49, 
+         347 402 322 418 215 220 339 339 339 337 218 315 315 315 315 167 167 167 167, 
+         505 220 601 644 612 160 206 206 206 422 134 518 134 134 518 652 382 206 158, 
+         794 325 960 528 247 247 338 366 847 753 753 236 334 334 461 711 652 381 381, 
+         1189 888 259 1082 725 811 636 965 497 497 1490 1490 392 1291 508 508 1291 1291 508, 
+         1763 1018 1500 432 1332 2203 126 2240 1719 1284 878 1983 266 266 266 266 747 747 127, 
+         2872 3233 1534 2941 2910 393 1796 919 446 919 919 1117 103 103 103 103 103 103 103, 
+         4309 3758 4034 1963 730 642 1502 2246 3834 1511 1102 1102 1522 1522 3427 3427 3928 915 915, 
+         6610 6977 1686 3819 2314 5647 3953 3614 5115 423 423 5408 7426 423 423 487 6227 2660 6227, 
+         9861 3647 4073 2535 3430 9865 2830 9328 4320 5913 10365 8272 3706 6186 7806 7806 7806 8610 2563, 
+         10327 7582 7124 8214 9600 10271 10193 10800 9086 2365 4409 13812 5661 9344 9344 10362 9344 9344 8585, 
+         19540 19926 11582 11113 24585 8726 17218 419 4918 4918 4918 15701 17710 4037 4037 15808 11401 19398 25950, 
+         34566 9579 12654 26856 37873 38806 29501 17271 3663 10763 18955 1298 26560 17132 17132 4753 4753 8713 18624, 
+         31929 49367 10982 3527 27066 13226 56010 18911 40574 20767 20767 9686 47603 47603 11736 11736 41601 12888 32948, 
+         40701 69087 77576 64590 39397 33179 10858 38935 43129 35468 35468 2196 61518 61518 27945 70975 70975 86478 86478, 
+         103650 125480 59978 46875 77172 83021 126904 14541 56299 43636 11655 52680 88549 29804 101894 113675 48040 113675 34987, 
+         165843 90647 59925 189541 67647 74795 68365 167485 143918 74912 167289 75517 8148 172106 126159 35867 35867 35867 121694, 
+         130365 236711 110235 125699 56483 93735 234469 60549 1291 93937 245291 196061 258647 162489 176631 204895 73353 172319 28881};
 
-
-   /* Global constants for the Richtmyer generators and lattice rules */
-   nl = 100;
 
 /* Helper module to format test results */
 start check_test(test_name, prob, correct, tol=0.001);
@@ -834,11 +872,11 @@ testName = "Test 0: 5-D Identity Matrix; [a,b]=[-2,2] in all coordinates";
    /* RUN TESTS IN probmvn_tests.sas */
 
    /* Possible improvements:
-   First, notice that the program uses global variables like nl, hisum, and olds. Some of them (such as hisum and olds) are initialized at the beginning of the program and modified inside a function call. 
+   First, notice that the program uses global variables like hisum, and olds. Some of them (such as hisum and olds) are initialized at the beginning of the program and modified inside a function call. 
 
 1. For consistency and convenience, these global variables should be set to their initial default values every time that mvn_dist is called. Since mvn_dist calls mvndnt, which sets up the problem, please move all initialization into mvndnt. You will need to modify the GLOBAL statement accordingly to declare ALL global variables. 
 
-2. I think there are some global variables that are used only in one function. For example, sqtwpi is only used in the covsrt function. Therefore, please move the definition for sqtwpi to the top of the covsrt function. Examine other global variables. If they are "read only" variables that are only used in one function, please move their definition to the top of the function. I think psqt and bb can be defined local to the dkrcht function. I think p and c can be local to the dkbvrc function.
+2. I think there are some global variables that are used only in one function.  Examine the global variables. If they are "read only" variables that are only used in one function, please move their definition to the top of the function. I think psqt and bb can be defined local to the dkrcht function. I think p and c can be local to the dkbvrc function.
 
 3. Some global variables can be derived from others and so do not need to be global at all. For example, any function that needs to use mxdim can defined locally as ncol(psqt). I think plim is merely ncol(p). I'm not sure how klim is defined, but it might be ncol(c)-1.
    */

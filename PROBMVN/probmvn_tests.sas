@@ -280,10 +280,10 @@ test_name = "Test 14: 3-D Mixed Orthant";
 R0 = { 1.0  0.6  0.4,
        0.6  1.0  0.2,
        0.4  0.2  1.0 };
-prob = probmvn_mod(L, U, R0);
 /* Compute P(X1 < 0, X2 > 0, X3 < 0) */
 L = {.  0 .};
 U = {0  . 0};
+prob = probmvn_mod(L, U, R0);
 /* By flipping the sign of X2, this becomes P(X1 < 0, Y2 < 0, X3 < 0).
    The new correlation matrix R_star flips signs on row 2 and col 2. */
 rhos = R0[{2,3,6}];
@@ -313,6 +313,6 @@ do i = 2 to nrow(signs);
    rhos[1] = -rhos[1]; /* rho_12 */
    rhos[3] = -rhos[3]; /* rho_23 */
    correct = 1/8 + 1/(4*constant("pi")) * sum(arsin(rhos));
-   test_name = "Test 15: 3-D Mixed Orthant, Version " + char(i);
+   test_name = "Test 15: 3-D Mixed Orthant, Version " + char(i,2);
    run check_test(test_name, prob, correct);
 end;
