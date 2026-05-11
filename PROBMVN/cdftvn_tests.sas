@@ -200,3 +200,24 @@ do i = 1 to nrow(signs);
 end;
 
 print "--- DONE ---";
+
+
+/****************************************************/
+
+proc iml;
+x = T(-3:3);
+/* HERE */
+
+
+/*
+start MonteCarloEstimate(N, L, U, Sigma, mu=j(1,ncol(Sigma),0));
+   X = randnormal(N, mu, Sigma);
+   inRegion = j(N, 1, 1);
+   do i = 1 to ncol(L);
+      if 
+   end;
+   inRegion = (X[,1] < b[1] & X[,2] < b[2] & X[,3] < b[3]);
+   MC_Est = mean(inRegion);
+   return MC_Est;
+finish;
+*/

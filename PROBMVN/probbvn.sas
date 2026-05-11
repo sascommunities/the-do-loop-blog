@@ -13,18 +13,24 @@ start probuvn_mod(L, U, sigma=1, mu=0);
    do i = 1 to nrow(L_std);
       a = L_std[i];
       b = U_std[i];
-      if ^missing(a) & ^missing(b) then
-        prob[i] = CDF("Normal", b) - CDF("Normal", a);
-      else if  missing(a) & ^missing(b) then
-        prob[i] = CDF("Normal", b);
-      else if ^missing(a) &  missing(b) then
-        prob[i] = SDF("Normal", a);
-      else
-        prob[i] = 1;
+      prob[i] = cdfuvn_std(a,b);
    end;
    return prob;
 finish;
 
+/* Extend the standard univariate CDF to support lower or upper limits at +/-Infinity.
+   This function is for SCALAR arguments a and b.
+*/
+start cdfuvn_std(a,b);
+   if ^missing(a) & ^missing(b) then
+      return CDF("Normal", b) - CDF("Normal", a);
+   else if  missing(a) & ^missing(b) then
+      return CDF("Normal", b);
+   else if ^missing(a) &  missing(b) then
+      return SDF("Normal", a);
+   else
+      return 1;
+finish;
 
 /* bivariate normal probabilities on rectangular domains for 
    X~BVN(mu, Sigma) with upper integration limits U=(U1,U2). 
@@ -112,6 +118,7 @@ finish;
 
 store module=(
 probuvn_mod
+cdfuvn_std
 probbvn_mod 
 cdfbvn_std
 probbvn_std
