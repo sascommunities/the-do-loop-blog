@@ -93,8 +93,24 @@ High-level driver.
 1. Initializes evaluation counters.
 2. Calls 'mvndnt' to sort variables and compute Cholesky decomposition.
 3. If dimension > 2 after handling infinities, calls the integration routine 'dkbvrc'.
+
+Input Arguments:
+- lower: 1xn row vector of lower limits (missing values indicate -Infinity)
+- upper: 1xn row vector of upper limits (missing values indicate +Infinity)
+- covar: nxn covariance matrix (in practice, is a correlation matrix)
+Output Arguments:
+- error: output scalar for error estimate
+- value: output scalar for probability value estimate
+- nevals: output scalar for number of evaluations
+- inform: output scalar for status information. Possible values for 'inform' include:
+   0: Normal completion with error estimate < tolerance
+   1: Completion with error estimate > tolerance
+   2: Invalid dimension (N > 100 or N < 1)
+   3: Invalid limits (lower > upper or invalid infinity flags)
+   4: Covariance matrix not positive semi-definite
 */
-start mvn_dist( lower, upper, covar, error, value, nevals, inform );
+start mvn_dist( lower, upper, covar, 
+                error, value, nevals, inform );
    /* Phase 1: Setup, Pivoting, and Cholesky Factorization */
    run mvndnt( lower, upper, covar, infis, value, error, inform );
 
