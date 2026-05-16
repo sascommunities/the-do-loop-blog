@@ -148,7 +148,7 @@ finish;
    Phi_k(b; Sigma) = Phi_k(D^{−1}(b); R)
 */
 start cdfmvn_mod(b, Sigma, mu=repeat(0,1,ncol(Sigma)), eps=1e-4);
-   IsValid = IsValidParmsMVN(b, Sigma, mu);    /* LOAD this module from cdfmvn_validate.sas */
+   IsValid = IsValidParmsCDFMVN(b, Sigma, mu);    /* LOAD this module from cdfmvn_validate.sas */
    if ^IsValid then
       return(.);
     R = cov2corr(Sigma);

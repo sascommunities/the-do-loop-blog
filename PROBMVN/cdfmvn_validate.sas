@@ -1,58 +1,9 @@
-/* Check the SYSVER macro to see if SAS 9.4 is running.
-   In SAS Viya, the macro is empty and does nothing.
-   In SAS 9.4, the macro defines a function that emulates the PrintToLog call.
-   The syntax is as follows:
-   call PrintToLog("This is a log message.");
-   call PrintToLog("This is a note.", 0);
-   call PrintToLog("This is a warning.", 1);
-   call PrintToLog("This is an error.", 2);
-*/
-%macro DefinePrintToLog;
-%if %sysevalf(&sysver = 9.4) %then %do;
-start PrintToLog(msg,errCode=-1);
-   if      errCode=0 then prefix = "NOTE: ";
-   else if errCode=1 then prefix = "WARNING: ";
-   else if errCode=2 then prefix = "ERROR: ";
-   else prefix = "";
-   stmt = '%put ' + prefix + msg + ';';
-   call execute(stmt);
-finish;
-store module=(PrintToLog);
-%end;
-start ErrorToLog(msg);
-   run PrintToLog(msg, 2);
-finish;
-store module=(ErrorToLog);   
-%mend;
+/* Common matrix validation functions (IsSym, IsSPD, IsCorr) and PrintToLog/ErrorToLog
+   are defined and stored by mvn_validate.sas. */
+*%include "mvn_validate.sas";
 
-/* this program runs in SAS 9.4 or in SAS Viya */
+/* CDF-specific validation functions for CDFMVN and CDFTVN. */
 proc iml;
-%DefinePrintToLog; 
-
-/* validate the arguments for CDFMVN:
-   b does not support missing values
-   Sigma is SPD
-*/
-start IsSym(A);
-   if nrow(A) ^= ncol(A) then return(0);    /* A is not square */
-   c = max(abs(A));
-   sqrteps = constant('SqrtMacEps');
-   return( all( abs(A-A`) < c*sqrteps ) );
-finish;
-
-start IsSPD(M);
-   if ^IsSym(M) then return( 0 );
-   U = root(M, "NoError");
-   if any(U=.) then return( 0 );
-   return( 1 );
-finish;
-
-start IsCorr(M);
-   if ^IsSPD(M) then return( 0 );
-   if any(vecdiag(M) ^= 1) then return ( 0 );
-   return( 1 );
-finish;
-
 start IsValidParmsCDF(b, Sigma, mu);
    if ^IsSym(Sigma) then do;
       run ErrorToLog( "The Sigma parameter must be symmetric.");
@@ -87,15 +38,15 @@ start IsValidParmsTVN(b, Sigma, mu);
    return( 1 );
 finish;
 
-start IsValidParmsMVN(b, Sigma, mu);
+start IsValidParmsCDFMVN(b, Sigma, mu);
    isValid = IsValidParmsCDF(b, Sigma, mu);
    if ^isValid then return( 0 );
    if ncol(b)<2 | ncol(b) > 32 then do;
-      run ErrorToLog( "cdfmvn supports problems between 2 and 32 dimensions.");
+      run ErrorToLog( "CDFMVN supports problems between 2 and 32 dimensions.");
       return( 0 );
    end;
    return( 1 );
 finish;
 
-store module=(IsSym IsSPD IsCorr IsValidParmsCDF IsValidParmsTVN IsValidParmsMVN);
+store module=(IsValidParmsCDF IsValidParmsTVN IsValidParmsCDFMVN);
 QUIT;

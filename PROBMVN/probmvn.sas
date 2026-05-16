@@ -25,14 +25,7 @@
            COVAR : positive semi-definie covariance matrix (N*N-matrix)  
 
    Output : ERROR : estimated absolute error, with 99% confidence level 
-            VALUE : estimated integral value 
-            NEVALS: number of evaluations 
-            INFORM: information parameter: 
-                    if INFORM = 0 then normal completion with ERROR < EPS 
-                    if INFORM = 1 then completion with ERROR > EPS 
-                    if INFORM = 2 then N > 100 or N < 1 
-                    if INFORM = 3 then one INFIN(I) > 2 or A(I) > B(I) 
-                    if INFORM = 4 then COVAR not positive semidefinite 
+                  VALUE : estimated integral value
 
    Completely rewritten by Rick Wicklin, April 2026, to modernize and vectorize the code.
 */
@@ -42,17 +35,23 @@
    N = 5; 
    LOWER = J(1,N,-2); UPPER = J(1,N,2); 
    COVAR = I(5);
-   RUN MVN_DIST( LOWER, UPPER, COVAR, ERROR, VALUE, NEVALS, INFORM ); 
-   PRINT ERROR VALUE NEVALS INFORM; 
+   RUN MVN_DIST( LOWER, UPPER, COVAR, ERROR, VALUE ); 
+   PRINT ERROR VALUE; 
 
    lead to the following output: 
-   ERROR     VALUE     NEVALS INFORM 
-   0.0000756 0.9030463 27040  0 
+   ERROR     VALUE
+   0.0000756 0.9030463
 */
 options ps=32000;
 /* load the PROBBVN_MOD function for rectangular bivariate normal probabilities */
 %include "probbvn.sas";
-
+/* assume that we have stored the matrix validation helper functions. When you 
+   run 
+   mvn_validate.sas
+   and
+   probmvn_validate.sas
+   the functions are stored in a library where they can be LOADed by the LOAD MODULE= statement.
+*/
 /* Define the PROBMVN_MOD function for rectangular bivariate normal probabilities.
    Let X~MVN(mu, Sigma) be a multivariate normal random vector, where
    Sigma is an nxn covariance matrix and mu is a 1xn row vector.
@@ -63,6 +62,8 @@ options ps=32000;
    where a missing element for L means -Infinity and a missing element for U means +Infinity. */
 
 proc iml;
+load module=_all_;
+
 /* probmvn_mod: Main routine for rectangular multivariate normal probabilities. 
    L and U are 1xn row vectors of lower and upper limits, respectively. 
    Sigma is an nxn covariance matrix. mu is an optional 1xn mean vector. 
@@ -83,8 +84,13 @@ finish;
 
 /* Define some constants and call mvn_dist for the standardized problem X~MVN(0,R). */
 start probmvn_std(L, U, R);
+   /* Validate standardized arguments once so downstream routines can assume validity. */
+   isValid = IsValidParmsPROBMVN(L, U, R);
+   if ^isValid then 
+      return( j(nrow(L),1,.) );
+
    run mvn_dist(L, U, R,
-                error, value, nevals, inform );
+                error, value );
    return(value);
 finish;
 
@@ -93,23 +99,31 @@ High-level driver.
 1. Initializes evaluation counters.
 2. Calls 'mvndnt' to sort variables and compute Cholesky decomposition.
 3. If dimension > 2 after handling infinities, calls the integration routine 'dkbvrc'.
+
+Input Arguments:
+- lower: 1xn row vector of lower limits (missing values indicate -Infinity)
+- upper: 1xn row vector of upper limits (missing values indicate +Infinity)
+- covar: nxn covariance matrix (in practice, is a correlation matrix)
+Output Arguments:
+- error: output scalar for error estimate
+- value: output scalar for probability value estimate
 */
-start mvn_dist( lower, upper, covar, error, value, nevals, inform );
-   /* Phase 1: Setup, Pivoting, and Cholesky Factorization */
-   run mvndnt( lower, upper, covar, infis, value, error, inform );
+start mvn_dist( lower, upper, covar, 
+                error, value );
+   /* Phase 1: Setup, Pivoting, and Cholesky Factorization.
+               If all of the checks pass, proceed to numerical integration
+               by running dkbvrc. */
+   run mvndnt( lower, upper, covar, infis, value, error );
 
    n = ncol(covar);
    maxpts = 2000*n**3;
    if n < 10 then abseps = 1E-4;
    else abseps = 1E-3;
    releps = 0;
-   nevals = 0;
-   if ( inform = 0 ) then do;
-      /* If effective dimension > 2, perform numerical integration.
-         1D and 2D cases are handled analytically inside mvndnt. */
-      if ( n-infis > 2 ) then
-         run dkbvrc( n-infis-1, 0, maxpts, abseps, releps, error, value, nevals, inform );
-   end;
+   /* If effective dimension > 2, perform numerical integration.
+      1D and 2D cases are handled analytically inside mvndnt. */
+   if ( n-infis > 2 ) then
+      run dkbvrc( n-infis-1, 0, maxpts, abseps, releps, error, value );
 finish mvn_dist;
 
 
@@ -212,95 +226,82 @@ finish mvn_dist;
    3. Handles N=1 and N=2 cases analytically (Exact solutions).
    4. Handles Independent cases (Diagonal matrix).
    */
-   start mvndnt( lower, upper, covar, infis, value, error, inform ) 
+   start mvndnt( lower, upper, covar, infis, value, error ) 
          global( covars, done, eone, infi, a, b, nn, hisum, olds );
       n = ncol(covar);
       infin = GetInfinityFlag(lower, upper);
-      inform = 0;
       /* Reset quasi-random sequence state for each top-level probability call. */
       nn = j(1, 51, 0);
       hisum = .;
       olds = 0;
       /* Global constant for the Richtmyer generators and lattice rules */
       nl = 100;
-      if ( n > nl | n < 1 ) then
-         inform = 2;
-      else do i = 1 to n;
-         if ( infin[i] > 2 ) then
-            inform = 3;
-         else if ( infin[i] = 2 & lower[i] > upper[i] ) then inform = 3;
-      end;
+      /* The parameters have been validated by IsValidParmsPROBMVN, which 
+         performs all necessary checks, including that COVAR is SPD. */
 
       /* Perform Cholesky Decomposition with Variable Reordering */
-      if ( inform = 0 ) then
-         run covsrt( lower, upper, covar, infin, infis, inform );
+      run covsrt( lower, upper, covar, infin, infis );
 
-      if ( inform = 0 ) then do;
-         /* CASE: 0 Dimensions active (all (-inf, inf)) */
-         if ( n - infis = 0 ) then do;
-            value = 1;
-            error = 0;
+      /* CASE: 0 Dimensions active (all (-inf, inf)) */
+      if ( n - infis = 0 ) then do;
+         value = 1;
+         error = 0;
+      end;
+      else do;
+         /* CASE: 1 Dimension active (Univariate Normal) */
+         if ( n - infis = 1 ) then do;
+            value = eone - done;
+            error = 2e-15;
          end;
          else do;
-            /* CASE: 1 Dimension active (Univariate Normal) */
-            if ( n - infis = 1 ) then do;
-               value = eone - done;
+            /* CASE: 2 Dimensions active (Bivariate Normal) */
+            if ( n - infis = 2 ) then do;
+               /* If correlated, use Bivariate CDF */
+               if ( abs( covars[2,2] ) > 0 ) then do;
+                  d = sqrt( 1 + covars[2,1]**2 );
+
+                  if ( infi[2] ^= 0 ) then
+                     a[2] = a[2]/d;
+
+                  if ( infi[2] ^= 1 ) then
+                     b[2] = b[2]/d;
+                  value = probbvn( a, b, infi, covars[2,1]/d );
+               end;
+               else do;
+                  /* If independent (Cov[2,1]=0), compute product of marginals */
+                  if ( infi[1] ^= 0 ) then do;
+                     if ( infi[2] ^= 0 ) then
+                        a[1] = max( a[1], a[2] );
+                  end;
+                  else do;
+                     if ( infi[2] ^= 0 ) then
+                        a[1] = a[2];
+                  end;
+
+                  /* Logic to intersect intervals for independent variables */
+                  if ( infi[1] ^= 1 ) then do;
+                     if ( infi[2] ^= 1 ) then
+                        b[1] = min( b[1], b[2] );
+                  end;
+                  else do;
+                     if ( infi[2] ^= 1 ) then
+                        b[1] = b[2];
+                  end;
+
+                  if ( infi[1] ^= infi[2] ) then
+                     infi[1] = 2;
+                  run mvnlms( a[1], b[1], infi[1], d, e );
+
+                  value = e - d;
+               end;
+
                error = 2e-15;
             end;
             else do;
-               /* CASE: 2 Dimensions active (Bivariate Normal) */
-               if ( n - infis = 2 ) then do;
-                  /* If correlated, use Bivariate CDF */
-                  if ( abs( covars[2,2] ) > 0 ) then do;
-                     d = sqrt( 1 + covars[2,1]**2 );
-
-                     if ( infi[2] ^= 0 ) then
-                        a[2] = a[2]/d;
-
-                     if ( infi[2] ^= 1 ) then
-                        b[2] = b[2]/d;
-                     value = probbvn( a, b, infi, covars[2,1]/d );
-                  end;
-                  else do;
-                     /* If independent (Cov[2,1]=0), compute product of marginals */
-                     if ( infi[1] ^= 0 ) then do;
-                        if ( infi[2] ^= 0 ) then
-                           a[1] = max( a[1], a[2] );
-                     end;
-                     else do;
-                        if ( infi[2] ^= 0 ) then
-                           a[1] = a[2];
-                     end;
-
-                     /* Logic to intersect intervals for independent variables */
-                     if ( infi[1] ^= 1 ) then do;
-                        if ( infi[2] ^= 1 ) then
-                           b[1] = min( b[1], b[2] );
-                     end;
-                     else do;
-                        if ( infi[2] ^= 1 ) then
-                           b[1] = b[2];
-                     end;
-
-                     if ( infi[1] ^= infi[2] ) then
-                        infi[1] = 2;
-                     run mvnlms( a[1], b[1], infi[1], d, e );
-
-                     value = e - d;
-                  end;
-
-                  error = 2e-15;
-               end;
-               else do;
-                  value = 0;
-                  error = 1;
-               end;
+               value = 0;
+               error = 1;
             end;
          end;
-      end;
-      else do;
-         value = 0;
-         error = 1;
       end;
 
    finish mvndnt;
@@ -339,8 +340,9 @@ finish mvn_dist;
    It reorders variables so that the outermost integration variables 
    have the smallest expected integration intervals.
    */
-   start covsrt( lower, upper, covar, infin, infis, inform ) global( eps, covars, done, eone, infi, a, b, y );
+   start covsrt( lower, upper, covar, infin, infis ) global( covars, done, eone, infi, a, b, y );
       n = ncol(covar);
+      eps = 1e-10;       /* numerical tolerance in pivot/singularity checks */
       y = j( 1, n, . );
       infi = infin;
       a = j( 1, n, 0 );
@@ -499,14 +501,13 @@ finish mvn_dist;
                   y[i] = 0;
                end;
                else do;
-                  inform = 4; /* Error: Not positive semi-definite */
+                 /* Error: Shouldn't happen b/c COVAR is pre-checked to be positive definite */
                   i = n-infis;
                end;
             end;
          end;
 
-         if (inform = 0 ) then
-            run mvnlms( a[1], b[1], infi[1], done, eone );
+         run mvnlms( a[1], b[1], infi[1], done, eone );
       end;
    finish covsrt;
 
@@ -554,11 +555,42 @@ finish mvn_dist;
    1. Estimates integral value and error.
    2. Increases number of points or changes prime base if error > tolerance.
    */
-   start dkbvrc( ndim, minvls, maxvls, abseps, releps,   abserr, finest, intvls, inform )
-      global( plim, klim, p, c, minsmp );
+   start dkbvrc( ndim, minvls, maxvls, abseps, releps,   abserr, finest );
+
+      minsmp = 8;           /* minimum number of random shifts per stage */
+
+         /* Korobov lattice primes and generator coefficients (local to QMC driver). */
+         p_vector = { 31 47 73 113 173 263 397 593 907 1361 2053 3079 4621 6947 10427 15641 23473 35221 52837 79259 118891 178349 267523 401287 601942};
+         mat = { 12 9 9 13 12 12 12 12 12 12 12 12 3 3 3 12 7 7 12,
+            13 11 17 10 15 15 15 15 15 15 22 15 15 6 6 6 15 15 9,
+            27 28 10 11 11 20 11 11 28 13 13 28 13 13 13 14 14 14 14,
+            35 27 27 36 22 29 29 20 45 5 5 5 21 21 21 21 21 21 21,
+            64 66 28 28 44 44 55 67 10 10 10 10 10 10 38 38 10 10 10,
+            111 42 54 118 20 31 31 72 17 94 14 14 11 14 14 14 94 10 10,
+            163 154 83 43 82 92 150 59 76 76 47 11 11 100 131 116 116 116 116,
+            246 189 242 102 250 250 102 250 280 118 196 118 191 215 121 121 49 49 49,
+            347 402 322 418 215 220 339 339 339 337 218 315 315 315 315 167 167 167 167,
+            505 220 601 644 612 160 206 206 206 422 134 518 134 134 518 652 382 206 158,
+            794 325 960 528 247 247 338 366 847 753 753 236 334 334 461 711 652 381 381,
+            1189 888 259 1082 725 811 636 965 497 497 1490 1490 392 1291 508 508 1291 1291 508,
+            1763 1018 1500 432 1332 2203 126 2240 1719 1284 878 1983 266 266 266 266 747 747 127,
+            2872 3233 1534 2941 2910 393 1796 919 446 919 919 1117 103 103 103 103 103 103 103,
+            4309 3758 4034 1963 730 642 1502 2246 3834 1511 1102 1102 1522 1522 3427 3427 3928 915 915,
+            6610 6977 1686 3819 2314 5647 3953 3614 5115 423 423 5408 7426 423 423 487 6227 2660 6227,
+            9861 3647 4073 2535 3430 9865 2830 9328 4320 5913 10365 8272 3706 6186 7806 7806 7806 8610 2563,
+            10327 7582 7124 8214 9600 10271 10193 10800 9086 2365 4409 13812 5661 9344 9344 10362 9344 9344 8585,
+            19540 19926 11582 11113 24585 8726 17218 419 4918 4918 4918 15701 17710 4037 4037 15808 11401 19398 25950,
+            34566 9579 12654 26856 37873 38806 29501 17271 3663 10763 18955 1298 26560 17132 17132 4753 4753 8713 18624,
+            31929 49367 10982 3527 27066 13226 56010 18911 40574 20767 20767 9686 47603 47603 11736 11736 41601 12888 32948,
+            40701 69087 77576 64590 39397 33179 10858 38935 43129 35468 35468 2196 61518 61518 27945 70975 70975 86478 86478,
+            103650 125480 59978 46875 77172 83021 126904 14541 56299 43636 11655 52680 88549 29804 101894 113675 48040 113675 34987,
+            165843 90647 59925 189541 67647 74795 68365 167485 143918 74912 167289 75517 8148 172106 126159 35867 35867 35867 121694,
+            130365 236711 110235 125699 56483 93735 234469 60549 1291 93937 245291 196061 258647 162489 176631 204895 73353 172319 28881};
+
+         plim = ncol(p_vector);
+         klim = ncol(mat) + 1;
 
       vk   = j( 1, klim, . );
-      inform = 1;
       intvls = 0;
       klimi  = klim;
       
@@ -571,12 +603,12 @@ finish mvn_dist;
          /* Determine starting prime index based on input 'minvls' */
          do i = 1 to plim;
             np = i;
-            if ( minvls < 2*sampls*p[i] ) then
+            if ( minvls < 2*sampls*p_vector[i] ) then
                i = plim;
          end;
 
-         if ( minvls >= 2*sampls*p[plim] ) then
-            sampls = minvls/( 2*p[plim] );
+         if ( minvls >= 2*sampls*p_vector[plim] ) then
+            sampls = minvls/( 2*p_vector[plim] );
       end;
 
       value = j( 1, sampls, . );
@@ -585,9 +617,9 @@ finish mvn_dist;
       /* ADAPTIVE LOOP */
       do until( exit = 1);
          /* Initialize Lattice Rule Generator */
-         vk[1] = 1/p[np];
+         vk[1] = 1/p_vector[np];
          do i = 2 to min( ndim, klim );
-            vk[i] = mod( c[np, min(ndim-1,klim-1)]*vk[i-1], 1 );
+            vk[i] = mod( mat[np, min(ndim-1,klim-1)]*vk[i-1], 1 );
          end;
 
          finval = 0;
@@ -595,13 +627,13 @@ finish mvn_dist;
 
          /* Compute Integral Estimate (value) */
          do i = 1 to sampls;
-            value[i] = dksmrc( ndim, klimi, p[np], vk );
+            value[i] = dksmrc( ndim, klimi, p_vector[np], vk );
          end;
 
          /* Compute Variance and Error Estimates */
          finval = value[:];
          varsqr = (value[##] - value[+]##2/sampls) / (sampls # (sampls-1));
-         intvls = intvls + 2*sampls*p[np];
+         intvls = intvls + 2*sampls*p_vector[np];
          varprd = varest*varsqr;
          
          /* Weighted update of final estimate */
@@ -620,15 +652,14 @@ finish mvn_dist;
             if ( np < plim ) then
                np = np + 1;
             else do;
-               sampls = min( 3*sampls/2, ( maxvls - intvls )/( 2*p[np] ) );
+               sampls = min( 3*sampls/2, ( maxvls - intvls )/( 2*p_vector[np] ) );
                sampls = max( minsmp, sampls );
             end;
 
-            if ( intvls + 2*sampls*p[np] > maxvls ) then
+            if ( intvls + 2*sampls*p_vector[np] > maxvls ) then
                exit = 1;
          end;
          else do;
-            inform = 0;
             exit = 1;
          end;
       end;
@@ -807,42 +838,9 @@ probbvn
    /*********************/
    /*
    Read-Only Constants: 
-   eps, nl, plim, klim, minsmp, p, c.
+      nl.
    Global State Variables: nn, hisum, olds (managed by dkrcht).
    */
-   eps = 1e-10;          /* numerical tolerance in pivot/singularity checks */
-   plim = 25;            /* number of prime lattice rules in table p */
-   klim = 20;            /* max Korobov-lattice dimensions tracked in vk */
-   minsmp = 8;           /* minimum number of random shifts per stage */
-   /* Tabulated Korobov lattice primes (p) and generator coefficients (c). */
-   p = { 31 47 73 113 173 263 397 593 907 1361 2053 3079 4621 6947 10427 15641 23473 35221 52837 79259 118891 178349 267523 401287 601942};
-   c = { 12 9 9 13 12 12 12 12 12 12 12 12 3 3 3 12 7 7 12, 
-         13 11 17 10 15 15 15 15 15 15 22 15 15 6 6 6 15 15 9, 
-         27 28 10 11 11 20 11 11 28 13 13 28 13 13 13 14 14 14 14, 
-         35 27 27 36 22 29 29 20 45 5 5 5 21 21 21 21 21 21 21, 
-         64 66 28 28 44 44 55 67 10 10 10 10 10 10 38 38 10 10 10, 
-         111 42 54 118 20 31 31 72 17 94 14 14 11 14 14 14 94 10 10, 
-         163 154 83 43 82 92 150 59 76 76 47 11 11 100 131 116 116 116 116, 
-         246 189 242 102 250 250 102 250 280 118 196 118 191 215 121 121 49 49 49, 
-         347 402 322 418 215 220 339 339 339 337 218 315 315 315 315 167 167 167 167, 
-         505 220 601 644 612 160 206 206 206 422 134 518 134 134 518 652 382 206 158, 
-         794 325 960 528 247 247 338 366 847 753 753 236 334 334 461 711 652 381 381, 
-         1189 888 259 1082 725 811 636 965 497 497 1490 1490 392 1291 508 508 1291 1291 508, 
-         1763 1018 1500 432 1332 2203 126 2240 1719 1284 878 1983 266 266 266 266 747 747 127, 
-         2872 3233 1534 2941 2910 393 1796 919 446 919 919 1117 103 103 103 103 103 103 103, 
-         4309 3758 4034 1963 730 642 1502 2246 3834 1511 1102 1102 1522 1522 3427 3427 3928 915 915, 
-         6610 6977 1686 3819 2314 5647 3953 3614 5115 423 423 5408 7426 423 423 487 6227 2660 6227, 
-         9861 3647 4073 2535 3430 9865 2830 9328 4320 5913 10365 8272 3706 6186 7806 7806 7806 8610 2563, 
-         10327 7582 7124 8214 9600 10271 10193 10800 9086 2365 4409 13812 5661 9344 9344 10362 9344 9344 8585, 
-         19540 19926 11582 11113 24585 8726 17218 419 4918 4918 4918 15701 17710 4037 4037 15808 11401 19398 25950, 
-         34566 9579 12654 26856 37873 38806 29501 17271 3663 10763 18955 1298 26560 17132 17132 4753 4753 8713 18624, 
-         31929 49367 10982 3527 27066 13226 56010 18911 40574 20767 20767 9686 47603 47603 11736 11736 41601 12888 32948, 
-         40701 69087 77576 64590 39397 33179 10858 38935 43129 35468 35468 2196 61518 61518 27945 70975 70975 86478 86478, 
-         103650 125480 59978 46875 77172 83021 126904 14541 56299 43636 11655 52680 88549 29804 101894 113675 48040 113675 34987, 
-         165843 90647 59925 189541 67647 74795 68365 167485 143918 74912 167289 75517 8148 172106 126159 35867 35867 35867 121694, 
-         130365 236711 110235 125699 56483 93735 234469 60549 1291 93937 245291 196061 258647 162489 176631 204895 73353 172319 28881};
-
-
 /* Helper module to format test results */
 start check_test(test_name, prob, correct, tol=0.001);
    maxDiff = max(abs(prob-correct));
@@ -865,7 +863,7 @@ testName = "Test 0: 5-D Identity Matrix; [a,b]=[-2,2] in all coordinates";
    upper = j(1,n, 2);
 
    run mvn_dist(lower, upper, R,
-                error, value, nevals, inform );
+                error, value );
    correct = prod(cdf("Normal", upper) - cdf("Normal", lower));
    run check_test(testName, value, correct);
 
