@@ -1,37 +1,9 @@
+options ps=32000 nodate nonumber;
+
 proc iml;
 load module=_all_;
 
-
-   /*********************/
-   /* call main program */
-   /*********************/
-   /*
-   Read-Only Constants: 
-   eps, sqtwpi, nl, plim, klim, minsmp, p, c, psqt, mxdim, mxhsum, bb.
-
-   Read/Write State Variables: 
-   hisum, olds, nn, covars, done, eone, infi, a, b, y.
-   You must reset all state variables in mvndnt so that you can call mvn_dist multiple times.
-   */
-   hisum = .;
-   olds = 0;
-   mxdim = 80;
-   mxhsum = 50;
-   bb = 2;
-   psqt={1.414213562373 1.732050807569 2.236067977500 2.645751311065 3.316624790355 3.605551275464 4.123105625618 4.358898943541 4.795831523313 5.385164807135 5.567764362830 6.082762530298 6.403124237433 6.557438524302 6.855654600401 7.280109889281 7.681145747869 7.810249675907 8.185352771872 8.426149773176 8.544003745318 8.888194417316 9.110433579144 9.433981132057 9.848857801796 10.04987562112 10.14889156509 10.34408043279 10.44030650891 10.63014581273 11.26942766958 11.44552314226 11.70469991072 11.78982612255 12.20655561573 12.28820572744 12.52996408614 12.76714533480 12.92284798332 13.15294643797 13.37908816026 13.45362404707 13.82027496109 13.89244398945 14.03566884762 14.10673597967 14.52583904633 14.93318452307 15.06651917332 15.13274595042 15.26433752247 15.45962483374 15.52417469626 15.84297951775 16.03121954188 16.21727474023 16.40121946686 16.46207763315 16.64331697709 16.76305461424 16.82260384126 17.11724276862 17.52141546794 17.63519208855 17.69180601295 17.80449381476 18.19340539866 18.35755975069 18.62793601020 18.68154169227 18.78829422806 18.94729532150 19.15724406067 19.31320791583 19.46792233393 19.57038579078 19.72308292332 19.92485884517 20.02498439450 20.22374841616};
-   eps = 1e-10;
-   sqtwpi = 2.506628274631000502415765284811045253;
-   plim = 25;
-   klim = 20;
-   minsmp = 8;
-   p = { 31 47 73 113 173 263 397 593 907 1361 2053 3079 4621 6947 10427 15641 23473 35221 52837 79259 118891 178349 267523 401287 601942};
-   c = { 12 9 9 13 12 12 12 12 12 12 12 12 3 3 3 12 7 7 12, 13 11 17 10 15 15 15 15 15 15 22 15 15 6 6 6 15 15 9 , 27 28 10 11 11 20 11 11 28 13 13 28 13 13 13 14 14 14 14 , 35 27 27 36 22 29 29 20 45 5 5 5 21 21 21 21 21 21 21 , 64 66 28 28 44 44 55 67 10 10 10 10 10 10 38 38 10 10 10 , 111 42 54 118 20 31 31 72 17 94 14 14 11 14 14 14 94 10 10 , 163 154 83 43 82 92 150 59 76 76 47 11 11 100 131 116 116 116 116 , 246 189 242 102 250 250 102 250 280 118 196 118 191 215 121 121 49 49 49 , 347 402 322 418 215 220 339 339 339 337 218 315 315 315 315 167 167 167 167 , 505 220 601 644 612 160 206 206 206 422 134 518 134 134 518 652 382 206 158 , 794 325 960 528 247 247 338 366 847 753 753 236 334 334 461 711 652 381 381 , 1189 888 259 1082 725 811 636 965 497 497 1490 1490 392 1291 508 508 1291 1291 508 , 1763 1018 1500 432 1332 2203 126 2240 1719 1284 878 1983 266 266 266 266 747 747 127 , 2872 3233 1534 2941 2910 393 1796 919 446 919 919 1117 103 103 103 103 103 103 103 , 4309 3758 4034 1963 730 642 1502 2246 3834 1511 1102 1102 1522 1522 3427 3427 3928 915 915 , 6610 6977 1686 3819 2314 5647 3953 3614 5115 423 423 5408 7426 423 423 487 6227 2660 6227 , 9861 3647 4073 2535 3430 9865 2830 9328 4320 5913 10365 8272 3706 6186 7806 7806 7806 8610 2563 , 10327 7582 7124 8214 9600 10271 10193 10800 9086 2365 4409 13812 5661 9344 9344 10362 9344 9344 8585 , 19540 19926 11582 11113 24585 8726 17218 419 4918 4918 4918 15701 17710 4037 4037 15808 11401 19398 25950 , 34566 9579 12654 26856 37873 38806 29501 17271 3663 10763 18955 1298 26560 17132 17132 4753 4753 8713 18624 , 31929 49367 10982 3527 27066 13226 56010 18911 40574 20767 20767 9686 47603 47603 11736 11736 41601 12888 32948 , 40701 69087 77576 64590 39397 33179 10858 38935 43129 35468 35468 2196 61518 61518 27945 70975 70975 86478 86478 , 103650 125480 59978 46875 77172 83021 126904 14541 56299 43636 11655 52680 88549 29804 101894 113675 48040 113675 34987 , 165843 90647 59925 189541 67647 74795 68365 167485 143918 74912 167289 75517 8148 172106 126159 35867 35867 35867 121694 , 130365 236711 110235 125699 56483 93735 234469 60549 1291 93937 245291 196061 258647 162489 176631 204895 73353 172319 28881};
-
-   /* Global constants for the Richtmyer generators and lattice rules */
-   nl = 100;
-
-   /* --- TEST SUITE --- */
-
+/* --- TEST SUITE --- */ 
 
 /* Helper module to format test results */
 start check_test(test_name, prob, correct, tol=0.001);
@@ -45,6 +17,59 @@ start check_test(test_name, prob, correct, tol=0.001);
       print msg[L=""];
    end;
 finish;
+
+/* Use Monte Carlo simulation to estimate the probability that a 
+   MVN random variable is less than a specified value in each coordinate.
+   Sigma is a kxk covariance matrix; mu is an option row vector with k elements.
+   The row vector b specifies the upper limits of integration. 
+   The function returns an estimate of 
+   P(X1<b[1] & X2<b[2] & ... & Xk<b[k] | X~MVN(mu, Sigma))
+   by simulating N random variates from MVN(mu, Sigma) and returning the proportion
+   that are in the specified region.
+*/
+start MC_CDFMVN(N, b, Sigma, mu=j(1,ncol(Sigma),0));
+   X = randnormal(N, mu, Sigma);
+   inRegion = j(N,1,1);
+   do i = 1 to ncol(b);
+      v = (X[,i] < b[i]);
+      inRegion = inRegion & v;
+   end;
+   return mean(inRegion);
+finish;
+
+/* Monte Carlo simulation of P( L < X < U | X~MVN(mu,Sigma) )
+   where L and U are row vectors and a missing value 
+   represents -Infinity in L and represents +Infinity in U */
+start MC_PROBMVN(N, Lcov, Ucov, Sigma, mu=j(1,ncol(Sigma),0));
+   /* standardize the parameters to the correlation scale */
+   L = Xform_Limits_Cov2Corr(Lcov, Sigma, mu);
+   U = Xform_Limits_Cov2Corr(Ucov, Sigma, mu);
+   R = cov2corr(Sigma);
+   X = randnormal(N, j(1,ncol(R),0), R);
+   inRegion = j(N,1,1);
+   /* Note: The '<' operator works correctly with a missing value
+      on the left. The expression (a<y & y<b) is correct if a=.;
+      However, if b=., you need to use (a<y). */
+   do i = 1 to ncol(L);
+      if U[i]=. then 
+         v = (L[i] < X[,i]);
+      else
+         v = ((L[i] < X[,i]) & (X[,i] < U[i]));
+      inRegion = inRegion & v;
+   end;
+   return mean(inRegion);
+finish;
+
+/* return a list with the MC est and a 95% CL. The list looks like
+   [prob, lower95, upper95] */
+start MC_PROBMVN_CL(N, L, U, Sigma, mu=j(1,ncol(Sigma),0));
+   prob_MC = MC_PROBMVN(N, L, U, Sigma);
+   SE_MC = sqrt( prob_MC * (1-prob_MC)/N );
+   Lower95 = prob_MC - 1.96*SE_MC;
+   Upper95 = prob_MC + 1.96*SE_MC;
+   return( [prob_MC, Lower95, Upper95] );
+finish;
+
 
    /* basic validation test */
 call randseed(12345);
@@ -112,6 +137,13 @@ prob = probmvn_mod(lower, upper, Sigma);
 correct = 0.4597946;
 run check_test(testName, prob, correct);
 
+/* 4a. 5-D Min Matrix G&B p. 5, Eqn 1.8 */
+testName = "Test 4a: 5-D Min Matrix G & B p. 5, Eqn 1.8, Rectangular domain";
+L = -1:-5;
+U = 2:6;
+prob = probmvn_mod(L, U, Sigma);
+correct = 0.7615;
+run check_test(testName, prob, correct);
 
 /* 5. 8-D Min Matrix */
 testName = "Test 5: 8-D Min Matrix; CDF";
@@ -128,6 +160,14 @@ n = ncol(Sigma);
 lower = j(1, n, .); 
 prob = probmvn_mod(lower, upper, Sigma);
 correct = 0.4590496;
+run check_test(testName, prob, correct);
+
+/* 5a: 8-D Min Matrix G&B p. 5, Eqn 1.9 */
+testName = "Test 5a: 8-D Min Matrix G & B p. 5, Eqn 1.9, Rectangular domain";
+L = -1:-8;
+U = 2:9;
+prob = probmvn_mod(L, U, Sigma);
+correct = 0.7595;
 run check_test(testName, prob, correct);
 
 /* 6. A kxk equicorrelated matrix with rho=0.5 and b=0.
@@ -316,3 +356,143 @@ do i = 2 to nrow(signs);
    test_name = "Test 15: 3-D Mixed Orthant, Version " + char(i,2);
    run check_test(test_name, prob, correct);
 end;
+
+/* Test 16: Orthant probability in 4-D. See
+   https://blogs.sas.com/content/iml/2026/05/18/4d-orthant-probability-mvn.html
+*/
+/* The base case: P2. For a scalar correlation, rho, returning the orthant probability, P2.
+   See https://blogs.sas.com/content/iml/2026/05/11/mvn-orthant-probability.html */
+start P2(rho);
+  return( 0.25 + arsin(rho) / (2*constant("pi")) );
+finish;
+ 
+/* The sum of the I4 integrands. Instead of evaluating the three integrals separately,
+   evaluate the sum of the integrals and perform one numerical integration.   
+   Evaluates the Sun (1988) residual partial correlation matrix.
+   Whereas Genz/Bretz Eqn 2.8-2.9 uses a general covariance matrix, this function assumes 
+   R is a correlation matrix, so R[i,i]=1  */
+start ProbInt4(x) global(R_global);
+  R = R_global;
+  pi = constant("pi");
+  x2 = x # x;
+  sum = 0;
+ 
+  /* The sum of three terms: i=2, 3, and 4 */
+  do i = 2 to 4;
+    /* Determine the indices (j, k) of the two remaining variables */
+    if i=2 then do;      j=3; k=4; end;
+    else if i=3 then do; j=2; k=4; end;
+    else do;             j=2; k=3; end;
+ 
+    /* R_ii term: The quadratic denominator */
+    w = 1 - R[1,i]##2 * x2;          /* R[i,i]=1 for all i */
+    if w< 1E-12 then w = 1E-12;      /* Numerical safeguard */
+ 
+    /* Compute the conditional variances and covariance. The are a_11, a_12, etc, in Sun and Asano */
+    a_jj = 1      -R[1,j]##2 * x2   -((R[i,j] - R[1,i]*R[1,j]*x2)##2) / w;
+    a_kk = 1      -R[1,k]##2 * x2   -((R[i,k] - R[1,i]*R[1,k]*x2)##2) / w;
+    a_jk = R[j,k] -R[1,j]*R[1,k]*x2 -(R[i,j] - R[1,i]*R[1,j]*x2)*(R[i,k] - R[1,i]*R[1,k]*x2) / w;
+ 
+    /* rho is the off-diagonal element of the conditional correlation matrix */
+    rho = a_jk / sqrt(a_jj * a_kk);
+ 
+    /* ensure rho is in [-1,1]. See
+       https://blogs.sas.com/content/iml/2026/02/04/clip-values.html */
+    rho = ( -1 <> (rho >< 1) ); /* clamp to [-1,1] */
+ 
+    /* Call P2 function to get the I2 term */
+    I2_val = 2 * pi * ( P2(rho) - 0.25 );     /* this actually simplifies to ARSIN(rho) :-) */
+ 
+    /* Add the i-th term to the sum */
+    sum = sum + (R[1,i] / sqrt(w)) * I2_val;
+  end;
+  return(sum);
+finish;
+ 
+/* The main P4 function, which evaluates the Childs-Sun formula for 4 dimensions */
+start P4_Childs(R) global(R_global);
+  R_global = R; /* Set the global correlation matrix for QUAD */
+ 
+  /* Integrate ProbInt4 over the interval [0, 1] */
+  call quad(I4, "ProbInt4", {0 1});
+ 
+  /* Apply the Childs (1967) formula */
+  pi = constant("pi");
+  sum_arsin = sum( arsin(R[{2 3 4 7 8 12}]) );  /* sum of arcsine for all 6 off-diagonal elements */
+  prob = 1/16 + sum_arsin / (8*pi) + I4 / (4 * pi**2);  /* fixes the typo in Genz and Bretz, Eqn 2.8 */
+  return(prob);
+finish;
+ 
+/* --- Test all 16 orthant probabilities. We compare Childs formul in each octant to
+   a call to probmvn_mod. See
+   https://blogs.sas.com/content/iml/2026/05/11/mvn-orthant-probability.html
+   https://blogs.sas.com/content/iml/2026/05/18/4d-orthant-probability-mvn.html
+*/
+R0 = {1.0  0.5  0.3  0.2,
+      0.5  1.0  0.4  0.3,
+      0.3  0.4  1.0  0.5,
+      0.2  0.3  0.5  1.0};
+L0 = {. . . .};
+U0 = {0 0 0 0};
+/* Generate all 16 combinations of sign vectors for 4-D orthants. See
+   https://blogs.sas.com/content/iml/2026/06/01/generate-all-combinations-of-signs.html */
+Signs = expandgrid({1 -1}, {1 -1}, {1 -1}, {1 -1});
+do i = 1 to nrow(Signs);
+   s = Signs[i,];
+   R = s # R0 # s`;
+   correct = P4_Childs(R);
+   /* now reverse the limits of integration every location where there is a -1 sign */
+   L = L0;
+   U = U0;
+   flip_idx = loc( s = -1 );
+   if ncol(flip_idx) > 0 then do;
+      L[flip_idx] = U0[ flip_idx ];
+      U[flip_idx] = L0[ flip_idx ];
+   end;
+   prob = probmvn_mod(L, U, R0);
+   test_name = "Test 16: 4x4 Orthant Probability (Childs, 1967): Orthant=" + putn(i,"f2.");
+   run check_test(test_name, prob, correct);
+end;
+
+/* Test 17: A series of rectangular regions for 5-D.
+   Include all possible ranges: 
+   (-Infty, Infty), (-Infty, b), (a, Infty), (a, b) 
+   The final test has all variables in (-Infty, Infty) so answer should be 1! */
+test_name = "--- Test 17: 36 Different 5-D Rectangular Regions:";
+print test_name[L=""] "only failures will be printed ---";
+R = {1    -0.25  0.15 -0.35 -0.15 ,
+    -0.25  1    -0.4   0.55  0.35 ,
+     0.15 -0.4   1     0.05 -0.55 ,
+    -0.35  0.55  0.05  1     0.1  ,
+    -0.15  0.35 -0.55  0.1   1    };
+
+L_Block = {.M .M .M .M .M,
+           .M -1 -1 -1 .M,
+           -2 -1 .M -1 -1,
+           -3 .M -1 -2 -1,
+           -1 -3 -2 -1 -2,
+           -2 -1 -3 -2 -1  };
+U_Block = {.I  1  0  1 .I,
+            2  1 .I  1  0,
+            3  2  1 .I  1,
+            0  1  3  2  1,
+            1  3  2  1  0,
+           .I .I .I .I .I  };
+N = 1E6;
+do i = 1 to nrow(L_Block);
+   L = L_Block[i,];
+   do j = 1 to nrow(U_Block);
+      U = U_Block[j,];
+      prob = probmvn_mod(L, U, R);
+      /* Compute the MC estimate; see if the QMC value is in the 95% CI */
+      correct_list = MC_PROBMVN_CL(N, L, U, R);
+      correct = correct_list$1;
+      lower95 = correct_list$2;
+      upper95 = correct_list$3;
+      if prob < lower95 | prob > upper95 then do;
+         run check_test(test_name, prob, correct);
+         print L, U;
+      end;
+   end;
+end;
+print test_name[L=""] "DONE ---";

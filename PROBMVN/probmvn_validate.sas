@@ -50,7 +50,7 @@ finish;
      mu    -- 1xn mean vector; no missing values allowed
    Returns 1 if all checks pass, 0 otherwise.
 */
-start IsValidParmsPROBMVN(L, U, Sigma, mu);
+start IsValidParmsPROBMVN(L, U, Sigma, mu=j(1,ncol(Sigma),0));
    n = ncol(Sigma);
 
    /* 1. Sigma must be symmetric */
