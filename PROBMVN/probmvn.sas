@@ -240,7 +240,17 @@ finish mvn_dist;
          performs all necessary checks, including that COVAR is SPD. */
 
       /* Perform Cholesky Decomposition with Variable Reordering */
-      run covsrt( lower, upper, covar, infin, infis );
+      /* FEATURE FLAG: 0 = original covsrt (Bretz: greedy pivot + singularity handling)
+                       1 = covsrt_nopivot (Rick: ROOT + ridge, no pivot) 
+                       2 = covsrt_static (Rick: permute vars according to 1-D marginal probabilities) */
+      use_new_covsrt = 2;  /* 0=Greedy, 1=None, 2=Static Sort */
+      if use_new_covsrt = 2 then
+         run covsrt_static( lower, upper, covar, infin, infis );
+      else if use_new_covsrt = 1 then
+         run covsrt_nopivot( lower, upper, covar, infin, infis );
+      else
+         run covsrt( lower, upper, covar, infin, infis );
+         
 
       /* CASE: 0 Dimensions active (all (-inf, inf)) */
       if ( n - infis = 0 ) then do;
@@ -333,6 +343,73 @@ finish mvn_dist;
       upper = max( upper, lower );
    finish mvnlms;
 
+   /* CopyLowerTriToUpper */
+   start CopyLowerTriToUpper(M);
+      v = vech(M);          /* extract lower triangular elements (including diagonal) */
+      return( sqrvech(v) ); /* create dense symmetric matrix */
+   finish;
+
+   /* FUNCTION: covsrt_static
+      Cholesky decomposition with a STATIC Pre-Sort on 1-D marginal probabilities.
+      Strategy:
+      1. Move fully infinite dimensions to the end (same as original).
+      2. STATIC SORT: Compute 1-D marginal probability for each active dimension, 
+         sort them ascending, and symmetrically permute the active limits and covariance block.
+      3. Compute Cholesky via ROOT with ridge policy (same as nopivot).
+      4. Scale factor and compute conditional expectations (same as nopivot).
+   */
+   start covsrt_static( lower, upper, covar, infin, infis )
+         global( covars, done, eone, infi, a, b, y );
+      infis = InitCovsrtGlobals( lower, upper, covar, infin );
+      n_active = PermuteInfiniteDims( infis );
+
+      if ( n_active > 0 ) then do;
+         /* STATIC PRE-SORT on 1-D marginals before Cholesky factorization */
+         if ( n_active > 1 ) then do;
+            p = j(1, n_active, 1);
+            do i = 1 to n_active;
+               /* Normalize by marginal scale to compare 1-D interval masses */
+               sumsq = sqrt(covars[i,i]);
+               run mvnlms( a[i]/sumsq, b[i]/sumsq, infi[i], dd, ee );
+               p[i] = ee - dd;
+            end;
+
+            p_col = t(p);
+            call sortndx(idx, p_col, 1);
+            idx = t(idx);
+
+            a[1:n_active]    = a[idx];
+            b[1:n_active]    = b[idx];
+            infi[1:n_active] = infi[idx];
+            covars[1:n_active, 1:n_active] = covars[idx, idx];
+         end;
+
+         run FactorizeActiveBlock( n_active );
+         run ComputeConditionalExpectations( n_active );
+      end;
+   finish covsrt_static;
+
+   /* FUNCTION: covsrt_nopivot
+   Cholesky decomposition without pivoting (experimental).
+   Strategy:
+     1. Mirror covsrt exactly: copy inputs into global work arrays infi/covars/a/b/y.
+     2. Permute infinite dimensions to the end using the same rcswp calls as covsrt.
+     3. Compute Cholesky of the active submatrix via ROOT (two-pass ridge policy).
+     4. Scale the factor and limits so each diagonal entry of C equals 1.
+     5. Compute conditional expectations y[i] for the Genz transform.
+   Input arguments lower, upper, covar, infin are not modified (same as covsrt).
+   */
+   start covsrt_nopivot( lower, upper, covar, infin, infis )
+         global( covars, done, eone, infi, a, b, y );
+      infis = InitCovsrtGlobals( lower, upper, covar, infin );
+      n_active = PermuteInfiniteDims( infis );
+
+      if ( n_active > 0 ) then do;
+         run FactorizeActiveBlock( n_active );
+         run ComputeConditionalExpectations( n_active );
+      end;
+   finish covsrt_nopivot;
+
 
    /* FUNCTION: covsrt
    Computes Cholesky Decomposition with Greedy Pivoting.
@@ -343,47 +420,23 @@ finish mvn_dist;
    start covsrt( lower, upper, covar, infin, infis ) global( covars, done, eone, infi, a, b, y );
       n = ncol(covar);
       eps = 1e-10;       /* numerical tolerance in pivot/singularity checks */
-      y = j( 1, n, . );
-      infi = infin;
-      a = j( 1, n, 0 );
-      b = j( 1, n, 0 );
       sqtwpi = sqrt( 2*constant("PI") );
-      covars = covar;
-      /* Count effectively infinite dimensions */
-      infis = n - sum( sign( sign( infi ) + 1 ) );
-      /* Initialize working limits a/b from input lower/upper */
-      do i = 1 to n;
-         if ( infi[i] >= 0 ) then do;
-            if ( infi[i] ^= 0 ) then
-               a[i] = lower[i];
+      infis = InitCovsrtGlobals( lower, upper, covar, infin );
+      n_active = PermuteInfiniteDims( infis );
 
-            if ( infi[i] ^= 1 ) then
-               b[i] = upper[i];
-         end;
-      end;
-
-      if ( infis < n ) then do;
-         /* Move infinite limits to the end of the array */
-         do i = n to n-infis+1 by -1;
-            if ( infi[i] >= 0 ) then do;
-               do j = 1 to i-1;
-                  if ( infi[j] < 0 ) then do;
-                     run rcswp( j, i, a, b, infi, n, covars );
-                     j = i-1;
-                  end;
-               end;
-            end;
-         end;
-
+      if ( n_active > 0 ) then do;
+         *print "DBG covsrt: after permutation, before Cholesky loop";
+         *print infis n_active;
+         *print covars, infi, a, b;
          /* MAIN CHOLESKY LOOP WITH PIVOTING */
-         do i = 1 to n-infis;
+         do i = 1 to n_active;
             demin = 1;
             jmin = i;
             cvdiag = 0;
             epsi = i*i*eps;
 
             /* SEARCH LOOP: Find variable 'j' that minimizes expected interval width */
-            do j = i to n-infis;
+            do j = i to n_active;
                if ( covars[j,j] > epsi ) then do;
                   sumsq = sqrt( covars[j,j] );
                   vsum = 0;
@@ -413,7 +466,7 @@ finish mvn_dist;
             if ( cvdiag > 0 ) then do;
                covars[i,i] = cvdiag;
 
-               do l = i+1 to n-infis;
+               do l = i+1 to n_active;
                   covars[l,i] = covars[l,i]/cvdiag;
                   covars[l,i+1:l] = covars[l,i+1:l] - covars[l,i] # t(covars[i+1:l,i]);
                end;
@@ -449,7 +502,7 @@ finish mvn_dist;
             else do;
                /* Handling Singularities / Semi-definite cases */
                if ( covars[i,i] > -epsi ) then do;
-                  covars[i:n-infis,i] = 0;
+                  covars[i:n_active,i] = 0;
                   aaa = 0;
 
                   /* Back-substitute to resolve dependency */
@@ -502,10 +555,13 @@ finish mvn_dist;
                end;
                else do;
                  /* Error: Shouldn't happen b/c COVAR is pre-checked to be positive definite */
-                  i = n-infis;
+                  i = n_active;
                end;
             end;
          end;
+
+         *print "DBG covsrt: final state before mvnlms";
+         *print covars, infi, a, b, y;
 
          run mvnlms( a[1], b[1], infi[1], done, eone );
       end;
@@ -540,8 +596,7 @@ finish mvn_dist;
          c[q,i] = tmp;
       end;
 
-      /* RECOVERED SECTION: Swap columns below q 
-         This maintains the lower triangular structure. */
+      /* Swap columns below q */
       if (q<n) then do;
          tmp = c[q+1:n,p];
          c[q+1:n,p] = c[q+1:n,q];
@@ -812,6 +867,126 @@ finish mvn_dist;
       return ( bvn );
    finish probbvn;
 
+   /* define helper functions used in the various covsrt* modules */
+   /* Helper: Initialize global arrays: 
+        y as a vector of missing values
+        covars as a copy of the input covariance matrix
+        a, b as working limits
+        infi as infinity flags 
+      Return infis = the count of infinite dimensions */
+start InitCovsrtGlobals( lower, upper, covar, infin) /* input args */
+      global( covars, infi, a, b, y );
+   n = ncol(covar);
+   y = j( 1, n, . );
+   infi = infin;
+   a = j( 1, n, .M );
+   b = j( 1, n, .I );
+   covars = covar;
+
+   /* Initialize working limits a/b from input lower/upper */
+   do i = 1 to n;
+      if ( infi[i] >= 0 ) then do;
+         if ( infi[i] ^= 0 ) then a[i] = lower[i];
+         if ( infi[i] ^= 1 ) then b[i] = upper[i];
+      end;
+   end;
+
+   /* Count infinite dimensions */
+   infis = n - sum( sign( sign( infi ) + 1 ) );
+   return infis;
+finish InitCovsrtGlobals;
+
+/* Helper: Permute fully-infinite dimensions to the end */
+start PermuteInfiniteDims( infis )
+      global( covars, infi, a, b );
+   n = ncol(covars);
+   if ( infis < n ) then do;
+      /* Move infinite limits to the end of the array */
+      do i = n to n-infis+1 by -1;
+         if ( infi[i] >= 0 ) then do;
+            do j = 1 to i-1;
+               if ( infi[j] < 0 ) then do;
+                  run rcswp( j, i, a, b, infi, n, covars );
+                  j = i-1;
+               end;
+            end;
+         end;
+      end;
+      n_active = n - infis;
+      
+      /* rcswp only maintains the lower triangle. Make the active block 
+         symmetric so any subsequent operations use a valid matrix. */
+      covars[1:n_active, 1:n_active] = CopyLowerTriToUpper(covars[1:n_active, 1:n_active]);
+   end;
+   else n_active = 0;
+   return n_active;
+finish PermuteInfiniteDims;
+
+/* Helper: Cholesky factorization via ROOT with ridge policy */
+start FactorizeActiveBlock( n_active )
+      global( covars, a, b );
+   
+   R_active = covars[1:n_active, 1:n_active];
+   
+   /* Pass 1: try ROOT without ridge */
+   G = root(R_active, "NoError");
+
+   /* Pass 2: Retry with small ridge if not PD; prevent division by zero */
+   ridge_eps = 1E-12;
+   if any(vecdiag(G) < ridge_eps) then do;
+      G = root(R_active + ridge_eps*I(n_active), "NoError");
+      /* TO DO: Gracefully return without calling ABORT */
+      if any(G=.) then
+         ABORT "FactorizeActiveBlock: ROOT fails even with ridge=1E-12";
+   end;
+
+   /* C is the lower-triangular Cholesky factor.
+      Scale C and limits so diagonal of C is 1 */
+   C = t(G); 
+   v = vecdiag(C);
+   do i = 1 to n_active;
+      C[i,] = C[i,] / v[i];
+      a[i]  = a[i]  / v[i];
+      b[i]  = b[i]  / v[i];
+   end;
+   covars[1:n_active, 1:n_active] = C;
+   covars = CopyLowerTriToUpper(covars); 
+finish FactorizeActiveBlock;
+
+/* Helper: Compute conditional expectations for the Genz transformation */
+start ComputeConditionalExpectations( n_active )
+      global( covars, infi, a, b, y, done, eone );
+   
+   sqtwpi = sqrt( 2*constant("PI") );
+   do i = 1 to n_active;
+      if (i > 1) then vsum = sum( covars[i,1:i-1] # t(y[1:i-1]) );
+      else vsum = 0;
+      
+      ai = a[i] - vsum;
+      bi = b[i] - vsum;
+
+      di = 0; ei = 1;
+      if ( infi[i] ^= 0 ) then di = cdf("Normal", ai);
+      if ( infi[i] ^= 1 ) then ei = cdf("Normal", bi);
+      ei = max(ei, di);
+
+      if ( ei - di > 1e-10 ) then do;
+         yl = 0; yu = 0;
+         if ( infi[i] ^= 0 ) then yl = -exp(-ai**2/2)/sqtwpi;
+         if ( infi[i] ^= 1 ) then yu = -exp(-bi**2/2)/sqtwpi;
+         y[i] = (yu - yl) / (ei - di);
+      end;
+      else do;
+         if      ( infi[i] = 0 ) then y[i] = bi;
+         else if ( infi[i] = 1 ) then y[i] = ai;
+         else                         y[i] = (ai + bi)/2;
+      end;
+   end;
+   
+   if ( n_active > 0 ) then
+      run mvnlms( a[1], b[1], infi[1], done, eone );
+finish ComputeConditionalExpectations;
+
 store module=(
 probmvn_mod
 probmvn_std
@@ -820,27 +995,25 @@ mvn_dfn
 mvndnt
 mvnlms
 covsrt
+covsrt_nopivot
+covsrt_static
 rcswp
 dkbvrc
 dksmrc
 dkrcht
 GetInfinityFlag
 probbvn
+CopyLowerTriToUpper
+InitCovsrtGlobals
+PermuteInfiniteDims
+FactorizeActiveBlock
+ComputeConditionalExpectations
 );
 
+/*********************/
+/* call main program */
+/*********************/
 
-   /*********************/
-   /* HELPER FUNCTIONS  */
-   /*********************/
- 
-   /*********************/
-   /* call main program */
-   /*********************/
-   /*
-   Read-Only Constants: 
-      nl.
-   Global State Variables: nn, hisum, olds (managed by dkrcht).
-   */
 /* Helper module to format test results */
 start check_test(test_name, prob, correct, tol=0.001);
    maxDiff = max(abs(prob-correct));
@@ -866,15 +1039,3 @@ testName = "Test 0: 5-D Identity Matrix; [a,b]=[-2,2] in all coordinates";
                 error, value );
    correct = prod(cdf("Normal", upper) - cdf("Normal", lower));
    run check_test(testName, value, correct);
-
-   /* RUN TESTS IN probmvn_tests.sas */
-
-   /* Possible improvements:
-   First, notice that the program uses global variables like hisum, and olds. Some of them (such as hisum and olds) are initialized at the beginning of the program and modified inside a function call. 
-
-1. For consistency and convenience, these global variables should be set to their initial default values every time that mvn_dist is called. Since mvn_dist calls mvndnt, which sets up the problem, please move all initialization into mvndnt. You will need to modify the GLOBAL statement accordingly to declare ALL global variables. 
-
-2. I think there are some global variables that are used only in one function.  Examine the global variables. If they are "read only" variables that are only used in one function, please move their definition to the top of the function. I think psqt and bb can be defined local to the dkrcht function. I think p and c can be local to the dkbvrc function.
-
-3. Some global variables can be derived from others and so do not need to be global at all. For example, any function that needs to use mxdim can defined locally as ncol(psqt). I think plim is merely ncol(p). I'm not sure how klim is defined, but it might be ncol(c)-1.
-   */

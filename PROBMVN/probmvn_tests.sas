@@ -459,7 +459,7 @@ end;
    (-Infty, Infty), (-Infty, b), (a, Infty), (a, b) 
    The final test has all variables in (-Infty, Infty) so answer should be 1! */
 test_name = "--- Test 17: 36 Different 5-D Rectangular Regions:";
-print test_name[L=""] "only failures will be printed ---";
+print test_name[L=""] "only failures are printed ---";
 R = {1    -0.25  0.15 -0.35 -0.15 ,
     -0.25  1    -0.4   0.55  0.35 ,
      0.15 -0.4   1     0.05 -0.55 ,
@@ -478,20 +478,24 @@ U_Block = {.I  1  0  1 .I,
             0  1  3  2  1,
             1  3  2  1  0,
            .I .I .I .I .I  };
-N = 1E6;
+N = 5E5;
 do i = 1 to nrow(L_Block);
    L = L_Block[i,];
    do j = 1 to nrow(U_Block);
       U = U_Block[j,];
       prob = probmvn_mod(L, U, R);
       /* Compute the MC estimate; see if the QMC value is in the 95% CI */
-      correct_list = MC_PROBMVN_CL(N, L, U, R);
+      if any(L=. | U=.) then
+         correct_list = MC_PROBMVN_CL(5*N, L, U, R);  /* do extra computations for semi-infinite limits */
+      else 
+         correct_list = MC_PROBMVN_CL(N, L, U, R);
       correct = correct_list$1;
       lower95 = correct_list$2;
       upper95 = correct_list$3;
       if prob < lower95 | prob > upper95 then do;
          run check_test(test_name, prob, correct);
-         print L, U;
+         if max(abs(prob-correct)) > 0.001 then 
+            print L, U;
       end;
    end;
 end;

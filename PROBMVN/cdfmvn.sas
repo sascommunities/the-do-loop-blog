@@ -8,11 +8,20 @@ proc iml;
    I have not located the original reference for this matrix.
 */
 start cdfmvn_LR(prob, error,         /* output values: probability and error estimate */
-             R, _b, eps=0.0001);   /* input values:  correlation matrix R, upper limits b, absolute error eps */
+             R, _b, eps=0.0001);     /* input values:  correlation matrix R, upper limits b, absolute error eps */
   q=ncol(_b);
-  ridge_eps = 1E-12;
-  /* apply a ridge factor by adding a small value to the diagonal of R to ensure that it is positive definite. */
-  C = t(root(R+ridge_eps*I(q)));        /* C is the lower-triangular Cholesky factor of R */
+  G = root(R, "NoError");
+  if any(G=.) then do;
+    /* apply a ridge factor by adding a small value to the diagonal of R to ensure that it is positive definite. */
+    ridge_eps = 1E-12;
+    G = root(R + ridge_eps*I(ncol(R)), "NoError");
+    if any(G=.) then do;
+      prob = j(nrow(_b), 1, .);
+      error = prob;
+      return;
+    end;
+  end;
+  C = t(G);        /* C is the lower-triangular Cholesky factor of R (or ridged R) */
   /* scale the b vector and the rows of C to prevent needing to divide by C[i,i] inside loops. */
   v = vecdiag(C);
   b = _b / rowvec(v);
