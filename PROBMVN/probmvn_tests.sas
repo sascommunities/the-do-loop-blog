@@ -190,7 +190,7 @@ end;
 
 /* 7. Rank-1 singular correlation matrix.
    If R is a matrix of all 1s, then X1=X2=...=Xn.
-   P(X1 < 1, X2 < 2, ..., X8 < 8) = P(X1 < min(b)) = P(X1 < 1).
+   P(X1 < 1, X2 < 2, ..., X8 < 8) = P(X1 < min(upper)) = P(X1 < 1).
 */
 testName = "Test 7: 8-D Singular (All 1s); CDF";
 n = 8;
@@ -198,7 +198,7 @@ R = j(n,n,1);
 upper = 1:n;
 lower = j(1, n, .); 
 prob = probmvn_mod(lower, upper, R);
-correct = cdf("Normal", min(b));
+correct = cdf("Normal", min(upper));
 run check_test(testName, prob, correct);
 
 /* 8. Block-diagonal correlation matrix. If the blocks are 1x1 and 2x2,
@@ -479,6 +479,9 @@ U_Block = {.I  1  0  1 .I,
             1  3  2  1  0,
            .I .I .I .I .I  };
 N = 5E5;
+/* use a double loop to test all combinations of lower and upper limits. 
+   For each combination, compute the QMC estimate and a 95% CI from MC simulation. 
+   If the QMC value is outside the 95% CI, print the limits. */
 do i = 1 to nrow(L_Block);
    L = L_Block[i,];
    do j = 1 to nrow(U_Block);
@@ -500,3 +503,25 @@ do i = 1 to nrow(L_Block);
    end;
 end;
 print test_name[L=""] "DONE ---";
+
+/* Test 18: Near-singular equicorrelated covariance matrix.
+   This guards numerical stability when rho is very close to 1 (but still PD). */
+TestName = "Test 18: 5-D Near-Singular Equicorrelated (rho=0.999), Mixed Limits";
+k = 5;
+rho = 0.999;
+R = (1-rho)*I(k) + rho*J(k,k,1);
+L = {-1.2  -0.8   .M  -0.3   0.0};
+U = { 0.6    .I   0.4   .I   1.1};
+prob = probmvn_mod(L, U, R);
+correct = MC_PROBMVN(1E6, L, U, R);
+run check_test(TestName, prob, correct);
+
+/* Test 19: A 3-D problem that reduces to a 2-D rectangle */
+TestName = "Test 19: 3-D Problem reduces to 2-D Rectangle";
+L={.M -2 -1};
+U={.I 2 1};
+Sigma={1 1 1, 1 2 2, 1 2 3};
+prob = probmvn_mod(L, U, Sigma);
+correct = probbvn_mod(L[,2:3], U[,2:3], Sigma[2:3, 2:3]);
+correct2 = MC_PROBMVN(1E6, L, U, Sigma);
+run check_test(TestName, prob, correct);

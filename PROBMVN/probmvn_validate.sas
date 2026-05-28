@@ -17,7 +17,7 @@ proc iml;
    Returns 1 if valid, 0 otherwise.
    Checks:
    1. L and U have the same number of elements.
-   2. For every dimension i where both L[i] and U[i] are non-missing, L[i] <= U[i].
+   2. For every dimension i where both L[i] and U[i] are non-missing, L[i] < U[i].
 */
 start IsValidRectLimits(L, U);
    if ncol(L) ^= ncol(U) then do;
@@ -32,8 +32,8 @@ start IsValidRectLimits(L, U);
    do j = 1 to nrow(L);
        do i = 1 to n;
           if L[j,i] ^= . & U[j,i] ^= . then do;
-             if L[j,i] > U[j,i] then do;
-                run ErrorToLog("L[j,i] must be <= U[j,i] for every non-missing pair of limits.");
+             if L[j,i] >= U[j,i] then do;
+                run ErrorToLog("L[j,i] must be < U[j,i] for every non-missing pair of limits.");
                 return( 0 );
              end;
           end;
