@@ -135,7 +135,7 @@ finish mvn_dist;
    3. Accumulates the probability mass (ei - di).
    */
    start mvn_dfn( n, w ) 
-          global( covars, done, eone, infi, a, b, y );
+         global( g_covars, g_done, g_eone, g_a, g_b, g_y );
       value = 1;
       infa = 0;
       infb = 0;
@@ -146,52 +146,47 @@ finish mvn_dist;
          vsum = 0;
          /* Compute inner product of Cholesky row 'i' with previous realizations 'y' */
          if ( ik > 1 ) then
-            vsum = vsum + sum( covars[i,1:ik-1]#t(y[1:ik-1]));
+            vsum = vsum + sum( g_covars[i,1:ik-1]#t(g_y[1:ik-1]));
 
          /* Update lower limit (ai) based on conditional mean */
-         if ( infi[i] ^= 0 ) then do;
+         if ( g_a[i] ^= . ) then do;
             if ( infa = 1 ) then
-               ai = max( ai, a[i] - vsum );
+               ai = max( ai, g_a[i] - vsum );
             else do;
-               ai = a[i] - vsum;
+               ai = g_a[i] - vsum;
                infa = 1;
             end;
          end;
 
          /* Update upper limit (bi) based on conditional mean */
-         if ( infi[i] ^= 1 ) then do;
+         if ( g_b[i] ^= . ) then do;
             if ( infb = 1 ) then
-               bi = min( bi, b[i] - vsum );
+               bi = min( bi, g_b[i] - vsum );
             else do;
-               bi = b[i] - vsum;
+               bi = g_b[i] - vsum;
                infb = 1;
             end;
          end;
 
          /* Check for end of integration or singular dimension */
          if ( i < n + 1 & ik < n + 1 ) then
-            aaa = covars[i+1,ik+1];
+            aaa = g_covars[i+1,ik+1];
          else aaa = 0;
 
          /* Calculate Probability for current dimension */
          if ( i = n+1 | aaa > 0 ) then do;
             if ( i = 1 ) then do;
-               di = done;
-               ei = eone;
+               di = g_done;
+               ei = g_eone;
             end;
             else do;
                di = 0;
                ei = 1;
-               /* Determine if bounds are finite or infinite (-Inf, +Inf) */
-               j = 2*infa+infb-1;  /* encode a local version of GetInfinityFlag. See mvnlms */
+               if ( infa = 1 ) then
+                  di = cdf("Normal", ai);
 
-               if ( j >= 0 ) then do;
-                  if ( j ^= 0 ) then
-                     di = cdf("Normal", ai);
-
-                  if ( j ^= 1 ) then
-                     ei = cdf("Normal", bi);
-               end;
+               if ( infb = 1 ) then
+                  ei = cdf("Normal", bi);
 
                ei = max( ei, di );
             end;
@@ -204,9 +199,9 @@ finish mvn_dist;
             else do;
                value = value*( ei - di );
 
-               /* Transform uniform w[ik] to Normal y[ik] for next iteration */
+               /* Transform uniform w[ik] to Normal g_y[ik] for next iteration */
                if ( i <= n ) then
-                  y[ik] = quantile("Normal", di + w[ik]*( ei - di ) );
+                  g_y[ik] = quantile("Normal", di + w[ik]*( ei - di ) );
                ik = ik + 1;
                infa = 0;
                infb = 0;
@@ -227,13 +222,12 @@ finish mvn_dist;
    4. Handles Independent cases (Diagonal matrix).
    */
    start mvndnt( lower, upper, covar, infis, value, error ) 
-         global( covars, done, eone, infi, a, b, nn, hisum, olds );
+         global( g_covars, g_done, g_eone, g_a, g_b, g_nn, g_hisum, g_olds );
       n = ncol(covar);
-      infin = GetInfinityFlag(lower, upper);
       /* Reset quasi-random sequence state for each top-level probability call. */
-      nn = j(1, 51, 0);
-      hisum = .;
-      olds = 0;
+      g_nn = j(1, 51, 0);
+      g_hisum = .;
+      g_olds = 0;
       /* Global constant for the Richtmyer generators and lattice rules */
       nl = 100;
       /* The parameters have been validated by IsValidParmsPROBMVN, which 
@@ -241,15 +235,15 @@ finish mvn_dist;
 
       /* Perform Cholesky Decomposition with Variable Reordering */
       /* FEATURE FLAG: 0 = original covsrt (Bretz: greedy pivot + singularity handling)
-                       1 = covsrt_nopivot (Rick: ROOT + ridge, no pivot) 
+                       1 = covsrt_naive (Rick: ROOT + ridge, no permuting) 
                        2 = covsrt_static (Rick: permute vars according to 1-D marginal probabilities) */
       use_new_covsrt = 2;  /* 0=Greedy, 1=None, 2=Static Sort */
       if use_new_covsrt = 2 then
-         run covsrt_static( lower, upper, covar, infin, infis );
+         run covsrt_static( lower, upper, covar, infis );
       else if use_new_covsrt = 1 then
-         run covsrt_nopivot( lower, upper, covar, infin, infis );
+         run covsrt_naive( lower, upper, covar, infis );
       else
-         run covsrt( lower, upper, covar, infin, infis );
+         run covsrt( lower, upper, covar, infis );
          
 
       /* CASE: 0 Dimensions active (all (-inf, inf)) */
@@ -260,47 +254,44 @@ finish mvn_dist;
       else do;
          /* CASE: 1 Dimension active (Univariate Normal) */
          if ( n - infis = 1 ) then do;
-            value = eone - done;
+            value = g_eone - g_done;
             error = 2e-15;
          end;
          else do;
             /* CASE: 2 Dimensions active (Bivariate Normal) */
             if ( n - infis = 2 ) then do;
                /* If correlated, use Bivariate CDF */
-               if ( abs( covars[2,2] ) > 0 ) then do;
-                  d = sqrt( 1 + covars[2,1]**2 );
+               if ( abs( g_covars[2,2] ) > 0 ) then do;
+                  d = sqrt( 1 + g_covars[2,1]**2 );
 
-                  if ( infi[2] ^= 0 ) then
-                     a[2] = a[2]/d;
+                  if ( g_a[2] ^= . ) then
+                     g_a[2] = g_a[2]/d;
 
-                  if ( infi[2] ^= 1 ) then
-                     b[2] = b[2]/d;
-                  value = probbvn( a, b, infi, covars[2,1]/d );
+                  if ( g_b[2] ^= . ) then
+                     g_b[2] = g_b[2]/d;
+                  value = probbvn_std( g_a, g_b, g_covars[2,1]/d );
                end;
                else do;
                   /* If independent (Cov[2,1]=0), compute product of marginals */
-                  if ( infi[1] ^= 0 ) then do;
-                     if ( infi[2] ^= 0 ) then
-                        a[1] = max( a[1], a[2] );
+                  if ( g_a[1] ^= . ) then do;
+                     if ( g_a[2] ^= . ) then
+                        g_a[1] = max( g_a[1], g_a[2] );
                   end;
                   else do;
-                     if ( infi[2] ^= 0 ) then
-                        a[1] = a[2];
+                     if ( g_a[2] ^= . ) then
+                        g_a[1] = g_a[2];
                   end;
 
                   /* Logic to intersect intervals for independent variables */
-                  if ( infi[1] ^= 1 ) then do;
-                     if ( infi[2] ^= 1 ) then
-                        b[1] = min( b[1], b[2] );
+                  if ( g_b[1] ^= . ) then do;
+                     if ( g_b[2] ^= . ) then
+                        g_b[1] = min( g_b[1], g_b[2] );
                   end;
                   else do;
-                     if ( infi[2] ^= 1 ) then
-                        b[1] = b[2];
+                     if ( g_b[2] ^= . ) then
+                        g_b[1] = g_b[2];
                   end;
-
-                  if ( infi[1] ^= infi[2] ) then
-                     infi[1] = 2;
-                  run mvnlms( a[1], b[1], infi[1], d, e );
+                  run mvnlms( g_a[1], g_b[1], d, e );
 
                   value = e - d;
                end;
@@ -320,27 +311,25 @@ finish mvn_dist;
    /* FUNCTION: mvnlms
    Convert one-dimensional normal limits on the z-scale into
    probability-scale limits for the Genz transformation.
-   Given scalar bounds a and b and an infinity flag, return
-   lower = Phi(a) and upper = Phi(b), with lower=0 for -Infinity
-   and upper=1 for +Infinity. The routine is used to form the
-   interval mass upper-lower for pivoting, initialization, and
-   low-dimensional special cases. The original name "mvnlms" is
-   retained from the source code; the meaning of "lms" is not clear.
-   It might be short for "limits."
+   Given scalar bounds a and b, return lower = Phi(a) and upper = Phi(b),
+   with lower=0 for -Infinity and upper=1 for +Infinity.
+   Missing values in a or b are treated as infinities.
+   The routine is used to form the interval mass upper-lower for pivoting,
+   initialization, and low-dimensional special cases.
+   The original name "mvnlms" is retained from the source code;
+   the meaning of "lms" is not clear. It might be short for "limits."
    */
-   start mvnlms( a, b, infin, lower, upper );
+   start mvnlms( a, b, lower, upper );
       lower = 0;
       upper = 1;
 
-      if ( infin >= 0 ) then do;
-         if ( infin ^= 0 ) then
-            lower = cdf("Normal", a);
+      if ( a ^= . ) then
+         lower = cdf("Normal", a);
 
-         if ( infin ^= 1 ) then
-            upper = cdf("Normal", b);
-      end;
+      if ( b ^= . ) then
+         upper = cdf("Normal", b);
 
-      upper = max( upper, lower );
+      /* upper = max( upper, lower ); */
    finish mvnlms;
 
    /* CopyLowerTriToUpper */
@@ -358,9 +347,9 @@ finish mvn_dist;
       3. Compute Cholesky via ROOT with ridge policy (same as nopivot).
       4. Scale factor and compute conditional expectations (same as nopivot).
    */
-   start covsrt_static( lower, upper, covar, infin, infis )
-         global( covars, done, eone, infi, a, b, y );
-      infis = InitCovsrtGlobals( lower, upper, covar, infin );
+   start covsrt_static( lower, upper, covar, infis )
+         global( g_covars, g_done, g_eone, g_a, g_b, g_y );
+      infis = InitCovsrtGlobals( lower, upper, covar );
       n_active = PermuteInfiniteDims( infis );
 
       if ( n_active > 0 ) then do;
@@ -369,8 +358,8 @@ finish mvn_dist;
             p = j(1, n_active, 1);
             do i = 1 to n_active;
                /* Normalize by marginal scale to compare 1-D interval masses */
-               sumsq = sqrt(covars[i,i]);
-               run mvnlms( a[i]/sumsq, b[i]/sumsq, infi[i], dd, ee );
+               sumsq = sqrt(g_covars[i,i]);
+               run mvnlms( g_a[i]/sumsq, g_b[i]/sumsq, dd, ee );
                p[i] = ee - dd;
             end;
 
@@ -378,10 +367,9 @@ finish mvn_dist;
             call sortndx(idx, p_col, 1);
             idx = t(idx);
 
-            a[1:n_active]    = a[idx];
-            b[1:n_active]    = b[idx];
-            infi[1:n_active] = infi[idx];
-            covars[1:n_active, 1:n_active] = covars[idx, idx];
+            g_a[1:n_active]    = g_a[idx];
+            g_b[1:n_active]    = g_b[idx];
+            g_covars[1:n_active, 1:n_active] = g_covars[idx, idx];
          end;
 
          run FactorizeActiveBlock( n_active );
@@ -389,26 +377,27 @@ finish mvn_dist;
       end;
    finish covsrt_static;
 
-   /* FUNCTION: covsrt_nopivot
-   Cholesky decomposition without pivoting (experimental).
+   /* FUNCTION: covsrt_naive
+   Cholesky decomposition without pivoting, using ROOT with ridge policy. 
+   I tried this method, but in increased the variance of the estimates.
    Strategy:
-     1. Mirror covsrt exactly: copy inputs into global work arrays infi/covars/a/b/y.
+     1. Mirror covsrt exactly: copy inputs into global work arrays g_covars,g_a,g_b,g_y.
      2. Permute infinite dimensions to the end using the same rcswp calls as covsrt.
      3. Compute Cholesky of the active submatrix via ROOT (two-pass ridge policy).
      4. Scale the factor and limits so each diagonal entry of C equals 1.
-     5. Compute conditional expectations y[i] for the Genz transform.
-   Input arguments lower, upper, covar, infin are not modified (same as covsrt).
+     5. Compute conditional expectations g_y[i] for the Genz transform.
+   Input arguments lower, upper, and covar are not modified (same as covsrt).
    */
-   start covsrt_nopivot( lower, upper, covar, infin, infis )
-         global( covars, done, eone, infi, a, b, y );
-      infis = InitCovsrtGlobals( lower, upper, covar, infin );
+   start covsrt_naive( lower, upper, covar, infis )
+         global( g_covars, g_done, g_eone, g_a, g_b, g_y );
+      infis = InitCovsrtGlobals( lower, upper, covar );
       n_active = PermuteInfiniteDims( infis );
 
       if ( n_active > 0 ) then do;
          run FactorizeActiveBlock( n_active );
          run ComputeConditionalExpectations( n_active );
       end;
-   finish covsrt_nopivot;
+   finish covsrt_naive;
 
 
    /* FUNCTION: covsrt
@@ -417,17 +406,18 @@ finish mvn_dist;
    It reorders variables so that the outermost integration variables 
    have the smallest expected integration intervals.
    */
-   start covsrt( lower, upper, covar, infin, infis ) global( covars, done, eone, infi, a, b, y );
+   start covsrt( lower, upper, covar, infis ) 
+         global( g_covars, g_done, g_eone, g_a, g_b, g_y );
       n = ncol(covar);
       eps = 1e-10;       /* numerical tolerance in pivot/singularity checks */
       sqtwpi = sqrt( 2*constant("PI") );
-      infis = InitCovsrtGlobals( lower, upper, covar, infin );
+      infis = InitCovsrtGlobals( lower, upper, covar );
       n_active = PermuteInfiniteDims( infis );
 
       if ( n_active > 0 ) then do;
          *print "DBG covsrt: after permutation, before Cholesky loop";
          *print infis n_active;
-         *print covars, infi, a, b;
+         *print g_covars, g_a, g_b;
          /* MAIN CHOLESKY LOOP WITH PIVOTING */
          do i = 1 to n_active;
             demin = 1;
@@ -437,15 +427,15 @@ finish mvn_dist;
 
             /* SEARCH LOOP: Find variable 'j' that minimizes expected interval width */
             do j = i to n_active;
-               if ( covars[j,j] > epsi ) then do;
-                  sumsq = sqrt( covars[j,j] );
+               if ( g_covars[j,j] > epsi ) then do;
+                  sumsq = sqrt( g_covars[j,j] );
                   vsum = 0;
 
                   if ( i > 1 ) then
-                     vsum = sum( covars[j,1:i-1] # t(y[1:i-1]) );
-                  aj = ( a[j] - vsum )/sumsq;
-                  bj = ( b[j] - vsum )/sumsq;
-                  run mvnlms( aj, bj, infi[j], dd, ee );
+                     vsum = sum( g_covars[j,1:i-1] # t(g_y[1:i-1]) );
+                  aj = ( g_a[j] - vsum )/sumsq;
+                  bj = ( g_b[j] - vsum )/sumsq;
+                  run mvnlms( aj, bj, dd, ee );
 
                   /* Pivot Criterion: Choose j with smallest probability mass (ee-dd) */
                   if ( demin >= ee - dd ) then do;
@@ -460,85 +450,79 @@ finish mvn_dist;
 
             /* Swap rows/cols if a better variable was found */
             if ( jmin > i ) then
-               run rcswp( i, jmin, a, b, infi, n, covars );
+               run rcswp( i, jmin, g_a, g_b, n, g_covars );
 
             /* Perform Cholesky Update for current row */
             if ( cvdiag > 0 ) then do;
-               covars[i,i] = cvdiag;
+               g_covars[i,i] = cvdiag;
 
                do l = i+1 to n_active;
-                  covars[l,i] = covars[l,i]/cvdiag;
-                  covars[l,i+1:l] = covars[l,i+1:l] - covars[l,i] # t(covars[i+1:l,i]);
+                  g_covars[l,i] = g_covars[l,i]/cvdiag;
+                  g_covars[l,i+1:l] = g_covars[l,i+1:l] - g_covars[l,i] # t(g_covars[i+1:l,i]);
                end;
 
-               /* Calculate expected value 'y[i]' to center next iteration */
+               /* Calculate expected value 'g_y[i]' to center next iteration */
                if ( demin > epsi ) then do;
                   yl = 0;
                   yu = 0;
 
-                  if ( infi[i] ^= 0 ) then
+                  if ( g_a[i] ^= . ) then
                      yl = -exp( -amin**2/2 )/sqtwpi;
 
-                  if ( infi[i] ^= 1 ) then
+                  if ( g_b[i] ^= . ) then
                      yu = -exp( -bmin**2/2 )/sqtwpi;
-                  y[i] = ( yu - yl )/demin;
+                  g_y[i] = ( yu - yl )/demin;
                end;
                else do;
-                  if ( infi[i] = 0 ) then
-                     y[i] = bmin;
+                  if ( g_a[i] = . & g_b[i] ^= . ) then          /* (-inf, b) */
+                     g_y[i] = bmin;
 
-                  if ( infi[i] = 1 ) then
-                     y[i] = amin;
+                  if ( g_a[i] ^= . & g_b[i] = . ) then          /* (a, inf) */
+                     g_y[i] = amin;
 
-                  if ( infi[i] = 2 ) then
-                     y[i] = ( amin + bmin )/2;
+                  if ( g_a[i] ^= . & g_b[i] ^= . ) then         /* (a, b) */
+                     g_y[i] = ( amin + bmin )/2;
                end;
 
                /* Normalize current row */
-               covars[i,1:i] = covars[i,1:i]/cvdiag;
-               a[i] = a[i]/cvdiag;
-               b[i] = b[i]/cvdiag;
+               g_covars[i,1:i] = g_covars[i,1:i]/cvdiag;
+               g_a[i] = g_a[i]/cvdiag;
+               g_b[i] = g_b[i]/cvdiag;
             end;
             else do;
                /* Handling Singularities / Semi-definite cases */
-               if ( covars[i,i] > -epsi ) then do;
-                  covars[i:n_active,i] = 0;
+               if ( g_covars[i,i] > -epsi ) then do;
+                  g_covars[i:n_active,i] = 0;
                   aaa = 0;
 
                   /* Back-substitute to resolve dependency */
                   do j = i-1 to 1 by -1;
-                     if ( abs( covars[i,j] ) > epsi ) then do;
-                        a[i] = a[i]/covars[i,j];
-                        b[i] = b[i]/covars[i,j];
+                     if ( abs( g_covars[i,j] ) > epsi ) then do;
+                        g_a[i] = g_a[i]/g_covars[i,j];
+                        g_b[i] = g_b[i]/g_covars[i,j];
 
-                        if ( covars[i,j] < 0 ) then do;
-                           tmp = a[i];
-                           a[i] = b[i];
-                           b[i] = tmp;
-
-                           if ( infi[i] ^= 2 ) then
-                              infi[i] = 1 - infi[i];
+                        if ( g_covars[i,j] < 0 ) then do;
+                           tmp = g_a[i];
+                           g_a[i] = g_b[i];
+                           g_b[i] = tmp;
                         end;
 
-                        covars[i,1:j] = covars[i,1:j]/covars[i,j];
+                        g_covars[i,1:j] = g_covars[i,1:j]/g_covars[i,j];
 
                         /* Re-sort rows to maintain triangular structure after singularity fix */
                         do l = j+1 to i-1;
-                           if( covars[l,j+1] > 0 ) then do;
+                           if( g_covars[l,j+1] > 0 ) then do;
                               do k = i-1 to l by -1;
                                  /* Large block swapping logic for singularity handling */
-                                 tmp = covars[k,1:k];
-                                 covars[k,1:k] = covars[k+1,1:k];
-                                 covars[k+1,1:k] = tmp;
-                                 tmp = a[k];
-                                 a[k] = a[k+1];
-                                 a[k+1] = tmp;
-                                 tmp = b[k];
-                                 b[k] = b[k+1];
-                                 b[k+1] = tmp;
-                                 m = infi[k];
-                                 infi[k] = infi[k+1];
-                                 infi[k+1] = m;
+                                 tmp = g_covars[k,1:k];
+                                 g_covars[k,1:k] = g_covars[k+1,1:k];
+                                 g_covars[k+1,1:k] = tmp;
+                                 tmp = g_a[k];
+                                 g_a[k] = g_a[k+1];
+                                 g_a[k+1] = tmp;
+                                 tmp = g_b[k];
+                                 g_b[k] = g_b[k+1];
+                                 g_b[k+1] = tmp;
                               end;
                               l = i-1;
                            end;
@@ -549,9 +533,9 @@ finish mvn_dist;
                      
                      /* Zero out remaining elements if singularity resolved */
                      if aaa = 1 then;
-                     else covars[i,j] = 0;
+                     else g_covars[i,j] = 0;
                   end;
-                  y[i] = 0;
+                  g_y[i] = 0;
                end;
                else do;
                  /* Error: Shouldn't happen b/c COVAR is pre-checked to be positive definite */
@@ -561,9 +545,9 @@ finish mvn_dist;
          end;
 
          *print "DBG covsrt: final state before mvnlms";
-         *print covars, infi, a, b, y;
+         *print g_covars, g_a, g_b, g_y;
 
-         run mvnlms( a[1], b[1], infi[1], done, eone );
+         run mvnlms( g_a[1], g_b[1], g_done, g_eone );
       end;
    finish covsrt;
 
@@ -573,11 +557,10 @@ finish mvn_dist;
    and associated limit vectors.
    ** NOTE: This section contains the user-patched recovery logic. **
    */
-   start rcswp( p, q, a, b, infin, n, c );
+   start rcswp( p, q, a, b, n, c );
       /* Swap Limits */
       tmp = a[p];   a[p] = a[q];         a[q] = tmp;
       tmp = b[p];   b[p] = b[q];         b[q] = tmp;
-      i = infin[p]; infin[p] = infin[q]; infin[q] = i;
 
       /* Swap Diagonal Elements */
       tmp = c[p,p]; c[p,p] = c[q,q];     c[q,q] = tmp;
@@ -782,7 +765,7 @@ finish mvn_dist;
    Generates quasi-random numbers using square roots of primes.
    Used for dimensions exceeding the optimal lattice rule coefficients.
    */
-   start dkrcht( s, quasi ) global( nn, hisum, olds );
+   start dkrcht( s, quasi ) global( g_nn, g_hisum, g_olds );
       /* Local read-only constants for quasi-random generation */
       mxdim = 80;        /* max number of dimensions supported */
       mxhsum = 50;       /* max depth of digit expansion */
@@ -793,120 +776,80 @@ finish mvn_dist;
        283 293 307 311 313 317 331 337 347 349 353 359 367 373 379 383 389 397 401 409};
       psqt = sqrt(primes);
       
-      if ( s ^= olds | s < 1 ) then do;
-         olds = s;
-         nn[1] = 0;
-         hisum = 0;
+      if ( s ^= g_olds | s < 1 ) then do;
+         g_olds = s;
+         g_nn[1] = 0;
+         g_hisum = 0;
       end;
 
       i = 0;
       crit = 0;
 
       /* Update counters for the sequence */
-      do until( crit = 1 | i = hisum + 1 );
-         nn[i + 1] = nn[i + 1] + 1;
+      do until( crit = 1 | i = g_hisum + 1 );
+         g_nn[i + 1] = g_nn[i + 1] + 1;
 
-         if ( nn[i + 1] < bb ) then do;
+         if ( g_nn[i + 1] < bb ) then do;
             crit = 1;
             i = i - 1;
          end;
-         else nn[i + 1] = 0;
+         else g_nn[i + 1] = 0;
          i = i + 1;
       end;
 
-      if ( i > hisum ) then do;
-         hisum = hisum + 1;
+      if ( i > g_hisum ) then do;
+         g_hisum = g_hisum + 1;
 
-         if ( hisum > mxhsum ) then
-            hisum = 0;
-         nn[hisum + 1] = 1;
+         if ( g_hisum > mxhsum ) then
+            g_hisum = 0;
+         g_nn[g_hisum + 1] = 1;
       end;
 
       rn = 0;
-      do i = hisum to 0 by -1;
-         rn = nn[i + 1] + bb * rn;
+      do i = g_hisum to 0 by -1;
+         rn = g_nn[i + 1] + bb * rn;
       end;
 
       quasi[1:s] = mod( rn # psqt[1:s], 1 );
    finish dkrcht;
 
 
-   /* INFIN : limit flags (N-rowvector): 
-   if INFIN(I) < 0, Ith limit is (-infinity, infinity) 
-   if INFIN(I) = 0, Ith limit is (-infinity, UPPER(I)] 
-   if INFIN(I) = 1, Ith limit is [ LOWER(I), infinity) 
-   if INFIN(I) = 2, Ith limit is [ LOWER(I), UPPER(I)] 
-   */
-   start GetInfinityFlag(lower, upper);
-      Flag = j(nrow(lower), ncol(lower), -1);
-      idx = loc(lower=. & upper^=.);
-      if ncol(idx)>0 then Flag[idx] = 0;
-      idx = loc(lower^=. & upper=.);
-      if ncol(idx)>0 then Flag[idx] = 1;
-      idx = loc(lower^=. & upper^=.);
-      if ncol(idx)>0 then Flag[idx] = 2;
-      return Flag;
-   finish;
-   
-   /* FUNCTION: probbvn
-   Helper for Bivariate Normal Probabilities.
-   Translates infinite bounds flags (0,1,2) into calls to the 
-   standard PROBBNRM function.
-   */
-   start probbvn( lower, upper, infin, correl );
-      if ( infin[1] = 2 & infin[2] = 2 ) then
-         bvn = probbnrm ( lower[1], lower[2], correl ) - probbnrm ( upper[1], lower[2], correl ) - probbnrm ( lower[1], upper[2], correl ) + probbnrm ( upper[1], upper[2], correl );
-      else if ( infin[1] = 2 & infin[2] = 1 ) then bvn = probbnrm ( -lower[1], -lower[2], correl ) - probbnrm ( -upper[1], -lower[2], correl );
-      else if ( infin[1] = 1 & infin[2] = 2 ) then bvn = probbnrm ( -lower[1], -lower[2], correl ) - probbnrm ( -lower[1], -upper[2], correl );
-      else if ( infin[1] = 2 & infin[2] = 0 ) then bvn = probbnrm ( upper[1], upper[2], correl ) - probbnrm ( lower[1], upper[2], correl );
-      else if ( infin[1] = 0 & infin[2] = 2 ) then bvn = probbnrm ( upper[1], upper[2], correl ) - probbnrm ( upper[1], lower[2], correl );
-      else if ( infin[1] = 1 & infin[2] = 0 ) then bvn = probbnrm ( -lower[1], upper[2], -correl );
-      else if ( infin[1] = 0 & infin[2] = 1 ) then bvn = probbnrm ( upper[1], -lower[2], -correl );
-      else if ( infin[1] = 1 & infin[2] = 1 ) then bvn = probbnrm ( -lower[1], -lower[2], correl );
-      else if ( infin[1] = 0 & infin[2] = 0 ) then bvn = probbnrm ( upper[1], upper[2], correl );
-      return ( bvn );
-   finish probbvn;
-
    /* define helper functions used in the various covsrt* modules */
    /* Helper: Initialize global arrays: 
         y as a vector of missing values
-        covars as a copy of the input covariance matrix
-        a, b as working limits
-        infi as infinity flags 
+        g_covars as a copy of the input covariance matrix
+        g_a, g_b as working limits
       Return infis = the count of infinite dimensions */
-start InitCovsrtGlobals( lower, upper, covar, infin) /* input args */
-      global( covars, infi, a, b, y );
+start InitCovsrtGlobals( lower, upper, covar ) /* input args */
+   global( g_covars, g_a, g_b, g_y );
    n = ncol(covar);
-   y = j( 1, n, . );
-   infi = infin;
-   a = j( 1, n, .M );
-   b = j( 1, n, .I );
-   covars = covar;
+   g_y = j( 1, n, . );
+   g_a = j( 1, n, .M );
+   g_b = j( 1, n, .I );
+   g_covars = covar;
 
-   /* Initialize working limits a/b from input lower/upper */
+   /* Initialize working limits directly from input lower/upper. */
    do i = 1 to n;
-      if ( infi[i] >= 0 ) then do;
-         if ( infi[i] ^= 0 ) then a[i] = lower[i];
-         if ( infi[i] ^= 1 ) then b[i] = upper[i];
-      end;
+      if ( lower[i] ^= . ) then g_a[i] = lower[i];
+      if ( upper[i] ^= . ) then g_b[i] = upper[i];
    end;
 
    /* Count infinite dimensions */
-   infis = n - sum( sign( sign( infi ) + 1 ) );
+   infis = sum( g_a=. & g_b=. );
    return infis;
 finish InitCovsrtGlobals;
 
 /* Helper: Permute fully-infinite dimensions to the end */
 start PermuteInfiniteDims( infis )
-      global( covars, infi, a, b );
-   n = ncol(covars);
+   global( g_covars, g_a, g_b );
+   n = ncol(g_covars);
    if ( infis < n ) then do;
       /* Move infinite limits to the end of the array */
       do i = n to n-infis+1 by -1;
-         if ( infi[i] >= 0 ) then do;
+         if ( g_a[i] ^=. | g_b[i] ^= . ) then do;
             do j = 1 to i-1;
-               if ( infi[j] < 0 ) then do;
-                  run rcswp( j, i, a, b, infi, n, covars );
+               if ( g_a[j] = . & g_b[j] = . ) then do;
+                  run rcswp( j, i, g_a, g_b, n, g_covars );
                   j = i-1;
                end;
             end;
@@ -916,7 +859,7 @@ start PermuteInfiniteDims( infis )
       
       /* rcswp only maintains the lower triangle. Make the active block 
          symmetric so any subsequent operations use a valid matrix. */
-      covars[1:n_active, 1:n_active] = CopyLowerTriToUpper(covars[1:n_active, 1:n_active]);
+      g_covars[1:n_active, 1:n_active] = CopyLowerTriToUpper(g_covars[1:n_active, 1:n_active]);
    end;
    else n_active = 0;
    return n_active;
@@ -924,9 +867,9 @@ finish PermuteInfiniteDims;
 
 /* Helper: Cholesky factorization via ROOT with ridge policy */
 start FactorizeActiveBlock( n_active )
-      global( covars, a, b );
+   global( g_covars, g_a, g_b );
    
-   R_active = covars[1:n_active, 1:n_active];
+   R_active = g_covars[1:n_active, 1:n_active];
    
    /* Pass 1: try ROOT without ridge */
    G = root(R_active, "NoError");
@@ -946,45 +889,45 @@ start FactorizeActiveBlock( n_active )
    v = vecdiag(C);
    do i = 1 to n_active;
       C[i,] = C[i,] / v[i];
-      a[i]  = a[i]  / v[i];
-      b[i]  = b[i]  / v[i];
+      g_a[i]  = g_a[i]  / v[i];
+      g_b[i]  = g_b[i]  / v[i];
    end;
-   covars[1:n_active, 1:n_active] = C;
-   covars = CopyLowerTriToUpper(covars); 
+   g_covars[1:n_active, 1:n_active] = C;
+   g_covars = CopyLowerTriToUpper(g_covars); 
 finish FactorizeActiveBlock;
 
 /* Helper: Compute conditional expectations for the Genz transformation */
 start ComputeConditionalExpectations( n_active )
-      global( covars, infi, a, b, y, done, eone );
+   global( g_covars, g_a, g_b, g_y, g_done, g_eone );
    
    sqtwpi = sqrt( 2*constant("PI") );
    do i = 1 to n_active;
-      if (i > 1) then vsum = sum( covars[i,1:i-1] # t(y[1:i-1]) );
+      if (i > 1) then vsum = sum( g_covars[i,1:i-1] # t(g_y[1:i-1]) );
       else vsum = 0;
       
-      ai = a[i] - vsum;
-      bi = b[i] - vsum;
+      ai = g_a[i] - vsum;
+      bi = g_b[i] - vsum;
 
       di = 0; ei = 1;
-      if ( infi[i] ^= 0 ) then di = cdf("Normal", ai);
-      if ( infi[i] ^= 1 ) then ei = cdf("Normal", bi);
+      if ( g_a[i] ^= . ) then di = cdf("Normal", ai);
+      if ( g_b[i] ^= . ) then ei = cdf("Normal", bi);
       ei = max(ei, di);
 
       if ( ei - di > 1e-10 ) then do;
          yl = 0; yu = 0;
-         if ( infi[i] ^= 0 ) then yl = -exp(-ai**2/2)/sqtwpi;
-         if ( infi[i] ^= 1 ) then yu = -exp(-bi**2/2)/sqtwpi;
-         y[i] = (yu - yl) / (ei - di);
+         if ( g_a[i] ^= . ) then yl = -exp(-ai**2/2)/sqtwpi;
+         if ( g_b[i] ^= . ) then yu = -exp(-bi**2/2)/sqtwpi;
+         g_y[i] = (yu - yl) / (ei - di);
       end;
       else do;
-         if      ( infi[i] = 0 ) then y[i] = bi;
-         else if ( infi[i] = 1 ) then y[i] = ai;
-         else                         y[i] = (ai + bi)/2;
+         if ( g_a[i] = . & g_b[i] ^= . ) then g_y[i] = bi;       /* flag 0: (-inf, b) */
+         else if ( g_a[i] ^= . & g_b[i] = . ) then g_y[i] = ai;  /* flag 1: (a, inf) */
+         else if ( g_a[i] ^= . & g_b[i] ^= . ) then g_y[i] = (ai + bi)/2;  /* flag 2: (a, b) */
       end;
    end;
    
    if ( n_active > 0 ) then
-      run mvnlms( a[1], b[1], infi[1], done, eone );
+      run mvnlms( g_a[1], g_b[1], g_done, g_eone );
 finish ComputeConditionalExpectations;
 
 store module=(
@@ -995,14 +938,12 @@ mvn_dfn
 mvndnt
 mvnlms
 covsrt
-covsrt_nopivot
+covsrt_naive
 covsrt_static
 rcswp
 dkbvrc
 dksmrc
 dkrcht
-GetInfinityFlag
-probbvn
 CopyLowerTriToUpper
 InitCovsrtGlobals
 PermuteInfiniteDims
