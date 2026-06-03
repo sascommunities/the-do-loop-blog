@@ -84,15 +84,45 @@ start probmvn_mod(L, U, Sigma, mu=j(1,ncol(Sigma),0));
 finish;
 
 /* Define some constants and call mvn_dist for the standardized problem X~MVN(0,R). */
-start probmvn_std(L, U, R);
+start probmvn_std(L0, U0, R0);
    /* Validate standardized arguments once so downstream routines can assume validity. */
-   isValid = IsValidParmsPROBMVN(L, U, R);
+   isValid = IsValidParmsPROBMVN(L0, U0, R0);
    if ^isValid then 
-      return( j(nrow(L),1,.) );
+      return( j(nrow(L0),1,.) );
 
-   run mvn_dist(L, U, R,
-                error, value );
+   /* If all limits are infinite, the probability is 1 by definition. */
+   new_params = RemoveInfiniteLimits(L0, U0, R0);
+   L = new_params$1;
+   if ncol(L) = 0 then
+      return(1);     /* If all limits are infinite, the probability is 1 by definition. */
+   U = new_params$2;
+   R = new_params$3;
+
+   /* if the effective dimension of 1 of 2, solve the problem exactly */
+   if ncol(L) = 1 then 
+      value = probuvn_std(L, U);
+   else if ncol(L)=2 then 
+      value = probbvn_std(L, U, R[1,2]);
+   else 
+      run mvn_dist(L, U, R,
+                   error, value );
    return(value);
+finish;
+
+start RemoveInfiniteLimits(L, U, R);
+   /* Keep all dimensions except those with both bounds infinite/missing. */
+   idx = loc( ^(L= . & U= .) );
+   if ncol(idx)>0 then do;
+      L_new = L[,idx];
+      U_new = U[,idx];
+      R_new = R[idx, idx];
+   end;
+   else do;
+      L_new = {};
+      U_new = {};
+      R_new = {};
+   end;
+   return ( [L_new, U_new, R_new] );
 finish;
 
 /* FUNCTION: mvn_dist
@@ -819,44 +849,19 @@ start InitCovsrtGlobals( lower, upper, covar ) /* input args */
    global( g_covars, g_a, g_b, g_y );
    n = ncol(covar);
    g_y = j( 1, n, . );
-   g_a = j( 1, n, .M );
-   g_b = j( 1, n, .I );
+   g_a = lower;
+   g_b = upper;
    g_covars = covar;
 
-   /* Initialize working limits directly from input lower/upper. */
-   do i = 1 to n;
-      if ( lower[i] ^= . ) then g_a[i] = lower[i];
-      if ( upper[i] ^= . ) then g_b[i] = upper[i];
-   end;
-
-   /* Count infinite dimensions */
-   infis = sum( g_a=. & g_b=. );
+   /* Fully infinite dimensions are removed upstream in RemoveInfiniteLimits. */
+   infis = 0;
    return infis;
 finish InitCovsrtGlobals;
 
 /* Helper: Permute fully-infinite dimensions to the end */
 start PermuteInfiniteDims( infis )
    global( g_covars, g_a, g_b );
-   n = ncol(g_covars);
-   if ( infis < n ) then do;
-      /* Move infinite limits to the end of the array */
-      do i = n to n-infis+1 by -1;
-         if ( g_a[i] ^=. | g_b[i] ^= . ) then do;
-            do j = 1 to i-1;
-               if ( g_a[j] = . & g_b[j] = . ) then do;
-                  run rcswp( j, i, g_a, g_b, n, g_covars );
-                  j = i-1;
-               end;
-            end;
-         end;
-      end;
-      n_active = n - infis;
-      
-      /* rcswp only maintains the lower triangle. Make the active block 
-         symmetric so any subsequent operations use a valid matrix. */
-      g_covars[1:n_active, 1:n_active] = CopyLowerTriToUpper(g_covars[1:n_active, 1:n_active]);
-   end;
-   else n_active = 0;
+   n_active = ncol(g_covars);
    return n_active;
 finish PermuteInfiniteDims;
 
@@ -928,6 +933,7 @@ finish ComputeConditionalExpectations;
 store module=(
 probmvn_mod
 probmvn_std
+RemoveInfiniteLimits
 mvn_dist
 mvn_dfn
 mvndnt

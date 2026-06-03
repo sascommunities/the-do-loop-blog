@@ -13,15 +13,15 @@ start probuvn_mod(L, U, sigma=1, mu=0);
    do i = 1 to nrow(L_std);
       a = L_std[i];
       b = U_std[i];
-      prob[i] = cdfuvn_std(a,b);
+      prob[i] = probuvn_std(a,b);
    end;
    return prob;
 finish;
 
-/* Extend the standard univariate CDF to support lower or upper limits at +/-Infinity.
-   This function is for SCALAR arguments a and b.
+/* Return univariate probabilities on (a,b). 
+   This function is for SCALAR arguments a and b, which can be missing to indicate +/-Infinity.
 */
-start cdfuvn_std(a,b);
+start probuvn_std(a,b);
    if ^missing(a) & ^missing(b) then
       return CDF("Normal", b) - CDF("Normal", a);
    else if  missing(a) & ^missing(b) then
@@ -118,7 +118,7 @@ finish;
 
 store module=(
 probuvn_mod
-cdfuvn_std
+probuvn_std
 probbvn_mod 
 cdfbvn_std
 probbvn_std

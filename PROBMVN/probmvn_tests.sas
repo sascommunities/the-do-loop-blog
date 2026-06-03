@@ -98,7 +98,6 @@ prob = probmvn_mod(lower, upper, R);
 correct = prod(cdf("Normal", upper));
 run check_test(testName, prob, correct);
 
-
 /* 2. 5-D Identity Matrix */
 testName = "Test 2: 5-D Identity Matrix; CDF";
 R = I(5);
@@ -516,12 +515,23 @@ prob = probmvn_mod(L, U, R);
 correct = MC_PROBMVN(1E6, L, U, R);
 run check_test(TestName, prob, correct);
 
-/* Test 19: A 3-D problem that reduces to a 2-D rectangle */
-TestName = "Test 19: 3-D Problem reduces to 2-D Rectangle";
+/* Test 19: A 3-D problem that reduces to lower-dimensional problems */
+TestName = "Test 19: 3-D Problem with (-Infty, Infty) Limits";
 L={.M -2 -1};
-U={.I 2 1};
+U={.I  2 1};
 Sigma={1 1 1, 1 2 2, 1 2 3};
 prob = probmvn_mod(L, U, Sigma);
 correct = probbvn_mod(L[,2:3], U[,2:3], Sigma[2:3, 2:3]);
-correct2 = MC_PROBMVN(1E6, L, U, Sigma);
-run check_test(TestName, prob, correct);
+run check_test(TestName + " (reduce to 2D)", prob, correct);
+
+L={.M -2 .M};
+U={.I  2 .I};
+prob = probmvn_mod(L, U, Sigma);
+correct = probuvn_mod(L[2], U[2], sqrt(Sigma[2,2]));
+run check_test(TestName + " (reduce to 1D)", prob, correct);
+
+L={.M .M .M};
+U={.I .I .I};
+prob = probmvn_mod(L, U, Sigma);
+correct = 1;
+run check_test(TestName + " (Degenerate)", prob, correct);
