@@ -43,7 +43,7 @@
    ERROR     VALUE
    0.0000756 0.9030463
 */
-options ps=32000;
+options nodate ps=32000;
 /* load the PROBBVN_MOD function for rectangular bivariate normal probabilities */
 %include "probbvn.sas";
 /* assume that we have stored the matrix validation helper functions. When you 
@@ -65,7 +65,7 @@ options ps=32000;
 proc iml;
 load module=_all_;
 
-/* probmvn_mod: Main routine for rectangular multivariate normal probabilities. 
+/* probmvn_mod: Main top-level routine for rectangular multivariate normal probabilities. 
    L and U are 1xn row vectors of lower and upper limits, respectively. 
    Sigma is an nxn covariance matrix. mu is an optional 1xn mean vector. 
    The function standardizes the limits and covariance matrix
@@ -76,11 +76,14 @@ load module=_all_;
    .I indicates positive infinity.
 */
 start probmvn_mod(L, U, Sigma, mu=j(1,ncol(Sigma),0));
-   R = cov2corr(Sigma);
    D = rowvec(sqrt(vecdiag(Sigma)));
    L_std = (L - mu)/ D;
    U_std = (U - mu)/ D;
-   return probmvn_std(L_std, U_std, R);
+   R = cov2corr(Sigma);
+   /* ensure that diagonal is EXACTLY 1 */
+   diagIdx = do(1,nrow(R)*ncol(R), ncol(R)+1);
+   R[diagIdx] = 1;             /* set diagonal elements */
+   return probmvn_std(L_std, U_std, R); /* Note: From here on, we deal only with correlation matrices */
 finish;
 
 /* Define some constants and call mvn_dist for the standardized problem X~MVN(0,R). */
@@ -93,12 +96,11 @@ start probmvn_std(L0, U0, R0);
    /* If all limits are infinite, the probability is 1 by definition. */
    new_params = RemoveInfiniteLimits(L0, U0, R0);
    L = new_params$1;
-   if ncol(L) = 0 then
-      return(1);     /* If all limits are infinite, the probability is 1 by definition. */
    U = new_params$2;
    R = new_params$3;
-
-   /* if the effective dimension of 1 of 2, solve the problem exactly */
+   /* if the effective dimensions are 0, 1, or 2, solve the problem exactly */
+   if ncol(L) = 0 then
+      return(1);     /* If all limits are infinite, the probability is 1 by definition. */
    if ncol(L) = 1 then 
       value = probuvn_std(L, U);
    else if ncol(L)=2 then 
@@ -129,7 +131,8 @@ finish;
 High-level driver. 
 1. Initializes evaluation counters.
 2. Calls 'mvndnt' to sort variables and compute Cholesky decomposition.
-3. If dimension > 2 after handling infinities, calls the integration routine 'dkbvrc'.
+3. Only called when effective dimension > 2 after handling infinities, so 
+   calls the integration routine 'dkbvrc'.
 
 Input Arguments:
 - lower: 1xn row vector of lower limits (missing values indicate -Infinity)
@@ -144,17 +147,15 @@ start mvn_dist( lower, upper, covar,
    /* Phase 1: Setup, Pivoting, and Cholesky Factorization.
                If all of the checks pass, proceed to numerical integration
                by running dkbvrc. */
-   run mvndnt( lower, upper, covar, infis, value, error );
+   run mvndnt( lower, upper, covar, value, error );
 
    n = ncol(covar);
    maxpts = 2000*n**3;
    if n < 10 then abseps = 1E-4;
    else abseps = 1E-3;
    releps = 0;
-   /* If effective dimension > 2, perform numerical integration.
-      1D and 2D cases are handled analytically inside mvndnt. */
-   if ( n-infis > 2 ) then
-      run dkbvrc( n-infis-1, 0, maxpts, abseps, releps, error, value );
+   /* perform numerical integration */
+   run dkbvrc( n-1, 0, maxpts, abseps, releps, error, value );
 finish mvn_dist;
 
 
@@ -166,7 +167,7 @@ This implements the Genz transformation:
 3. Accumulates the probability mass (ei - di).
 */
 start mvn_dfn( n, w ) 
-      global( g_covars, g_done, g_eone, g_a, g_b, g_y );
+      global( g_corr, g_done, g_eone, g_a, g_b, g_y );
    value = 1;
    infa = 0;
    infb = 0;
@@ -177,7 +178,8 @@ start mvn_dfn( n, w )
       vsum = 0;
       /* Compute inner product of Cholesky row 'i' with previous realizations 'y' */
       if ( ik > 1 ) then
-         vsum = vsum + sum( g_covars[i,1:ik-1]#t(g_y[1:ik-1]));
+         /* vsum = vsum + sum( g_corr[i,1:ik-1]#t(g_y[1:ik-1]));*/
+         vsum = vsum + g_corr[i,1:ik-1] * g_y[1:ik-1];
 
       /* Update lower limit (ai) based on conditional mean */
       if ( g_a[i] ^= . ) then do;
@@ -201,13 +203,13 @@ start mvn_dfn( n, w )
 
       /* Check for end of integration or singular dimension */
       if ( i < n + 1 & ik < n + 1 ) then
-         aaa = g_covars[i+1,ik+1];
+         aaa = g_corr[i+1,ik+1];
       else aaa = 0;
 
       /* Calculate Probability for current dimension */
       if ( i = n+1 | aaa > 0 ) then do;
          if ( i = 1 ) then do;
-            di = g_done;
+            di = g_done;  /* this seems to be the only place where g_done and g_eone are used. They are set in the covsrt routines by ProbIntegralTransform. */
             ei = g_eone;
          end;
          else do;
@@ -247,95 +249,44 @@ finish mvn_dfn;
 
 /* FUNCTION: mvndnt
 Initialization and Analytic Handling.
-1. Validates inputs.
+1. Defines GLOBAL variables.
 2. Calls 'covsrt' to pivot variables and compute Cholesky.
-3. Handles N=1 and N=2 cases analytically (Exact solutions).
-4. Handles Independent cases (Diagonal matrix).
 */
-start mvndnt( lower, upper, covar, infis, value, error ) 
-      global( g_covars, g_done, g_eone, g_a, g_b, g_nn, g_hisum, g_olds );
+start mvndnt( lower, upper, covar, value, error ) 
+      global( g_corr, g_a, g_b, g_y, g_done, g_eone, g_nn, g_hisum, g_olds );
    n = ncol(covar);
+   if n<2 then do;
+      print "ERROR: 1-D and 2-D problems are handled directly before calling this routine.";
+      value=.; error=.;
+      return;
+   end;
+   /* Initialize global work arrays. 
+      Fully infinite dimensions were already removed.
+      After the reduction, 1-D and 2-D were handled directly, so n > 2 from here forward. */
+   g_y = j( 1, n, . );
+   g_a = lower;
+   g_b = upper;
+   g_corr = covar;
+
    /* Reset quasi-random sequence state for each top-level probability call. */
    g_nn = j(1, 51, 0);
    g_hisum = .;
    g_olds = 0;
-   /* Global constant for the Richtmyer generators and lattice rules */
-   nl = 100;
+
    /* The parameters have been validated by IsValidParmsPROBMVN, which 
       performs all necessary checks, including that COVAR is SPD. */
 
    /* Perform Cholesky Decomposition with Variable Reordering */
    /* FEATURE FLAG: 0 = original covsrt (Bretz: greedy pivot + singularity handling)
-                     1 = covsrt_naive (Rick: ROOT + ridge, no permuting) 
-                     2 = covsrt_static (Rick: permute vars according to 1-D marginal probabilities) */
+                    1 = covsrt_naive (Rick: ROOT + ridge, no permuting) 
+                    2 = covsrt_static (Rick: permute vars according to 1-D marginal probabilities) */
    use_new_covsrt = 2;  /* 0=Greedy, 1=None, 2=Static Sort */
    if use_new_covsrt = 2 then
-      run covsrt_static( lower, upper, covar, infis );
+      run covsrt_static( lower, upper, covar );
    else if use_new_covsrt = 1 then
-      run covsrt_naive( lower, upper, covar, infis );
+      run covsrt_naive( lower, upper, covar );
    else
-      run covsrt( lower, upper, covar, infis );
-      
-
-   /* CASE: 0 Dimensions active (all (-inf, inf)) */
-   if ( n - infis = 0 ) then do;
-      value = 1;
-      error = 0;
-   end;
-   else do;
-      /* CASE: 1 Dimension active (Univariate Normal) */
-      if ( n - infis = 1 ) then do;
-         value = g_eone - g_done;
-         error = 2e-15;
-      end;
-      else do;
-         /* CASE: 2 Dimensions active (Bivariate Normal) */
-         if ( n - infis = 2 ) then do;
-            /* If correlated, use Bivariate CDF */
-            if ( abs( g_covars[2,2] ) > 0 ) then do;
-               d = sqrt( 1 + g_covars[2,1]**2 );
-
-               if ( g_a[2] ^= . ) then
-                  g_a[2] = g_a[2]/d;
-
-               if ( g_b[2] ^= . ) then
-                  g_b[2] = g_b[2]/d;
-               value = probbvn_std( g_a, g_b, g_covars[2,1]/d );
-            end;
-            else do;
-               /* If independent (Cov[2,1]=0), compute product of marginals */
-               if ( g_a[1] ^= . ) then do;
-                  if ( g_a[2] ^= . ) then
-                     g_a[1] = max( g_a[1], g_a[2] );
-               end;
-               else do;
-                  if ( g_a[2] ^= . ) then
-                     g_a[1] = g_a[2];
-               end;
-
-               /* Logic to intersect intervals for independent variables */
-               if ( g_b[1] ^= . ) then do;
-                  if ( g_b[2] ^= . ) then
-                     g_b[1] = min( g_b[1], g_b[2] );
-               end;
-               else do;
-                  if ( g_b[2] ^= . ) then
-                     g_b[1] = g_b[2];
-               end;
-               run ProbIntegralTransform( g_a[1], g_b[1], d, e );
-
-               value = e - d;
-            end;
-
-            error = 2e-15;
-         end;
-         else do;
-            value = 0;
-            error = 1;
-         end;
-      end;
-   end;
-
+      run covsrt( lower, upper, covar );
 finish mvndnt;
 
 
@@ -373,56 +324,48 @@ finish;
    3. Compute Cholesky via ROOT with ridge policy (same as nopivot).
    4. Scale factor and compute conditional expectations (same as nopivot).
 */
-start covsrt_static( lower, upper, covar, infis )
-      global( g_covars, g_done, g_eone, g_a, g_b, g_y );
-   infis = InitCovsrtGlobals( lower, upper, covar );
-   n_active = PermuteInfiniteDims( infis );
-
-   if ( n_active > 0 ) then do;
-      /* STATIC PRE-SORT on 1-D marginals before Cholesky factorization */
-      if ( n_active > 1 ) then do;
-         p = j(1, n_active, 1);
-         do i = 1 to n_active;
-            /* Normalize by marginal scale to compare 1-D interval masses */
-            sumsq = sqrt(g_covars[i,i]);
-            run ProbIntegralTransform( g_a[i]/sumsq, g_b[i]/sumsq, dd, ee );
-            p[i] = ee - dd;
-         end;
-
-         p_col = t(p);
-         call sortndx(idx, p_col, 1);
-         idx = t(idx);
-
-         g_a[1:n_active]    = g_a[idx];
-         g_b[1:n_active]    = g_b[idx];
-         g_covars[1:n_active, 1:n_active] = g_covars[idx, idx];
-      end;
-
-      run FactorizeActiveBlock( n_active );
-      run ComputeConditionalExpectations( n_active );
+start covsrt_static( lower, upper, covar )
+      global( g_corr, g_a, g_b, g_y, g_done, g_eone );
+   n = ncol(covar);
+v = vecdiag(covar);
+IF ANY(v^=1) THEN PRINT "WARNING: covsrt_static is designed for correlation matrices. Results may be inaccurate.", v;
+   /* STATIC PRE-SORT on 1-D marginals before Cholesky factorization */
+   p = j(n, 1, .);
+   do i = 1 to n;
+      run ProbIntegralTransform( g_a[i], g_b[i], dd, ee );
+      p[i] = ee - dd;   /* marginal probability CDF(b)-CDF(a) */
    end;
+
+   call sortndx(idx, p, 1);
+   idx = t(idx);
+
+   g_a   = g_a[idx];
+   g_b   = g_b[idx];
+   g_corr = g_corr[idx, idx];
+
+   run CholeskyAndStd( n );
+   run ComputeConditionalExpectations( n );
+   run ProbIntegralTransform( g_a[1], g_b[1], g_done, g_eone );/* sets these globals...necessary? */
 finish covsrt_static;
 
 /* FUNCTION: covsrt_naive
 Cholesky decomposition without pivoting, using ROOT with ridge policy. 
 I tried this method, but in increased the variance of the estimates.
 Strategy:
-   1. Mirror covsrt exactly: copy inputs into global work arrays g_covars,g_a,g_b,g_y.
+   1. Mirror covsrt exactly: copy inputs into global work arrays g_corr,g_a,g_b,g_y.
    2. Permute infinite dimensions to the end using the same rcswp calls as covsrt.
    3. Compute Cholesky of the active submatrix via ROOT (two-pass ridge policy).
    4. Scale the factor and limits so each diagonal entry of C equals 1.
    5. Compute conditional expectations g_y[i] for the Genz transform.
 Input arguments lower, upper, and covar are not modified (same as covsrt).
 */
-start covsrt_naive( lower, upper, covar, infis )
-      global( g_covars, g_done, g_eone, g_a, g_b, g_y );
-   infis = InitCovsrtGlobals( lower, upper, covar );
-   n_active = PermuteInfiniteDims( infis );
+start covsrt_naive( lower, upper, covar )
+      global( g_corr, g_a, g_b, g_y, g_done, g_eone );
+   n = ncol(covar);
 
-   if ( n_active > 0 ) then do;
-      run FactorizeActiveBlock( n_active );
-      run ComputeConditionalExpectations( n_active );
-   end;
+   run CholeskyAndStd( n );
+   run ComputeConditionalExpectations( n );
+   run ProbIntegralTransform( g_a[1], g_b[1], g_done, g_eone );/* sets these globals...necessary? */
 finish covsrt_naive;
 
 
@@ -432,149 +375,147 @@ This is critical for numerical stability and efficiency.
 It reorders variables so that the outermost integration variables 
 have the smallest expected integration intervals.
 */
-start covsrt( lower, upper, covar, infis ) 
-      global( g_covars, g_done, g_eone, g_a, g_b, g_y );
+start covsrt( lower, upper, covar )
+      global( g_corr, g_a, g_b, g_y, g_done, g_eone );
    n = ncol(covar);
+v = vecdiag(covar);
+IF ANY(v^=1) THEN PRINT "WARNING: covsrt_static is designed for correlation matrices. Results may be inaccurate.", v;
    eps = 1e-10;       /* numerical tolerance in pivot/singularity checks */
    sqtwpi = sqrt( 2*constant("PI") );
-   infis = InitCovsrtGlobals( lower, upper, covar );
-   n_active = PermuteInfiniteDims( infis );
 
-   if ( n_active > 0 ) then do;
-      *print "DBG covsrt: after permutation, before Cholesky loop";
-      *print infis n_active;
-      *print g_covars, g_a, g_b;
-      /* MAIN CHOLESKY LOOP WITH PIVOTING */
-      do i = 1 to n_active;
-         demin = 1;
-         jmin = i;
-         cvdiag = 0;
-         epsi = i*i*eps;
+   *print "DBG covsrt: after permutation, before Cholesky loop";
+   *print n;
+   *print g_corr, g_a, g_b;
+   /* MAIN CHOLESKY LOOP WITH PIVOTING */
+   do i = 1 to n;
+      demin = 1;
+      jmin = i;
+      cvdiag = 0;
+      epsi = i*i*eps;
 
-         /* SEARCH LOOP: Find variable 'j' that minimizes expected interval width */
-         do j = i to n_active;
-            if ( g_covars[j,j] > epsi ) then do;
-               sumsq = sqrt( g_covars[j,j] );
-               vsum = 0;
+      /* SEARCH LOOP: Find variable 'j' that minimizes expected interval width */
+      do j = i to n;
+         if ( g_corr[j,j] > epsi ) then do;
+            sumsq = sqrt( g_corr[j,j] );
+            vsum = 0;
 
-               if ( i > 1 ) then
-                  vsum = sum( g_covars[j,1:i-1] # t(g_y[1:i-1]) );
-               aj = ( g_a[j] - vsum )/sumsq;
-               bj = ( g_b[j] - vsum )/sumsq;
-               run ProbIntegralTransform( aj, bj, dd, ee );
+            if ( i > 1 ) then
+               vsum = g_corr[j,1:i-1] * g_y[1:i-1];
+            aj = ( g_a[j] - vsum )/sumsq;
+            bj = ( g_b[j] - vsum )/sumsq;
+            run ProbIntegralTransform( aj, bj, dd, ee );
 
-               /* Pivot Criterion: Choose j with smallest probability mass (ee-dd) */
-               if ( demin >= ee - dd ) then do;
-                  jmin = j;
-                  amin = aj;
-                  bmin = bj;
-                  demin = ee - dd;
-                  cvdiag = sumsq;
-               end;
-            end;
-         end;
-
-         /* Swap rows/cols if a better variable was found */
-         if ( jmin > i ) then
-            run rcswp( i, jmin, g_a, g_b, n, g_covars );
-
-         /* Perform Cholesky Update for current row */
-         if ( cvdiag > 0 ) then do;
-            g_covars[i,i] = cvdiag;
-
-            do l = i+1 to n_active;
-               g_covars[l,i] = g_covars[l,i]/cvdiag;
-               g_covars[l,i+1:l] = g_covars[l,i+1:l] - g_covars[l,i] # t(g_covars[i+1:l,i]);
-            end;
-
-            /* Calculate expected value 'g_y[i]' to center next iteration */
-            if ( demin > epsi ) then do;
-               yl = 0;
-               yu = 0;
-
-               if ( g_a[i] ^= . ) then
-                  yl = -exp( -amin**2/2 )/sqtwpi;
-
-               if ( g_b[i] ^= . ) then
-                  yu = -exp( -bmin**2/2 )/sqtwpi;
-               g_y[i] = ( yu - yl )/demin;
-            end;
-            else do;
-               if ( g_a[i] = . & g_b[i] ^= . ) then          /* (-inf, b) */
-                  g_y[i] = bmin;
-
-               if ( g_a[i] ^= . & g_b[i] = . ) then          /* (a, inf) */
-                  g_y[i] = amin;
-
-               if ( g_a[i] ^= . & g_b[i] ^= . ) then         /* (a, b) */
-                  g_y[i] = ( amin + bmin )/2;
-            end;
-
-            /* Normalize current row */
-            g_covars[i,1:i] = g_covars[i,1:i]/cvdiag;
-            g_a[i] = g_a[i]/cvdiag;
-            g_b[i] = g_b[i]/cvdiag;
-         end;
-         else do;
-            /* Handling Singularities / Semi-definite cases */
-            if ( g_covars[i,i] > -epsi ) then do;
-               g_covars[i:n_active,i] = 0;
-               aaa = 0;
-
-               /* Back-substitute to resolve dependency */
-               do j = i-1 to 1 by -1;
-                  if ( abs( g_covars[i,j] ) > epsi ) then do;
-                     g_a[i] = g_a[i]/g_covars[i,j];
-                     g_b[i] = g_b[i]/g_covars[i,j];
-
-                     if ( g_covars[i,j] < 0 ) then do;
-                        tmp = g_a[i];
-                        g_a[i] = g_b[i];
-                        g_b[i] = tmp;
-                     end;
-
-                     g_covars[i,1:j] = g_covars[i,1:j]/g_covars[i,j];
-
-                     /* Re-sort rows to maintain triangular structure after singularity fix */
-                     do l = j+1 to i-1;
-                        if( g_covars[l,j+1] > 0 ) then do;
-                           do k = i-1 to l by -1;
-                              /* Large block swapping logic for singularity handling */
-                              tmp = g_covars[k,1:k];
-                              g_covars[k,1:k] = g_covars[k+1,1:k];
-                              g_covars[k+1,1:k] = tmp;
-                              tmp = g_a[k];
-                              g_a[k] = g_a[k+1];
-                              g_a[k+1] = tmp;
-                              tmp = g_b[k];
-                              g_b[k] = g_b[k+1];
-                              g_b[k+1] = tmp;
-                           end;
-                           l = i-1;
-                        end;
-                     end;
-                     j = 1;
-                     aaa = 1;
-                  end;
-                  
-                  /* Zero out remaining elements if singularity resolved */
-                  if aaa = 1 then;
-                  else g_covars[i,j] = 0;
-               end;
-               g_y[i] = 0;
-            end;
-            else do;
-               /* Error: Shouldn't happen b/c COVAR is pre-checked to be positive definite */
-               i = n_active;
+            /* Pivot Criterion: Choose j with smallest probability mass (ee-dd) */
+            if ( demin >= ee - dd ) then do;
+               jmin = j;
+               amin = aj;
+               bmin = bj;
+               demin = ee - dd;
+               cvdiag = sumsq;
             end;
          end;
       end;
 
-      *print "DBG covsrt: final state before ProbIntegralTransform";
-      *print g_covars, g_a, g_b, g_y;
+      /* Swap rows/cols if a better variable was found */
+      if ( jmin > i ) then
+         run rcswp( i, jmin, g_a, g_b, n, g_corr );
 
-      run ProbIntegralTransform( g_a[1], g_b[1], g_done, g_eone );
+      /* Perform Cholesky Update for current row */
+      if ( cvdiag > 0 ) then do;
+         g_corr[i,i] = cvdiag;
+
+         do l = i+1 to n;
+            g_corr[l,i] = g_corr[l,i]/cvdiag;
+            g_corr[l,i+1:l] = g_corr[l,i+1:l] - g_corr[l,i] # t(g_corr[i+1:l,i]);
+         end;
+
+         /* Calculate expected value 'g_y[i]' to center next iteration */
+         if ( demin > epsi ) then do;
+            yl = 0;
+            yu = 0;
+
+            if ( g_a[i] ^= . ) then
+               yl = -exp( -amin**2/2 )/sqtwpi;
+
+            if ( g_b[i] ^= . ) then
+               yu = -exp( -bmin**2/2 )/sqtwpi;
+            g_y[i] = ( yu - yl )/demin;
+         end;
+         else do;
+            if ( g_a[i] = . & g_b[i] ^= . ) then          /* (-inf, b) */
+               g_y[i] = bmin;
+
+            if ( g_a[i] ^= . & g_b[i] = . ) then          /* (a, inf) */
+               g_y[i] = amin;
+
+            if ( g_a[i] ^= . & g_b[i] ^= . ) then         /* (a, b) */
+               g_y[i] = ( amin + bmin )/2;
+         end;
+
+         /* Normalize current row */
+         g_corr[i,1:i] = g_corr[i,1:i]/cvdiag;
+         g_a[i] = g_a[i]/cvdiag;
+         g_b[i] = g_b[i]/cvdiag;
+      end;
+      else do;
+         /* Handling Singularities / Semi-definite cases */
+         if ( g_corr[i,i] > -epsi ) then do;
+            g_corr[i:n,i] = 0;
+            aaa = 0;
+
+            /* Back-substitute to resolve dependency */
+            do j = i-1 to 1 by -1;
+               if ( abs( g_corr[i,j] ) > epsi ) then do;
+                  g_a[i] = g_a[i]/g_corr[i,j];
+                  g_b[i] = g_b[i]/g_corr[i,j];
+
+                  if ( g_corr[i,j] < 0 ) then do;
+                     tmp = g_a[i];
+                     g_a[i] = g_b[i];
+                     g_b[i] = tmp;
+                  end;
+
+                  g_corr[i,1:j] = g_corr[i,1:j]/g_corr[i,j];
+
+                  /* Re-sort rows to maintain triangular structure after singularity fix */
+                  do l = j+1 to i-1;
+                     if( g_corr[l,j+1] > 0 ) then do;
+                        do k = i-1 to l by -1;
+                           /* Large block swapping logic for singularity handling */
+                           tmp = g_corr[k,1:k];
+                           g_corr[k,1:k] = g_corr[k+1,1:k];
+                           g_corr[k+1,1:k] = tmp;
+                           tmp = g_a[k];
+                           g_a[k] = g_a[k+1];
+                           g_a[k+1] = tmp;
+                           tmp = g_b[k];
+                           g_b[k] = g_b[k+1];
+                           g_b[k+1] = tmp;
+                        end;
+                        l = i-1;
+                     end;
+                  end;
+                  j = 1;
+                  aaa = 1;
+               end;
+               
+               /* Zero out remaining elements if singularity resolved */
+               if aaa = 1 then;
+               else g_corr[i,j] = 0;
+            end;
+            g_y[i] = 0;
+         end;
+         else do;
+            /* Error: Shouldn't happen b/c COVAR is pre-checked to be positive definite */
+            i = n;
+         end;
+      end;
    end;
+
+   *print "DBG covsrt: final state before ProbIntegralTransform";
+   *print g_corr, g_a, g_b, g_y;
+
+   run ProbIntegralTransform( g_a[1], g_b[1], g_done, g_eone ); /* sets these globals...necessary? */
 finish covsrt;
 
 
@@ -839,75 +780,53 @@ start dkrcht( s, quasi ) global( g_nn, g_hisum, g_olds );
 finish dkrcht;
 
 
-   /* define helper functions used in the various covsrt* modules */
-   /* Helper: Initialize global arrays: 
-        y as a vector of missing values
-        g_covars as a copy of the input covariance matrix
-        g_a, g_b as working limits
-      Return infis = the count of infinite dimensions */
-start InitCovsrtGlobals( lower, upper, covar ) /* input args */
-   global( g_covars, g_a, g_b, g_y );
-   n = ncol(covar);
-   g_y = j( 1, n, . );
-   g_a = lower;
-   g_b = upper;
-   g_covars = covar;
-
-   /* Fully infinite dimensions are removed upstream in RemoveInfiniteLimits. */
-   infis = 0;
-   return infis;
-finish InitCovsrtGlobals;
-
-/* Helper: Permute fully-infinite dimensions to the end */
-start PermuteInfiniteDims( infis )
-   global( g_covars, g_a, g_b );
-   n_active = ncol(g_covars);
-   return n_active;
-finish PermuteInfiniteDims;
-
-/* Helper: Cholesky factorization via ROOT with ridge policy */
-start FactorizeActiveBlock( n_active )
-   global( g_covars, g_a, g_b );
+/* define helper functions used in the various covsrt* modules */
+/* Helper: Cholesky factorization via ROOT with ridge policy, followed by a standardization */
+start CholeskyAndStd( n )
+   global( g_corr, g_a, g_b );
    
-   R_active = g_covars[1:n_active, 1:n_active];
+   R = g_corr;
    
    /* Pass 1: try ROOT without ridge */
-   G = root(R_active, "NoError");
+   G = root(R, "NoError");
 
    /* Pass 2: Retry with small ridge if not PD; prevent division by zero */
    ridge_eps = 1E-12;
    if any(vecdiag(G) < ridge_eps) then do;
-      G = root(R_active + ridge_eps*I(n_active), "NoError");
+      G = root(R + ridge_eps*I(n), "NoError");
       /* TO DO: Gracefully return without calling ABORT */
       if any(G=.) then
-         ABORT "FactorizeActiveBlock: ROOT fails even with ridge=1E-12";
+         ABORT "CholeskyAndStd: ROOT fails even with ridge=1E-12";
    end;
 
    /* C is the lower-triangular Cholesky factor.
       Scale C and limits so diagonal of C is 1 */
    C = t(G); 
    v = vecdiag(C);
-   do i = 1 to n_active;
+   do i = 1 to n;
       C[i,] = C[i,] / v[i];
       g_a[i]  = g_a[i]  / v[i];
       g_b[i]  = g_b[i]  / v[i];
    end;
-   g_covars[1:n_active, 1:n_active] = C;
-   g_covars = CopyLowerTriToUpper(g_covars); 
-finish FactorizeActiveBlock;
+   g_corr = C;
+   /* this looks wrong; the Cholesky should be triangular */
+   g_corr = CopyLowerTriToUpper(g_corr); /* from this point on, g_corr is the Cholesky factor */
+finish CholeskyAndStd;
 
-/* Helper: Compute conditional expectations for the Genz transformation */
-start ComputeConditionalExpectations( n_active )
-   global( g_covars, g_a, g_b, g_y, g_done, g_eone );
+/* Helper: Compute conditional expectations for the Genz transformation
+           These are put into the g_y array */
+start ComputeConditionalExpectations( n )
+   global( g_corr, g_a, g_b, g_y, g_done, g_eone );
    
    sqtwpi = sqrt( 2*constant("PI") );
-   do i = 1 to n_active;
-      if (i > 1) then vsum = sum( g_covars[i,1:i-1] # t(g_y[1:i-1]) );
+   do i = 1 to n;
+      if (i > 1) then vsum = g_corr[i,1:i-1] * g_y[1:i-1];
       else vsum = 0;
       
       ai = g_a[i] - vsum;
       bi = g_b[i] - vsum;
 
+      /* this is the same calc as ProbIntegralTransform */
       di = 0; ei = 1;
       if ( g_a[i] ^= . ) then di = cdf("Normal", ai);
       if ( g_b[i] ^= . ) then ei = cdf("Normal", bi);
@@ -915,19 +834,20 @@ start ComputeConditionalExpectations( n_active )
 
       if ( ei - di > 1e-10 ) then do;
          yl = 0; yu = 0;
+         /* be careful here: better to compute the pdf values directly from ai and bi.
+            The following calculations might overflow. Consider using logs. */
          if ( g_a[i] ^= . ) then yl = -exp(-ai**2/2)/sqtwpi;
          if ( g_b[i] ^= . ) then yu = -exp(-bi**2/2)/sqtwpi;
          g_y[i] = (yu - yl) / (ei - di);
       end;
       else do;
-         if ( g_a[i] = . & g_b[i] ^= . ) then g_y[i] = bi;       /* flag 0: (-inf, b) */
-         else if ( g_a[i] ^= . & g_b[i] = . ) then g_y[i] = ai;  /* flag 1: (a, inf) */
+         if      ( g_a[i] = .  & g_b[i] ^= . ) then g_y[i] = bi;  /* flag 0: (-inf, b) */
+         else if ( g_a[i] ^= . & g_b[i] = .  ) then g_y[i] = ai;  /* flag 1: (a, inf) */
          else if ( g_a[i] ^= . & g_b[i] ^= . ) then g_y[i] = (ai + bi)/2;  /* flag 2: (a, b) */
       end;
    end;
    
-   if ( n_active > 0 ) then
-      run ProbIntegralTransform( g_a[1], g_b[1], g_done, g_eone );
+   run ProbIntegralTransform( g_a[1], g_b[1], g_done, g_eone );
 finish ComputeConditionalExpectations;
 
 store module=(
@@ -946,9 +866,7 @@ dkbvrc
 dksmrc
 dkrcht
 CopyLowerTriToUpper
-InitCovsrtGlobals
-PermuteInfiniteDims
-FactorizeActiveBlock
+CholeskyAndStd
 ComputeConditionalExpectations
 );
 
