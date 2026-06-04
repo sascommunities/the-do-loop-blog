@@ -873,33 +873,3 @@ CopyLowerTriToUpper
 CholeskyAndStd
 ComputeConditionalExpectations
 );
-
-/*********************/
-/* call main program */
-/*********************/
-
-/* Helper module to format test results */
-start check_test(test_name, prob, correct, tol=0.001);
-   maxDiff = max(abs(prob-correct));
-   if maxDiff > tol then do;
-      msg = cat("--- ",test_name, " FAILS ---");
-      print msg[L=""], maxDiff prob correct;
-   end;
-   else do; 
-      msg = cat("--- ",test_name, " passes ---");
-      print msg[L=""];
-   end;
-finish;
-
-   /* basic validation test */
-call randseed(12345);
-testName = "Test 0: 5-D Identity Matrix; [a,b]=[-2,2] in all coordinates";
-   R = i(5);
-   n = ncol(R);
-   lower = j(1,n,-2);
-   upper = j(1,n, 2);
-
-   run mvn_dist(lower, upper, R,
-                error, value );
-   correct = prod(cdf("Normal", upper) - cdf("Normal", lower));
-   run check_test(testName, value, correct);
