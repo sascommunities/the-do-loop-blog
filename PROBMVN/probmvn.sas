@@ -873,3 +873,4 @@ CopyLowerTriToUpper
 CholeskyAndStd
 ComputeConditionalExpectations
 );
+QUIT;
