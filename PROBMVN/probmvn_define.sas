@@ -1,3 +1,317 @@
+proc iml;
+
+/* Rectangular probability for 1-D standard normal distribution.
+   For the interval (L,U), use the CDF function (left-tailed probability)
+   to compute the probability P( L < X < U | X ~ N(0,1) )
+   L and U are scalars. A missing value indicates infinity.
+   Return the probability P( L < X < U | X ~ N(0,1) ) */
+start probuvn_mod(L, U, sigma=1, mu=0);
+   L_std = (L - mu)/sigma;
+   U_std = (U - mu)/sigma;
+   /* Determine the type of limits and compute probability accordingly */
+   prob = j(1, nrow(L_std), .);
+   do i = 1 to nrow(L_std);
+      a = L_std[i];
+      b = U_std[i];
+      prob[i] = probuvn_std(a,b);
+   end;
+   return prob;
+finish;
+
+/* Return univariate probabilities on (a,b). 
+   This function is for SCALAR arguments a and b, which can be missing to indicate +/-Infinity.
+*/
+start probuvn_std(a,b);
+   if ^missing(a) & ^missing(b) then
+      return CDF("Normal", b) - CDF("Normal", a);
+   else if  missing(a) & ^missing(b) then
+      return CDF("Normal", b);
+   else if ^missing(a) &  missing(b) then
+      return SDF("Normal", a);
+   else
+      return 1;
+finish;
+
+/* bivariate normal probabilities on rectangular domains for 
+   X~BVN(mu, Sigma) with upper integration limits U=(U1,U2). 
+   The function standardizes the upper limits U and the covariance 
+   matrix Sigma to get the corresponding standardized values for PROBBNRM.
+   The function uses missing values in U to indicate infinity.
+   .M indicates negative infinity
+   .I indicates positive infinity.
+   L, U and mu are row vectors of length 2. Sigma is a 2x2 covariance matrix.
+*/
+start probbvn_mod(L, U, Sigma, mu=j(1,2,0));
+   R = cov2corr(Sigma);
+   D = rowvec(sqrt(vecdiag(Sigma)));
+   L_std = (L - mu)/ D;
+   U_std = (U - mu)/ D;
+   return probbvn_std(L_std, U_std, R[1,2]);
+finish;
+
+/* Extend the standard bivariate CDF, which is PROBBNRM(a,b, rho), to support an 
+   upper limit of infinity (.P) for either argument:
+   Pr(a<.P; rho) = Phi(a) = cdf("Normal", a) is probability over left half plane
+   Pr(.P,b; rho) = Phi(b) = cdf("Normal", b) is probability over lower half plane
+   See https://blogs.sas.com/content/iml/2023/12/04/bivariate-normal-probability-sas.html
+   This function is for SCALAR arguments a, b and rho.
+*/
+start cdfbvn_std(a,b, rho);
+   if ^missing(a) & ^missing(b) then
+      return probbnrm(a, b, rho);
+   if missing(a) then 
+      return cdf("Normal", b);
+   if missing(b) then 
+      return cdf("Normal", a);
+   return 1;
+finish;
+
+/* probabilities on rectangular regions for BVN(0, rho)
+   L and U are kx2 matrices, where each rows is the lower or upper limit of integration.
+   rho is a scalar correlation coefficient */
+start probbvn_std(L, U, rho);
+   prob = j(nrow(L), 1, .);
+   do i = 1 to nrow(L);
+      a = L[i,1]; c = L[i,2];
+      b = U[i,1]; d = U[i,2];
+      ma = missing(a);   mb = missing(b);
+      mc = missing(c);   md = missing(d);
+      if ^ma & ^mb & ^mc & ^md then            * 16. rectangle;
+         prob[i] = cdfbvn_std(b,d,rho) - cdfbvn_std(a,d,rho)
+                 - cdfbvn_std(b,c,rho) + cdfbvn_std(a,c,rho);
+      else if ^ma & ^mb & ^mc & md then        * 15. upper strip (N);
+         prob[i] = cdfbvn_std(b,.P,rho) - cdfbvn_std(a,.P,rho)
+                 - cdfbvn_std(b,c,rho) + cdfbvn_std(a,c,rho);
+      else if ^ma & ^mb & mc & ^md then        * 14. lower strip (S);
+         prob[i] = cdfbvn_std(b,d,rho) - cdfbvn_std(a,d,rho);
+      else if ^ma & ^mb & mc & md then         * 13. vert strip;
+         prob[i] = cdfbvn_std(.P,b,rho) - cdfbvn_std(.P,a,rho);
+      else if ^ma & mb & ^mc & ^md then        * 12. right strip (E);
+         prob[i] = cdfbvn_std(.P,d,rho) - cdfbvn_std(.P,c,rho)
+                  - cdfbvn_std(a,d,rho) + cdfbvn_std(a,c,rho);
+      else if ^ma & mb & ^mc & md then         * 11. NE quadrant;
+         prob[i] = 1 - cdfbvn_std(.P,a,rho)
+                  - (cdfbvn_std(.P,c,rho) - cdfbvn_std(a,c,rho));
+      else if ^ma & mb & mc & ^md then         * 10. SE quadrant;
+         prob[i] = cdfbvn_std(.P,d,rho) - cdfbvn_std(a,d,rho);
+      else if ^ma & mb & mc & md then          * 9. right half plane;
+         prob[i] = 1 - cdfbvn_std(.P,a,rho);
+      else if ma & ^mb & ^mc & ^md then        * 8. left strip (W);
+         prob[i] = cdfbvn_std(b,d,rho) - cdfbvn_std(b,c,rho);
+      else if ma & ^mb & ^mc & md then         * 7. NW quadrant;
+         prob[i] = cdfbvn_std(b,.P,rho) - cdfbvn_std(b,c,rho);
+      else if ma & ^mb & mc & ^md then         * 6. SW quadrant;
+         prob[i] = cdfbvn_std(b,d,rho);
+      else if ma & ^mb & mc & md then          * 5. right half plane;
+         prob[i] = cdfbvn_std(b,.P,rho);
+      else if ma & mb & ^mc & ^md then         * 4. horiz strip;
+         prob[i] = cdfbvn_std(.P,d,rho) - cdfbvn_std(.P,c,rho);
+      else if ma & mb & ^mc & md then          * 3. upper half plane;
+         prob[i] = 1 - cdfbvn_std(.P,c,rho);
+      else if ma & mb & mc & ^md then          * 2. lower half plane;
+         prob[i] = cdfbvn_std(.P,d,rho);
+      else if ma & mb & mc & md then           * 1. complete plane;
+         prob[i] = 1;
+   end;
+   return( prob );
+finish;
+
+store module=(
+probuvn_mod
+probuvn_std
+probbvn_mod 
+cdfbvn_std
+probbvn_std
+);
+QUIT;
+/* COMMON utility functions for validating parameters to PROBMVN and CDFMVN.
+   These functions are loaded by tests for PROBMVN and CDFMVN.
+   Functions defined here:
+   1. PrintToLog(msg, errCode) -- prints a message to the SAS log with an optional error code (0=note, 1=warning, 2=error)
+   2. ErrorToLog(msg)          -- prints an error message to the SAS log
+   3. IsSym(A)                 -- returns 1 if A is a symmetric square matrix
+   4. IsSPD(M)                 -- returns 1 if M is symmetric and positive definite
+   5. IsCorr(M)                -- returns 1 if M is a correlation matrix (SPD with unit diagonal)
+*/
+/* Check the SYSVER macro to see if SAS 9.4 is running.
+   In SAS Viya, the macro is empty and does nothing.
+   In SAS 9.4, the macro defines a function that emulates the PrintToLog call.
+   The syntax is as follows:
+   call PrintToLog("This is a log message.");
+   call PrintToLog("This is a note.", 0);
+   call PrintToLog("This is a warning.", 1);
+   call PrintToLog("This is an error.", 2);
+*/
+%macro DefinePrintToLog;
+%if %sysevalf(&sysver = 9.4) %then %do;
+start PrintToLog(msg,errCode=-1);
+   if      errCode=0 then prefix = "NOTE: ";
+   else if errCode=1 then prefix = "WARNING: ";
+   else if errCode=2 then prefix = "ERROR: ";
+   else prefix = "";
+   stmt = '%put ' + prefix + msg + ';';
+   call execute(stmt);
+finish;
+store module=(PrintToLog);
+%end;
+start ErrorToLog(msg);
+   run PrintToLog(msg, 2);
+finish;
+store module=(ErrorToLog);
+%mend;
+
+/* Common validation functions shared by CDFMVN and PROBMVN.
+   Functions defined here:
+   IsSym(A)   -- returns 1 if A is a symmetric square matrix
+   IsSPD(M)   -- returns 1 if M is symmetric and positive definite
+   IsCorr(M)  -- returns 1 if M is a correlation matrix (SPD with unit diagonal)
+*/
+proc iml;
+%DefinePrintToLog;
+
+start IsSym(A);
+   if nrow(A) ^= ncol(A) then return(0);    /* A is not square */
+   c = max(abs(A));
+   sqrteps = constant('SqrtMacEps');
+   return( all( abs(A-A`) < c*sqrteps ) );
+finish;
+
+start IsSPD(M);
+   if ^IsSym(M) then return( 0 );
+   U = root(M, "NoError");
+   if any(U=.) then return( 0 );
+   return( 1 );
+finish;
+
+start IsCorr(M);
+   if ^IsSPD(M) then return( 0 );
+   if any(vecdiag(M) ^= 1) then return ( 0 );
+   return( 1 );
+finish;
+
+/* Sigma is a kxk covariance matrix and b is a row vector with k elements.
+   Convert b to inv(D)*(b-mu), where D is the diagonal matrix of
+   standard deviations: sqrt(vecdiag(Sigma))
+   Note: b can have multiple rows. b can also have missing values.
+*/
+start Xform_Limits_Cov2Corr( b, Sigma, mu=j(1,ncol(Sigma),0) );
+   D = sqrt(vecdiag(Sigma));
+   c = (b - mu) /rowvec(D);
+   return c;
+finish;
+
+store module=(IsSym IsSPD IsCorr Xform_Limits_Cov2Corr);
+QUIT;
+/* This program defines validation functions for the PROBMVN_MOD function, which
+   computes P(L < X < U) for a multivariate normal random vector X ~ MVN(mu, Sigma).
+
+   Key difference from CDFMVN: L and U are allowed to contain missing values.
+   A missing value in L[i] represents -Infinity, and a missing value in U[i]
+   represents +Infinity. All other parameters (Sigma, mu) cannot be missing.
+
+   Functions defined here:
+   IsValidRectLimits(L, U)   -- returns 1 if L and U are compatible limit vectors;
+                                missing values in L or U are allowed
+   IsValidParmsPROBMVN(L, U, Sigma, mu) -- returns 1 if all parameters are valid
+*/
+proc iml;
+/* IsValidRectLimits: validate the lower (L) and upper (U) limit vectors for PROBMVN_MOD.
+   Missing values are explicitly allowed: a missing L[i] represents -Infinity
+   and a missing U[i] represents +Infinity.
+   Returns 1 if valid, 0 otherwise.
+   Checks:
+   1. L and U have the same number of elements.
+   2. For every dimension i where both L[i] and U[i] are non-missing, L[i] < U[i].
+*/
+start IsValidRectLimits(L, U);
+   if ncol(L) ^= ncol(U) then do;
+      run ErrorToLog("The L and U parameters must have the same number of columns.");
+      return( 0 );
+   end;
+   if nrow(L) ^= nrow(U) then do;
+      run ErrorToLog("The L and U parameters must have the same number of rows.");
+      return( 0 );
+   end;
+   n = ncol(L);
+   do j = 1 to nrow(L);
+       do i = 1 to n;
+          if L[j,i] ^= . & U[j,i] ^= . then do;
+             if L[j,i] >= U[j,i] then do;
+                run ErrorToLog("L[j,i] must be < U[j,i] for every non-missing pair of limits.");
+                return( 0 );
+             end;
+          end;
+       end;
+   end;
+   return( 1 );
+finish;
+
+/* IsValidParmsPROBMVN: validate all input arguments to PROBMVN_MOD.
+   Parameters:
+     L     -- 1xn row vector of lower integration limits (missing = -Infinity)
+     U     -- 1xn row vector of upper integration limits (missing = +Infinity)
+     Sigma -- nxn covariance matrix; must be symmetric and positive definite
+     mu    -- 1xn mean vector; no missing values allowed
+   Returns 1 if all checks pass, 0 otherwise.
+*/
+start IsValidParmsPROBMVN(L, U, Sigma, mu=j(1,ncol(Sigma),0));
+   n = ncol(Sigma);
+
+   /* 1. Sigma must be symmetric */
+   if ^IsSym(Sigma) then do;
+      run ErrorToLog("The Sigma parameter must be symmetric.");
+      return( 0 );
+   end;
+
+   /* 2. Sigma cannot contain missing values */
+   if any(Sigma=.) then do;
+      run ErrorToLog("The Sigma parameter cannot contain missing values.");
+      return( 0 );
+   end;
+
+   /* 3. mu cannot contain missing values */
+   if any(mu=.) then do;
+      run ErrorToLog("The mu parameter cannot contain missing values.");
+      return( 0 );
+   end;
+
+   /* 4. Dimensional compatibility: L, U, mu vs Sigma */
+   if ncol(L) ^= n then do;
+      run ErrorToLog("The L and Sigma parameters have incompatible dimensions.");
+      return( 0 );
+   end;
+   if ncol(U) ^= n then do;
+      run ErrorToLog("The U and Sigma parameters have incompatible dimensions.");
+      return( 0 );
+   end;
+   if ncol(mu) ^= n then do;
+      run ErrorToLog("The mu and Sigma parameters have incompatible dimensions.");
+      return( 0 );
+   end;
+
+   /* 5. L and U must be internally consistent (missing values allowed) */
+   if ^IsValidRectLimits(L, U) then do;
+      run ErrorToLog("The L and U parameters must satisfy L[i] < U[i].");
+      return( 0 );
+   end;
+
+   /* 6. Sigma must be positive definite */
+   if ^IsSPD(Sigma) then do;
+      run ErrorToLog("The Sigma parameter must be positive definite.");
+      return( 0 );
+   end;
+
+   /* 7. Dimension must be between 1 and 100 */
+   if n < 2 | n > 100 then do;
+      run ErrorToLog("PROBMVN supports problems between 2 and 100 dimensions.");
+      return( 0 );
+   end;
+
+   return( 1 );
+finish;
+
+store module=(IsValidRectLimits IsValidParmsPROBMVN);
+QUIT;
 /* downloaded 25AUG2017 from 
    https://www.biostat.uni-hannover.de/fileadmin/institut/probmvn.sas
 
