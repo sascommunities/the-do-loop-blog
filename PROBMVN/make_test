@@ -1,0 +1,7 @@
+cat probbvn.sas mvn_validate.sas probmvn_validate.sas probmvn.sas > probmvn_define.sas
+cat probmvn_define.sas probmvn_tests.sas > test_all.sas; 
+
+# run SAS on 
+#   test_all.sas
+# then look at 
+#   test_all.lst
