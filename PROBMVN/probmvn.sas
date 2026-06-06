@@ -87,6 +87,11 @@ start probmvn_mod(L, U, Sigma, mu=j(1,ncol(Sigma),0));
    /* ensure that diagonal is EXACTLY 1 */
    diagIdx = do(1,nrow(R)*ncol(R), ncol(R)+1);
    R[diagIdx] = 1;             /* set diagonal elements */
+   delta = 8.125;
+   /* if a limit is outside of [-delta,delta], change it to +/-infinity.
+      This value is chosen because CDF("Normal", delta) ~ constant("maceps") */
+   idx = loc(L_std<-delta); if ncol(idx)>0 then L_std[idx] = .M;
+   idx = loc(U_std> delta); if ncol(idx)>0 then U_std[idx] = .I;
    return probmvn_std(L_std, U_std, R); /* Note: From here on, we deal only with correlation matrices */
 finish;
 
@@ -176,7 +181,7 @@ start mvn_dfn( n, w )
    infa = 0;
    infb = 0;
    ik = 1;
-
+   eps = constant("maceps");
    /* Loop through dimensions to compute conditional probabilities */
    do i = 1 to n+1;
       vsum = 0;
@@ -237,8 +242,15 @@ start mvn_dfn( n, w )
             value = value*( ei - di );
 
             /* Transform uniform w[ik] to Normal g_y[ik] for next iteration */
-            if ( i <= n ) then
-               g_y[ik] = quantile("Normal", di + w[ik]*( ei - di ) );
+            if ( i <= n ) then do;
+               pr = di + w[ik]*( ei - di );
+               if pr < eps then pr = eps;
+               else if pr > 1 - eps then pr = 1 - eps;
+               if pr < 0.9 then
+                  g_y[ik] = quantile("Normal", pr );
+               else
+                  g_y[ik] = squantile("Normal", 1-pr );
+            end;
             ik = ik + 1;
             infa = 0;
             infb = 0;

@@ -535,3 +535,19 @@ U={.I .I .I};
 prob = probmvn_mod(L, U, Sigma);
 correct = 1;
 run check_test(TestName + " (Degenerate)", prob, correct);
+
+/* Test 20: 3-D Problem with extreme limits */
+TestName = "Test 20: 3-D Problem with Extreme Limits";
+mu = {2.8  -17 1};
+sig = {72         0         0 ,
+       0         10         0 ,
+       0          0        18 };
+a = {-5  9  -5};
+b = {100  80  200};
+a_std = Xform_Limits_Cov2Corr(a, sig, mu);
+b_std = Xform_Limits_Cov2Corr(b, sig, mu);
+cdfb=cdf('normal',b_std);
+cdfa=cdf('normal',a_std);
+correct = prod(cdf('normal',b_std) - cdf('normal',a_std));
+prob = probmvn_mod(a, b, sig, mu);
+run check_test(TestName, prob, correct);
