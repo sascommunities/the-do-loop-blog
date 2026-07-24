@@ -3,7 +3,7 @@
    by Rick Wicklin, published 23MAR2026 on The DO Loop blog:
    https://blogs.sas.com/content/iml/2026/03/23/nmf-vs-svd.html
 
-   This program compares the SVD and NMF factoriztions on simulated data.
+   This program compares the SVD and NMF factorizations on simulated data.
    The example is a small modification of the example in  
    Section 4.2 "Realistic synthetic mixture," p. 212, of 
    Fogel, P., Hawkins, D. M., Beecher, C., Luta, G., & Young, S. S. (2013),
@@ -30,7 +30,7 @@ singular value decomposition (SVD) and the nonnegative matrix factorization
 (NMF). Although the SVD can produce factors that exactly generate the rank-2
 data matrix, the factors contain both positive and negative values, which 
 can make interpreting the factors difficult in some applications. 
-In contrast, the NMF produce factors that contain only nonnegative values.
+In contrast, the NMF produces factors that contain only nonnegative values.
 However, the product of the factors might not exactly equal the 
 data matrix.
 
@@ -121,9 +121,9 @@ THE SVD FACTORIZATION
    is the classical singular value decomposition (SVD). The second 
    is a newer algorithm called the nonnegative matrix factorization (NMF).
    Following Fogel et al. (2013), the remainder of this article compares 
-   these two factorization.
+   these two factorizations.
 
-   I have previous discussed how a low-rank factorization is not unique, but
+   I have previously discussed how a low-rank factorization is not unique, but
    can be arbitrarily rescaled and permuted. Fogel et al. did not worry about 
    this fact and visualized the results by using red-blue color ramps that are
    individually scaled to each factorization. That makes it hard to compare the 
@@ -158,7 +158,7 @@ print maxDiff;
    Although the product of the SVD exactly equals X, the SVD will NOT usually recover the 
    underlying factors (not even up to scaling).
    The reason is that the factors in an SVD are orthogonal, which means that the 
-   factors must contains both positive and negative elements when k &ge; 2.
+   factors must contain both positive and negative elements when k &ge; 2.
    (Technically, if X is block diagonal,
    then the SVD can recover the original features, but that is not the case in this example.)
    Because X contains strictly nonnegative values and isn't block diagonal, 
@@ -246,9 +246,9 @@ finish;
 /* standardize the rows of R, then scale L accordingly */
 start Stdize_LR(L, R, method="L2");
    if upcase(method)="L2" then
-      wts = R[,##];                   /* sum of squares of rows of R */
+      wts = sqrt(R[,##]);             /* L2 norm rows of R */
    else if upcase(method)="L1" then
-      wts = abs(R)[,+];               /* sum of abs values of rows of R */
+      wts = abs(R)[,+];               /* L1 norm rows of R */
    else return;
 
    wts = choose(wts=0, 1, wts);       /* avoid division by 0 */
@@ -258,9 +258,9 @@ finish;
 
 start Permute_LR(L, R, method="L2");
    if upcase(method)="L2" then
-      stat = L[##, ];                  /* sum of squares of cols of L */
+      stat = sqrt(L[##, ]);            /* L2 norm of cols of L */
    else if upcase(method)="L1" then
-      stat = abs(L)[+,];               /* sum of abs values of rows of R */
+      stat = abs(L)[+,];               /* L1 norm of rows of R */
    else return;
    /* sort columns of L in descending order by statistic */
    call sortndx(idx, stat`, 1, 1);   
@@ -319,7 +319,7 @@ call heatmapcont(X_est) colorramp={&Reds} range={-0.01 4.04}
 /* The product W1*H1 does a good job approximating X. 
    An obvious difference is seen for Patient 32 and 39.
    Where these patients actually have positive gene expression levels 
-   for genese 1-10, the rank-2 NMF does not recover that fact.
+   for genes 1-10, the rank-2 NMF does not recover that fact.
 */
 
 /* COMPARING THE NMF FACTORS
@@ -390,7 +390,7 @@ ods layout end;
       the first row of the W factor from the NMF does not correctly 
       estimate the values for Patients 32 and 39. The NMF estimate indicates
       that these patients only have the second etiology for the disease,
-      whereas in reality they have both etiologies. 
+      whereas in reality, they have both etiologies. 
 */
 
 /* SUMMARY 
@@ -403,7 +403,7 @@ ods layout end;
    A classical SVD analysis produced factors whose product equals X,
    but the factors contain both positive and negative values.
    That is because the SVD factors are essential contrasts.
-   In contrast, the NMF produce factors that contain only nonnegative values.
+   In contrast, the NMF produces factors that contain only nonnegative values.
    When the true underlying features of the data involve positive quantities
    whose effects are additive in nature,
    the NMF factors are more helpful for interpreting the features.  
