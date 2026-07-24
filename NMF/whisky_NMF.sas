@@ -196,9 +196,9 @@ finish;
 /* standardize the rows of R, then scale L accordingly */
 start Stdize_LR(L, R, method="L2");
    if upcase(method)="L2" then
-      wts = R[,##];                   /* sum of squares of rows of R */
+      wts = sqrt(R[,##]);             /* L2 norm rows of R */
    else if upcase(method)="L1" then
-      wts = abs(R)[,+];               /* sum of abs values of rows of R */
+      wts = abs(R)[,+];               /* L1 norm rows of R */
    else return;
 
    wts = choose(wts=0, 1, wts);       /* avoid division by 0 */
@@ -208,9 +208,9 @@ finish;
 
 start Permute_LR(L, R, method="L2");
    if upcase(method)="L2" then
-      stat = L[##, ];                  /* sum of squares of cols of L */
+      stat = sqrt(L[##, ]);            /* L2 norm of cols of L */
    else if upcase(method)="L1" then
-      stat = abs(L)[+,];               /* sum of abs values of rows of R */
+      stat = abs(L)[+,];               /* L1 norm of rows of R */
    else return;
    /* sort columns of L in descending order by statistic */
    call sortndx(idx, stat`, 1, 1);   
