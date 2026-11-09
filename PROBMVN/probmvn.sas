@@ -581,7 +581,7 @@ start dkbvrc( ndim, minvls, maxvls, abseps, releps,   abserr, finest );
    minsmp = 8;           /* minimum number of random shifts per stage */
 
       /* Korobov lattice primes and generator coefficients (local to QMC driver). */
-      p_vector = { 31 47 73 113 173 263 397 593 907 1361 2053 3079 4621 6947 10427 15641 23473 35221 52837 79259 118891 178349 267523 401287 601942};
+      p_vector = { 31 47 73 113 173 263 397 593 907 1361 2053 3079 4621 6947 10427 15641 23473 35221 52837 79259 118891 178349 267523 401287 601943}; /* correct typo: 601942 */
       mat = { 12 9 9 13 12 12 12 12 12 12 12 12 3 3 3 12 7 7 12,
          13 11 17 10 15 15 15 15 15 15 22 15 15 6 6 6 15 15 9,
          27 28 10 11 11 20 11 11 28 13 13 28 13 13 13 14 14 14 14,
